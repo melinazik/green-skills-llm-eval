@@ -1,0 +1,1388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESCO CSV Browser</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #111827;
+      --panel: #1f2937;
+      --muted: #9ca3af;
+      --text: #f9fafb;
+      --accent: #60a5fa;
+      --border: #374151;
+      --row-hover: #1e3a8a33;
+      --success: #34d399;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f3f4f6;
+        --panel: #ffffff;
+        --muted: #6b7280;
+        --text: #111827;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+        --row-hover: #2563eb11;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    h1 {
+      margin: 0 0 0.3rem;
+      font-size: 1.4rem;
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .controls {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 2fr repeat(9, minmax(120px, 1fr));
+      align-items: end;
+    }
+
+    .actions {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 2fr repeat(4, minmax(140px, 1fr));
+      align-items: end;
+      margin-top: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .controls,
+      .actions { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .controls,
+      .actions { grid-template-columns: 1fr; }
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    input, select, button {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.95rem;
+    }
+
+    input[type="file"] {
+      padding: 0.35rem 0.45rem;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      border-color: transparent;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    button.secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .status.ok {
+      color: var(--success);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      height: 33vh;
+      min-height: 220px;
+    }
+
+    .panel-divider {
+      height: 14px;
+      margin: -0.45rem 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: ns-resize;
+      user-select: none;
+      touch-action: none;
+      background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--accent) 10%, transparent));
+    }
+
+    .panel-divider:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1400px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 0.9rem;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--panel);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--muted);
+      overflow: visible;
+    }
+
+    th.resizable-col {
+      position: sticky;
+      padding-right: 1rem;
+    }
+
+    .col-resize-handle {
+      position: absolute;
+      top: 0;
+      right: -4px;
+      width: 8px;
+      height: 100%;
+      cursor: col-resize;
+      touch-action: none;
+      z-index: 3;
+    }
+
+    .col-resize-handle:hover,
+    th.resizable-col:hover .col-resize-handle {
+      background: color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    th.select-col,
+    td.select-col {
+      width: 90px;
+      text-align: center;
+    }
+
+    th.thematic-col,
+    td.thematic-col {
+      min-width: 180px;
+    }
+
+    th.category-col,
+    td.category-col {
+      min-width: 220px;
+    }
+
+    td.select-col input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    td.category-col select {
+      width: 100%;
+      min-width: 0;
+      padding: 0.35rem 0.45rem;
+      font-size: 0.86rem;
+    }
+
+    tbody tr { cursor: pointer; }
+    tbody tr:hover { background: var(--row-hover); }
+    tbody tr.active { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+    .desc {
+      max-width: 430px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+
+    .pagination .info {
+      color: var(--muted);
+      margin-right: auto;
+      font-size: 0.9rem;
+    }
+
+    .pagination button {
+      width: auto;
+      min-width: 140px;
+    }
+
+    #detailsPanel {
+      min-height: 240px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 0.35rem 0.9rem;
+      font-size: 0.92rem;
+      align-items: start;
+    }
+
+    .details-grid dt {
+      color: var(--muted);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .details-grid dd {
+      margin: 0;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .empty {
+      padding: 1rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="panel">
+      <h1>ESCO CSV Browser</h1>
+      <div class="subtle">Source: <code id="sourceLabel">greenSkillsCollection_default.csv</code></div>
+    </section>
+
+    <section class="panel">
+      <div class="controls">
+        <div class="field">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Search across all columns..." />
+        </div>
+
+        <div class="field">
+          <label for="skillType">Skill type</label>
+          <select id="skillType"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="reuseLevel">Reuse level</label>
+          <select id="reuseLevel"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="selectionFilter">Selection</label>
+          <select id="selectionFilter">
+            <option value="all">All</option>
+            <option value="selected">Selected only</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="escoPillar">ESCO pillar</label>
+          <select id="escoPillar"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="escoLevel1_Category">ESCO category</label>
+          <select id="escoLevel1_Category"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="thematicCategory">Thematic category</label>
+          <select id="thematicCategory"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="customCategoryFilter">Category</label>
+          <select id="customCategoryFilter"><option value="">All</option></select>
+        </div>
+
+        <div class="field">
+          <label for="pageSize">Rows per load</label>
+          <select id="pageSize">
+            <option>25</option>
+            <option>50</option>
+            <option>100</option>
+            <option>200</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="field">
+          <label for="csvFileInput">Load another CSV</label>
+          <input id="csvFileInput" type="file" accept=".csv,text/csv" />
+        </div>
+        <button id="reloadDefaultBtn" class="secondary" type="button">Reload default CSV</button>
+        <button id="clearSelectionBtn" class="secondary" type="button">Clear selection</button>
+        <button id="exportAllBtn" type="button">Export all rows</button>
+        <button id="exportSelectedBtn" type="button">Export selected rows</button>
+      </div>
+
+      <div class="topbar">
+        <div id="statusText" class="status">Loading...</div>
+        <button id="resetBtn" class="secondary" type="button">Reset filters</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="table-wrap" id="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="select-col">Selected</th>
+              <th class="resizable-col" data-col-key="preferredLabel" style="width: 260px;">Preferred label<span class="col-resize-handle" data-col-resize="preferredLabel"></span></th>
+              <th class="resizable-col" data-col-key="skillType" style="width: 170px;">Skill type<span class="col-resize-handle" data-col-resize="skillType"></span></th>
+              <th class="resizable-col" data-col-key="reuseLevel" style="width: 170px;">Reuse level<span class="col-resize-handle" data-col-resize="reuseLevel"></span></th>
+              <th class="resizable-col" data-col-key="status" style="width: 140px;">Status<span class="col-resize-handle" data-col-resize="status"></span></th>
+              <th class="resizable-col thematic-col" data-col-key="thematicCategory" style="width: 220px;">Thematic category<span class="col-resize-handle" data-col-resize="thematicCategory"></span></th>
+              <th class="resizable-col category-col" data-col-key="Category" style="width: 260px;">Category<span class="col-resize-handle" data-col-resize="Category"></span></th>
+              <th class="resizable-col" data-col-key="description" style="width: 500px;">Description<span class="col-resize-handle" data-col-resize="description"></span></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <div class="info" id="pageInfo"></div>
+        <button id="assignCategoryBtn" class="secondary" type="button">Assign category</button>
+        <button id="clearCategoryBtn" class="secondary" type="button">Clear Category</button>
+        <button id="stratifySelectBtn" class="secondary" type="button">Stratify Select</button>
+      </div>
+    </section>
+
+    <div id="panelDivider" class="panel-divider" title="Drag to resize space between grid and details">↕ Drag divider between grid and details</div>
+
+    <section class="panel" id="detailsPanel">
+      <h2 style="margin:0 0 0.75rem; font-size: 1.1rem;">Entry details</h2>
+      <div id="details" class="empty">Click a row to inspect all fields. Use the checkbox to select/deselect it.</div>
+    </section>
+  </main>
+
+  <script>
+    const DEFAULT_CSV_FILE = '../categorize/output_categorize/greenSkillsCollection_enhanced_with_thematic.csv';
+    const CATEGORY_VALUES = [
+      'G1 Renewable Energy & Energy Systems — generating renewable energy + storage/grid (solar, wind, biomass, geothermal, hydro, hydrogen, batteries, smart grid).',
+      'G2 Energy Efficiency & Built Environment — reducing energy demand + green building/construction/retrofit (audits, heat pumps, insulation, HVAC, installation).',
+      'G3 Circular Economy, Waste & Resource — reduce/reuse/recycle/recover; waste streams; resource & water efficiency; sustainable materials & textiles.',
+      'G4 Environmental Protection & Natural Capital — protect air/water/soil/ecosystems/wildlife; pollution control, remediation, biodiversity, climate impact.',
+      'G5 Sustainable Agriculture, Forestry & Food — sustainable crops/livestock/forestry/fisheries; soil & land management; food systems & food-waste.',
+      'G6 Sustainable Mobility & Green Manufacturing — low-impact transport/mobility + clean/sustainable industrial production.',
+      'G7 Green Management, Policy, Finance & Governance — environmental law/compliance/permits, policy, economics, ESG reporting, green finance, strategy, advisory.',
+      'G8 Green Technology, Data & Digital Innovation — computing/data/sensing/AI applied to sustainability (green IT, environmental data, IoT, monitoring tech).',
+    ];
+    const UNASSIGNED_CATEGORY_FILTER_VALUE = '__unassigned__';
+
+    const state = {
+      headers: [],
+      allRows: [],
+      filteredRows: [],
+      visibleCount: 25,
+      pageSize: 25,
+      activeRowId: null,
+      sourceName: DEFAULT_CSV_FILE,
+      selectionColumnName: 'selected',
+      categoryColumnName: 'Category',
+      isResizingGrid: false,
+      resizeStartY: 0,
+      resizeStartHeight: 0,
+      resizeStartDetailsHeight: 0,
+      isResizingColumn: false,
+      resizeColumnKey: '',
+      resizeColumnStartX: 0,
+      resizeColumnStartWidth: 0,
+    };
+
+    const el = {
+      sourceLabel: document.getElementById('sourceLabel'),
+      search: document.getElementById('search'),
+      skillType: document.getElementById('skillType'),
+      reuseLevel: document.getElementById('reuseLevel'),
+      status: document.getElementById('status'),
+      selectionFilter: document.getElementById('selectionFilter'),
+      escoLevel0Pillar: document.getElementById('escoPillar'),
+      escoLevel1Category: document.getElementById('escoLevel1_Category'),
+      thematicCategory: document.getElementById('thematicCategory'),
+      customCategoryFilter: document.getElementById('customCategoryFilter'),
+      pageSize: document.getElementById('pageSize'),
+      csvFileInput: document.getElementById('csvFileInput'),
+      reloadDefaultBtn: document.getElementById('reloadDefaultBtn'),
+      clearSelectionBtn: document.getElementById('clearSelectionBtn'),
+      exportAllBtn: document.getElementById('exportAllBtn'),
+      exportSelectedBtn: document.getElementById('exportSelectedBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+      tableBody: document.getElementById('tableBody'),
+      tableWrap: document.getElementById('tableWrap'),
+      panelDivider: document.getElementById('panelDivider'),
+      detailsPanel: document.getElementById('detailsPanel'),
+      pageInfo: document.getElementById('pageInfo'),
+      assignCategoryBtn: document.getElementById('assignCategoryBtn'),
+      clearCategoryBtn: document.getElementById('clearCategoryBtn'),
+      stratifySelectBtn: document.getElementById('stratifySelectBtn'),
+      statusText: document.getElementById('statusText'),
+      details: document.getElementById('details'),
+    };
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let field = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+
+        if (inQuotes) {
+          if (char === '"') {
+            if (text[i + 1] === '"') {
+              field += '"';
+              i++;
+            } else {
+              inQuotes = false;
+            }
+          } else {
+            field += char;
+          }
+          continue;
+        }
+
+        if (char === '"') {
+          inQuotes = true;
+        } else if (char === ',') {
+          row.push(field);
+          field = '';
+        } else if (char === '\n') {
+          row.push(field);
+          rows.push(row);
+          row = [];
+          field = '';
+        } else if (char === '\r') {
+          // Ignore CR in CRLF
+        } else {
+          field += char;
+        }
+      }
+
+      if (field.length > 0 || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+
+      if (rows.length === 0) return { headers: [], records: [] };
+
+      const headers = rows[0].map(h => h.trim());
+      const records = rows.slice(1)
+        .filter(r => r.some(v => v !== ''))
+        .map((r, idx) => {
+          const obj = {};
+          headers.forEach((h, colIdx) => {
+            obj[h] = r[colIdx] ?? '';
+          });
+          const baseId = obj.conceptUri || obj.preferredLabel || 'row';
+          obj.__id = `${baseId}__${idx}`;
+          obj.__selected = false;
+          return obj;
+        });
+
+      return { headers, records };
+    }
+
+    function parseSelectedValue(value) {
+      const normalized = String(value ?? '').trim().toLowerCase();
+      return ['true', '1', 'yes', 'y', 'x'].includes(normalized);
+    }
+
+    function uniqueValues(fieldName) {
+      return [...new Set(state.allRows.map(r => (r[fieldName] || '').trim()).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b));
+    }
+
+    function fillFilter(selectEl, values, labelFn = value => value) {
+      selectEl.innerHTML = '<option value="">All</option>';
+      values.forEach(value => {
+        const opt = document.createElement('option');
+        opt.value = value;
+        opt.textContent = labelFn(value);
+        selectEl.appendChild(opt);
+      });
+      selectEl.disabled = values.length === 0;
+    }
+
+    function getRowById(rowId) {
+      return state.allRows.find(r => r.__id === rowId) || null;
+    }
+
+    function setRowSelected(row, selected) {
+      if (!row) return;
+      row.__selected = Boolean(selected);
+
+      const existingSelectionHeader = state.headers.find(
+        h => h.trim().toLowerCase() === state.selectionColumnName.toLowerCase()
+      );
+      if (existingSelectionHeader) {
+        row[existingSelectionHeader] = row.__selected ? 'true' : 'false';
+      }
+    }
+
+    function selectedCount() {
+      return state.allRows.reduce((count, row) => count + (row.__selected ? 1 : 0), 0);
+    }
+
+    function getCategoryHeader() {
+      const match = state.headers.find(h => h.trim().toLowerCase() === state.categoryColumnName.toLowerCase());
+      return match || state.categoryColumnName;
+    }
+
+    function getRowCategoryValue(row) {
+      const header = getCategoryHeader();
+      return (row[header] || '').trim();
+    }
+
+    function setRowCategoryValue(row, value) {
+      const header = getCategoryHeader();
+      row[header] = value;
+    }
+
+    function categoryFilterValues() {
+      const valuesFromData = uniqueValues(getCategoryHeader());
+      return [...new Set([...CATEGORY_VALUES, ...valuesFromData])];
+    }
+
+    function toCategoryShortLabel(value) {
+      const text = String(value || '').trim();
+      if (!text) return '';
+      const idx = text.indexOf(' — ');
+      return idx >= 0 ? text.slice(0, idx) : text;
+    }
+
+    function thematicToCategoryValue(thematicValue) {
+      const normalized = String(thematicValue || '').trim();
+      if (!normalized) return '';
+      return CATEGORY_VALUES.includes(normalized) ? normalized : '';
+    }
+
+    function assignCategoryFromThematicForFilteredRows() {
+      let assignedCount = 0;
+
+      state.filteredRows.forEach(row => {
+        const mappedValue = thematicToCategoryValue(row.thematicCategory || '');
+        if (!mappedValue) return;
+
+        const currentValue = getRowCategoryValue(row);
+        if (currentValue === mappedValue) return;
+
+        setRowCategoryValue(row, mappedValue);
+        assignedCount += 1;
+      });
+
+      initFilters();
+      render();
+
+      return assignedCount;
+    }
+
+    function clearCategoryForFilteredRows() {
+      let clearedCount = 0;
+
+      state.filteredRows.forEach(row => {
+        const currentValue = getRowCategoryValue(row);
+        if (!currentValue) return;
+
+        setRowCategoryValue(row, '');
+        clearedCount += 1;
+      });
+
+      initFilters();
+      render();
+
+      return clearedCount;
+    }
+
+    function randomSample(rows, targetCount) {
+      if (targetCount <= 0 || rows.length === 0) return [];
+      if (rows.length <= targetCount) return [...rows];
+
+      const copy = [...rows];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy.slice(0, targetCount);
+    }
+
+    function stratifySelectFilteredRows(perCategoryCount) {
+      const grouped = new Map();
+
+      state.filteredRows.forEach(row => {
+        const category = getRowCategoryValue(row);
+        if (!category) return;
+        if (!grouped.has(category)) grouped.set(category, []);
+        grouped.get(category).push(row);
+      });
+
+      let selectedCount = 0;
+      let categoriesAffected = 0;
+
+      grouped.forEach((rows, category) => {
+        const sampled = randomSample(rows, perCategoryCount);
+        sampled.forEach(row => {
+          if (!row.__selected) {
+            setRowSelected(row, true);
+            selectedCount += 1;
+          }
+        });
+        if (sampled.length > 0) categoriesAffected += 1;
+      });
+
+      render();
+
+      return {
+        selectedCount,
+        categoriesAffected,
+        totalCategories: grouped.size,
+      };
+    }
+
+    function applyFilters() {
+      const q = el.search.value.trim().toLowerCase();
+      const skillType = el.skillType.value;
+      const reuseLevel = el.reuseLevel.value;
+      const status = el.status.value;
+      const selectionFilter = el.selectionFilter.value;
+      const escoLevel0Pillar = el.escoLevel0Pillar.value;
+      const escoLevel1Category = el.escoLevel1Category.value;
+      const thematicCategory = el.thematicCategory.value;
+      const customCategoryFilter = el.customCategoryFilter.value;
+
+      state.filteredRows = state.allRows.filter(row => {
+        if (skillType && row.skillType !== skillType) return false;
+        if (reuseLevel && row.reuseLevel !== reuseLevel) return false;
+        if (status && row.status !== status) return false;
+        if (selectionFilter === 'selected' && !row.__selected) return false;
+        if (escoLevel0Pillar && (row.escoLevel0Pillar || '') !== escoLevel0Pillar) return false;
+        if (escoLevel1Category && (row.escoLevel1Category || '') !== escoLevel1Category) return false;
+        if (thematicCategory && (row.thematicCategory || '') !== thematicCategory) return false;
+
+        const rowCategory = getRowCategoryValue(row);
+        if (customCategoryFilter === UNASSIGNED_CATEGORY_FILTER_VALUE && rowCategory) return false;
+        if (customCategoryFilter && customCategoryFilter !== UNASSIGNED_CATEGORY_FILTER_VALUE && rowCategory !== customCategoryFilter) return false;
+
+        if (!q) return true;
+
+        const haystack = state.headers.map(h => row[h] || '').join(' ').toLowerCase();
+        return haystack.includes(q);
+      });
+
+      state.visibleCount = state.pageSize;
+      render();
+    }
+
+    function getVisibleRows() {
+      return state.filteredRows.slice(0, state.visibleCount);
+    }
+
+    function ensureVisibleRowsForScroll() {
+      const wrap = el.tableWrap;
+      if (!wrap) return;
+
+      let safety = 0;
+      while (
+        wrap.scrollHeight <= wrap.clientHeight + 4
+        && state.visibleCount < state.filteredRows.length
+        && safety < 10
+      ) {
+        state.visibleCount = Math.min(state.filteredRows.length, state.visibleCount + state.pageSize);
+        renderTable();
+        renderPaginationAndStatus();
+        safety += 1;
+      }
+    }
+
+    function maybeLoadMoreRows() {
+      const wrap = el.tableWrap;
+      if (!wrap) return;
+
+      const nearBottom = wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight - 80;
+      if (!nearBottom) return;
+
+      if (state.visibleCount >= state.filteredRows.length) return;
+
+      state.visibleCount = Math.min(state.filteredRows.length, state.visibleCount + state.pageSize);
+      render();
+    }
+
+    function onGridResizeMove(clientY) {
+      if (!state.isResizingGrid) return;
+
+      const delta = clientY - state.resizeStartY;
+      const newGridHeight = Math.max(220, state.resizeStartHeight + delta);
+      const newDetailsHeight = Math.max(240, state.resizeStartDetailsHeight - delta);
+
+      el.tableWrap.style.height = `${newGridHeight}px`;
+      el.detailsPanel.style.height = `${newDetailsHeight}px`;
+      ensureVisibleRowsForScroll();
+    }
+
+    function stopGridResize() {
+      if (!state.isResizingGrid) return;
+      state.isResizingGrid = false;
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
+    }
+
+    function startGridResize(clientY) {
+      state.isResizingGrid = true;
+      state.resizeStartY = clientY;
+      state.resizeStartHeight = el.tableWrap.getBoundingClientRect().height;
+      state.resizeStartDetailsHeight = el.detailsPanel.getBoundingClientRect().height;
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'ns-resize';
+    }
+
+    function startColumnResize(columnKey, clientX) {
+      const headerEl = document.querySelector(`th[data-col-key="${CSS.escape(columnKey)}"]`);
+      if (!headerEl) return;
+
+      state.isResizingColumn = true;
+      state.resizeColumnKey = columnKey;
+      state.resizeColumnStartX = clientX;
+      state.resizeColumnStartWidth = headerEl.getBoundingClientRect().width;
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'col-resize';
+    }
+
+    function onColumnResizeMove(clientX) {
+      if (!state.isResizingColumn) return;
+
+      const headerEl = document.querySelector(`th[data-col-key="${CSS.escape(state.resizeColumnKey)}"]`);
+      if (!headerEl) return;
+
+      const delta = clientX - state.resizeColumnStartX;
+      const newWidth = Math.max(90, state.resizeColumnStartWidth + delta);
+      headerEl.style.width = `${newWidth}px`;
+    }
+
+    function stopColumnResize() {
+      if (!state.isResizingColumn) return;
+      state.isResizingColumn = false;
+      state.resizeColumnKey = '';
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function renderTable() {
+      const rows = getVisibleRows();
+
+      if (rows.length === 0) {
+        el.tableBody.innerHTML = '<tr><td colspan="8" class="empty">No entries match your filters.</td></tr>';
+        return;
+      }
+
+      const categoryValues = categoryFilterValues();
+
+      el.tableBody.innerHTML = rows.map(row => {
+        const activeClass = row.__id === state.activeRowId ? 'active' : '';
+        const rowCategory = getRowCategoryValue(row);
+        const categoryOptions = categoryValues
+          .map(value => {
+            const shortLabel = toCategoryShortLabel(value);
+            return `
+              <option value="${escapeHtml(value)}" ${value === rowCategory ? 'selected' : ''} title="${escapeHtml(value)}">${escapeHtml(shortLabel)}</option>
+            `;
+          })
+          .join('');
+
+        return `
+          <tr class="${activeClass}" data-id="${escapeHtml(row.__id)}">
+            <td class="select-col">
+              <input
+                type="checkbox"
+                data-toggle-select="true"
+                data-id="${escapeHtml(row.__id)}"
+                ${row.__selected ? 'checked' : ''}
+                aria-label="Select ${escapeHtml(row.preferredLabel || row.__id)}"
+              />
+            </td>
+            <td>${escapeHtml(row.preferredLabel || '')}</td>
+            <td>${escapeHtml(row.skillType || '')}</td>
+            <td>${escapeHtml(row.reuseLevel || '')}</td>
+            <td>${escapeHtml(row.status || '')}</td>
+            <td class="thematic-col" title="${escapeHtml(row.thematicCategory || '')}">${escapeHtml(toCategoryShortLabel(row.thematicCategory || ''))}</td>
+            <td class="category-col">
+              <select data-category-select="true" data-id="${escapeHtml(row.__id)}">
+                <option value="" ${rowCategory ? '' : 'selected'}>Unassigned</option>
+                ${categoryOptions}
+              </select>
+            </td>
+            <td class="desc" title="${escapeHtml(row.description || '')}">${escapeHtml(row.description || '')}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderDetails() {
+      const row = getRowById(state.activeRowId);
+      if (!row) {
+        el.details.className = 'empty';
+        el.details.textContent = 'Click a row to inspect all fields. Use the checkbox to select/deselect it.';
+        return;
+      }
+
+      el.details.className = '';
+      const categoryHeader = getCategoryHeader();
+      const headersWithoutSpecial = state.headers.filter(h => {
+        const normalized = h.trim().toLowerCase();
+        return normalized !== state.selectionColumnName.toLowerCase()
+          && normalized !== categoryHeader.trim().toLowerCase();
+      });
+      const fields = ['selected', categoryHeader, ...headersWithoutSpecial];
+
+      el.details.innerHTML = `
+        <dl class="details-grid">
+          ${fields.map(field => {
+            let value = '';
+            if (field === 'selected') {
+              value = row.__selected ? 'true' : 'false';
+            } else if (field.trim().toLowerCase() === categoryHeader.trim().toLowerCase()) {
+              value = getRowCategoryValue(row);
+            } else {
+              value = row[field] || '';
+            }
+
+            return `
+              <dt>${escapeHtml(field)}</dt>
+              <dd>${escapeHtml(value)}</dd>
+            `;
+          }).join('')}
+        </dl>
+      `;
+    }
+
+    function renderPaginationAndStatus() {
+      const total = state.filteredRows.length;
+      const visible = Math.min(state.visibleCount, total);
+      const selected = selectedCount();
+
+      el.pageInfo.textContent = `Showing ${visible} of ${total} filtered entries`;
+
+      el.statusText.className = 'status ok';
+      el.statusText.textContent = `${state.allRows.length} total entries loaded • ${selected} selected`;
+
+      el.exportAllBtn.disabled = state.allRows.length === 0;
+      el.exportSelectedBtn.disabled = selected === 0;
+      el.clearSelectionBtn.disabled = selected === 0;
+      el.assignCategoryBtn.disabled = state.filteredRows.length === 0;
+      el.clearCategoryBtn.disabled = state.filteredRows.length === 0;
+      el.stratifySelectBtn.disabled = state.filteredRows.length === 0;
+    }
+
+    function render() {
+      renderTable();
+      renderDetails();
+      renderPaginationAndStatus();
+      ensureVisibleRowsForScroll();
+    }
+
+    function initFilters() {
+      const previousValues = {
+        skillType: el.skillType.value,
+        reuseLevel: el.reuseLevel.value,
+        status: el.status.value,
+        escoLevel0Pillar: el.escoLevel0Pillar.value,
+        escoLevel1Category: el.escoLevel1Category.value,
+        thematicCategory: el.thematicCategory.value,
+        customCategoryFilter: el.customCategoryFilter.value,
+      };
+
+      fillFilter(el.skillType, uniqueValues('skillType'));
+      fillFilter(el.reuseLevel, uniqueValues('reuseLevel'));
+      fillFilter(el.status, uniqueValues('status'));
+      fillFilter(el.escoLevel0Pillar, uniqueValues('escoLevel0Pillar'));
+      fillFilter(el.escoLevel1Category, uniqueValues('escoLevel1Category'));
+      fillFilter(el.thematicCategory, uniqueValues('thematicCategory'), toCategoryShortLabel);
+
+      fillFilter(el.customCategoryFilter, categoryFilterValues(), toCategoryShortLabel);
+      const unassignedOption = document.createElement('option');
+      unassignedOption.value = UNASSIGNED_CATEGORY_FILTER_VALUE;
+      unassignedOption.textContent = 'Unassigned';
+      el.customCategoryFilter.insertBefore(unassignedOption, el.customCategoryFilter.children[1] || null);
+      el.customCategoryFilter.disabled = false;
+
+      const restoreValue = (selectEl, value) => {
+        if (!value) {
+          selectEl.value = '';
+          return;
+        }
+        const hasValue = [...selectEl.options].some(opt => opt.value === value);
+        selectEl.value = hasValue ? value : '';
+      };
+
+      restoreValue(el.skillType, previousValues.skillType);
+      restoreValue(el.reuseLevel, previousValues.reuseLevel);
+      restoreValue(el.status, previousValues.status);
+      restoreValue(el.escoLevel0Pillar, previousValues.escoLevel0Pillar);
+      restoreValue(el.escoLevel1Category, previousValues.escoLevel1Category);
+      restoreValue(el.thematicCategory, previousValues.thematicCategory);
+      restoreValue(el.customCategoryFilter, previousValues.customCategoryFilter);
+    }
+
+    function csvEscape(value) {
+      const str = String(value ?? '');
+      const escaped = str.replaceAll('"', '""');
+      if (/[",\n\r]/.test(str)) {
+        return `"${escaped}"`;
+      }
+      return escaped;
+    }
+
+    function buildExportCsv(includeOnlySelected) {
+      const rows = includeOnlySelected
+        ? state.allRows.filter(row => row.__selected)
+        : state.allRows;
+
+      const hasSelectionHeader = state.headers.some(
+        h => h.trim().toLowerCase() === state.selectionColumnName.toLowerCase()
+      );
+      const categoryHeader = getCategoryHeader();
+      const hasCategoryHeader = state.headers.some(
+        h => h.trim().toLowerCase() === categoryHeader.trim().toLowerCase()
+      );
+
+      let exportHeaders = hasSelectionHeader
+        ? [...state.headers]
+        : [...state.headers, state.selectionColumnName];
+
+      if (!hasCategoryHeader) {
+        exportHeaders.push(categoryHeader);
+      }
+
+      exportHeaders = [...new Set(exportHeaders)];
+
+      const lines = [exportHeaders.map(csvEscape).join(',')];
+
+      rows.forEach(row => {
+        const values = exportHeaders.map(header => {
+          const normalized = header.trim().toLowerCase();
+          if (normalized === state.selectionColumnName.toLowerCase()) {
+            return row.__selected ? 'true' : 'false';
+          }
+          if (normalized === categoryHeader.trim().toLowerCase()) {
+            return getRowCategoryValue(row);
+          }
+          return row[header] ?? '';
+        });
+
+        lines.push(values.map(csvEscape).join(','));
+      });
+
+      return lines.join('\r\n');
+    }
+
+    function downloadCsv(filename, content) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function baseFileName(name) {
+      return name.replace(/\.csv$/i, '');
+    }
+
+    function exportRows(includeOnlySelected) {
+      const csvContent = buildExportCsv(includeOnlySelected);
+      const suffix = includeOnlySelected ? '_selected' : '_all';
+      downloadCsv(`${baseFileName(state.sourceName)}${suffix}.csv`, csvContent);
+    }
+
+    function loadParsedCsv(headers, records, sourceName) {
+      if (!headers.length) {
+        throw new Error('CSV has no header row.');
+      }
+
+      const selectionHeader = headers.find(h => h.trim().toLowerCase() === 'selected');
+      const categoryHeader = headers.find(h => h.trim().toLowerCase() === state.categoryColumnName.toLowerCase()) || state.categoryColumnName;
+      state.selectionColumnName = selectionHeader || 'selected';
+
+      const normalizedHeaders = headers.map(h => h.trim().toLowerCase());
+      if (!normalizedHeaders.includes(categoryHeader.trim().toLowerCase())) {
+        headers.push(categoryHeader);
+      }
+
+      records.forEach(row => {
+        const selectedValue = selectionHeader ? row[selectionHeader] : '';
+        row.__selected = selectionHeader ? parseSelectedValue(selectedValue) : false;
+
+        if (selectionHeader) {
+          row[selectionHeader] = row.__selected ? 'true' : 'false';
+        }
+
+        const existingCategoryValue = (row[categoryHeader] || '').trim();
+        row[categoryHeader] = existingCategoryValue;
+      });
+
+      el.selectionFilter.value = 'all';
+      el.escoLevel0Pillar.value = '';
+      el.escoLevel1Category.value = '';
+      el.thematicCategory.value = '';
+      el.customCategoryFilter.value = '';
+
+      const shouldSortByLabel = headers.includes('preferredLabel');
+      state.headers = headers;
+      state.allRows = shouldSortByLabel
+        ? records.sort((a, b) => (a.preferredLabel || '').localeCompare(b.preferredLabel || ''))
+        : records;
+
+      state.filteredRows = [...state.allRows];
+      state.visibleCount = state.pageSize;
+      state.activeRowId = null;
+      state.sourceName = sourceName;
+      el.sourceLabel.textContent = sourceName;
+
+      initFilters();
+      render();
+    }
+
+    async function loadDefaultCsv() {
+      el.statusText.className = 'status';
+      el.statusText.textContent = `Loading ${DEFAULT_CSV_FILE}...`;
+
+      try {
+        const response = await fetch(DEFAULT_CSV_FILE);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const csvText = await response.text();
+        const { headers, records } = parseCSV(csvText);
+        loadParsedCsv(headers, records, DEFAULT_CSV_FILE);
+      } catch (error) {
+        el.statusText.className = 'status';
+        el.statusText.textContent = `Failed to load CSV: ${error.message}`;
+        el.tableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="empty">
+              Could not load <code>${DEFAULT_CSV_FILE}</code>.<br>
+              Start a local server in this folder and open the page through HTTP (not file://).<br>
+              Example: <code>python3 -m http.server 8000</code>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    async function loadCsvFile(file) {
+      el.statusText.className = 'status';
+      el.statusText.textContent = `Loading ${file.name}...`;
+
+      try {
+        const csvText = await file.text();
+        const { headers, records } = parseCSV(csvText);
+        loadParsedCsv(headers, records, file.name);
+      } catch (error) {
+        el.statusText.className = 'status';
+        el.statusText.textContent = `Failed to load ${file.name}: ${error.message}`;
+      }
+    }
+
+    function setupEvents() {
+      el.search.addEventListener('input', applyFilters);
+      el.skillType.addEventListener('change', applyFilters);
+      el.reuseLevel.addEventListener('change', applyFilters);
+      el.status.addEventListener('change', applyFilters);
+      el.selectionFilter.addEventListener('change', applyFilters);
+      el.escoLevel0Pillar.addEventListener('change', applyFilters);
+      el.escoLevel1Category.addEventListener('change', applyFilters);
+      el.thematicCategory.addEventListener('change', applyFilters);
+      el.customCategoryFilter.addEventListener('change', applyFilters);
+
+      el.pageSize.addEventListener('change', () => {
+        state.pageSize = Number(el.pageSize.value);
+        state.visibleCount = state.pageSize;
+        render();
+      });
+
+      el.resetBtn.addEventListener('click', () => {
+        el.search.value = '';
+        el.skillType.value = '';
+        el.reuseLevel.value = '';
+        el.status.value = '';
+        el.selectionFilter.value = 'all';
+        el.escoLevel0Pillar.value = '';
+        el.escoLevel1Category.value = '';
+        el.thematicCategory.value = '';
+        el.customCategoryFilter.value = '';
+        state.activeRowId = null;
+        applyFilters();
+      });
+
+      el.tableWrap.addEventListener('scroll', maybeLoadMoreRows);
+
+      el.panelDivider.addEventListener('mousedown', event => {
+        event.preventDefault();
+        startGridResize(event.clientY);
+      });
+
+      el.panelDivider.addEventListener('touchstart', event => {
+        const touch = event.touches?.[0];
+        if (!touch) return;
+        startGridResize(touch.clientY);
+      }, { passive: true });
+
+      window.addEventListener('mousemove', event => {
+        onGridResizeMove(event.clientY);
+        onColumnResizeMove(event.clientX);
+      });
+
+      window.addEventListener('touchmove', event => {
+        const touch = event.touches?.[0];
+        if (!touch) return;
+        onGridResizeMove(touch.clientY);
+        onColumnResizeMove(touch.clientX);
+      }, { passive: true });
+
+      window.addEventListener('mouseup', () => {
+        stopGridResize();
+        stopColumnResize();
+      });
+      window.addEventListener('touchend', () => {
+        stopGridResize();
+        stopColumnResize();
+      });
+      window.addEventListener('touchcancel', () => {
+        stopGridResize();
+        stopColumnResize();
+      });
+
+      el.tableWrap.addEventListener('mousedown', event => {
+        const handle = event.target.closest('[data-col-resize]');
+        if (!handle) return;
+        event.preventDefault();
+        event.stopPropagation();
+        startColumnResize(handle.dataset.colResize, event.clientX);
+      });
+
+      el.tableWrap.addEventListener('touchstart', event => {
+        const handle = event.target.closest('[data-col-resize]');
+        if (!handle) return;
+        const touch = event.touches?.[0];
+        if (!touch) return;
+        event.stopPropagation();
+        startColumnResize(handle.dataset.colResize, touch.clientX);
+      }, { passive: true });
+
+      el.tableBody.addEventListener('change', event => {
+        const checkbox = event.target.closest('input[data-toggle-select]');
+        if (checkbox) {
+          const row = getRowById(checkbox.dataset.id);
+          setRowSelected(row, checkbox.checked);
+
+          if (el.selectionFilter.value === 'selected') {
+            applyFilters();
+          } else {
+            render();
+          }
+          return;
+        }
+
+        const categorySelect = event.target.closest('select[data-category-select]');
+        if (categorySelect) {
+          const row = getRowById(categorySelect.dataset.id);
+          if (!row) return;
+
+          setRowCategoryValue(row, categorySelect.value);
+          initFilters();
+
+          if (
+            el.customCategoryFilter.value
+            || el.customCategoryFilter.value === UNASSIGNED_CATEGORY_FILTER_VALUE
+          ) {
+            applyFilters();
+          } else {
+            render();
+          }
+        }
+      });
+
+      el.tableBody.addEventListener('click', event => {
+        if (event.target.closest('input[data-toggle-select]')) return;
+        if (event.target.closest('select[data-category-select]')) return;
+        if (event.target.closest('[data-col-resize]')) return;
+
+        const rowEl = event.target.closest('tr[data-id]');
+        if (!rowEl) return;
+
+        state.activeRowId = rowEl.dataset.id;
+        renderDetails();
+        renderPaginationAndStatus();
+        renderTable();
+      });
+
+      el.clearSelectionBtn.addEventListener('click', () => {
+        state.allRows.forEach(row => setRowSelected(row, false));
+        applyFilters();
+      });
+
+      el.assignCategoryBtn.addEventListener('click', () => {
+        const confirmed = window.confirm(
+          `Assign Category from Thematic category for ${state.filteredRows.length} filtered row${state.filteredRows.length === 1 ? '' : 's'}?\n\nOnly valid non-ambiguous category matches will be assigned.`
+        );
+        if (!confirmed) return;
+
+        const count = assignCategoryFromThematicForFilteredRows();
+        el.statusText.className = 'status ok';
+        el.statusText.textContent = `Assigned category from thematic category for ${count} filtered row${count === 1 ? '' : 's'}.`;
+      });
+
+      el.clearCategoryBtn.addEventListener('click', () => {
+        const confirmed = window.confirm(
+          `Clear Category for ${state.filteredRows.length} filtered row${state.filteredRows.length === 1 ? '' : 's'}?`
+        );
+        if (!confirmed) return;
+
+        const count = clearCategoryForFilteredRows();
+        el.statusText.className = 'status ok';
+        el.statusText.textContent = `Cleared Category for ${count} filtered row${count === 1 ? '' : 's'}.`;
+      });
+
+      el.stratifySelectBtn.addEventListener('click', () => {
+        const input = window.prompt(
+          `How many entries should be selected per category among the ${state.filteredRows.length} filtered rows?`,
+          '5'
+        );
+        if (input === null) return;
+
+        const perCategoryCount = Number.parseInt(input, 10);
+        if (!Number.isFinite(perCategoryCount) || perCategoryCount < 0) {
+          window.alert('Please enter a whole number 0 or greater.');
+          return;
+        }
+
+        const confirmed = window.confirm(
+          `Stratify-select up to ${perCategoryCount} row${perCategoryCount === 1 ? '' : 's'} per category across filtered rows?\n\nIf a category has fewer rows, all rows in that category will be selected.`
+        );
+        if (!confirmed) return;
+
+        const result = stratifySelectFilteredRows(perCategoryCount);
+        el.statusText.className = 'status ok';
+        el.statusText.textContent = `Stratify selected ${result.selectedCount} row${result.selectedCount === 1 ? '' : 's'} across ${result.categoriesAffected}/${result.totalCategories} categor${result.totalCategories === 1 ? 'y' : 'ies'}.`;
+      });
+
+      el.exportAllBtn.addEventListener('click', () => {
+        exportRows(false);
+      });
+
+      el.exportSelectedBtn.addEventListener('click', () => {
+        exportRows(true);
+      });
+
+      el.reloadDefaultBtn.addEventListener('click', () => {
+        loadDefaultCsv();
+      });
+
+      el.csvFileInput.addEventListener('change', async () => {
+        const file = el.csvFileInput.files?.[0];
+        if (!file) return;
+        await loadCsvFile(file);
+        el.csvFileInput.value = '';
+      });
+    }
+
+    setupEvents();
+    loadDefaultCsv();
+  </script>
+</body>
+</html>

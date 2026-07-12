@@ -69,14 +69,11 @@ ollama pull qwen2.5:1.5b
 
 While it runs, `categorize.py` keeps a `checkpoint.jsonl` so it can continue if it
 stops or crashes. If you re-run it, skills already in the checkpoint are skipped.
-To start fresh (for example after changing the models), delete the checkpoint first:
+To start fresh, delete the checkpoint first:
 
 ```bash
 rm categorize/output_categorize/checkpoint.jsonl categorize/output_categorize/verbose.log
 ```
-
-Run only one categorize process at a time. Two at once write to the same checkpoint
-and mix the results.
 
 Then run (from the project root folder):
 
@@ -92,3 +89,27 @@ into `categorize/output_categorize/`:
 - `predictions_raw.csv` (one row per skill and model)
 - `greenSkills_categorised.csv` (one final group per skill)
 - `greenSkillsCollection_enhanced_with_thematic.csv` (the enhanced skills with the group added)
+
+## Step 3: select
+
+Picks a small, balanced sample of skills (about 70) to actually test, a few from
+each group. This is a small web page you open in the browser.
+
+Start a local web server from the project root folder, then open the page:
+
+```bash
+python -m http.server 8000
+```
+
+Open `http://localhost:8000/select/skill_selector.html` in the browser. It loads
+the categorized skills from Step 2 automatically.
+
+In the page:
+
+1. `Assign category` fills in the group for each skill. Any skill left unassigned
+   you can set by hand.
+2. `Stratify Select` asks for a number and then picks that many random skills from
+   each group.
+3. `Export selected rows` downloads a CSV with only the selected skills.
+
+That exported CSV is the input for Step 4.
