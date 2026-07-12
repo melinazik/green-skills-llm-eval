@@ -64,10 +64,21 @@ API key is needed. Which models to use is set in `categorize/models_config.yaml`
 ```bash
 ollama pull llama3.2:1b
 ollama pull gemma3:1b
-ollama pull gpt-oss
+ollama pull qwen2.5:1.5b
 ```
 
-Run (from the project root folder):
+While it runs, `categorize.py` keeps a `checkpoint.jsonl` so it can continue if it
+stops or crashes. If you re-run it, skills already in the checkpoint are skipped.
+To start fresh (for example after changing the models), delete the checkpoint first:
+
+```bash
+rm categorize/output_categorize/checkpoint.jsonl categorize/output_categorize/verbose.log
+```
+
+Run only one categorize process at a time. Two at once write to the same checkpoint
+and mix the results.
+
+Then run (from the project root folder):
 
 ```bash
 python categorize/categorize.py   # each model votes a group per skill

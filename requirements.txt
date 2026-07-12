@@ -2,3 +2,4 @@ litellm
 pandas
 pyyaml
 pydantic
+tabulate

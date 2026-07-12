@@ -387,6 +387,8 @@ def main() -> None:
 
     for model in model_cfgs:
         model_name = model["name"]
+        model_t0 = time.perf_counter()   # wall-clock start for this model
+        model_done_count = 0             # skills actually processed (not skipped)
 
         for idx, skill in enumerate(skills, start=1):
             pair = (skill["skill_id"], model_name)
@@ -521,9 +523,17 @@ def main() -> None:
             if final_checkpoint_record is not None:
                 append_jsonl(checkpoint_path, final_checkpoint_record)
                 done.add(pair)
+                model_done_count += 1
 
-            if idx % 50 == 0:
-                print(f"  {model_name}: {idx}/{len(skills)}")
+            if idx % 10 == 0:
+                elapsed = time.perf_counter() - model_t0
+                rate = elapsed / model_done_count if model_done_count else 0.0
+                remaining_s = (len(skills) - idx) * rate
+                left = f"~{remaining_s:.0f}s left" if remaining_s < 60 else f"~{remaining_s / 60:.1f} min left"
+                print(
+                    f"  {model_name}: {idx}/{len(skills)}  |  "
+                    f"{elapsed:.0f}s elapsed, ~{rate:.1f}s/skill, {left}"
+                )
 
     n_rows = write_predictions_from_checkpoint(checkpoint_path, out_csv)
     print(f"\nWrote {out_csv} ({n_rows} rows)")

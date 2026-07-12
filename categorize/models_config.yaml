@@ -25,8 +25,8 @@ models:
     enabled: true
     api_base: http://localhost:11434
 
-  - name: llama_gpt
-    litellm_model: ollama_chat/gpt-oss:latest
+  - name: llama_qwen
+    litellm_model: ollama_chat/qwen2.5:1.5b
     supports_schema: false
     enabled: true
     api_base: http://localhost:11434
