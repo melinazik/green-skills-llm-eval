@@ -1,0 +1,33 @@
+run:
+  input_csv: "enhance/output_enhance/greenSkillsCollection_enhanced.csv"
+  predictions_out: "categorize/output_categorize/predictions_raw.csv"
+  checkpoint: "categorize/output_categorize/checkpoint.jsonl"
+  verbose_log: "categorize/output_categorize/verbose.log"
+  seed: 42
+  temperature: 0.0
+  max_retries: 2
+  id_col: conceptUri
+  label_col: preferredLabel
+  desc_col: description
+  alt_col: altLabels
+
+models:
+
+  - name: llama_llama
+    litellm_model: ollama_chat/llama3.2:1b
+    supports_schema: false
+    enabled: true
+    api_base: http://localhost:11434
+
+  - name: llama_gemma
+    litellm_model: ollama_chat/gemma3:1b
+    supports_schema: false
+    enabled: true
+    api_base: http://localhost:11434
+
+  - name: llama_gpt
+    litellm_model: ollama_chat/gpt-oss:latest
+    supports_schema: false
+    enabled: true
+    api_base: http://localhost:11434
+

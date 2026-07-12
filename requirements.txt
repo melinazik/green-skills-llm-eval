@@ -1,2 +1,4 @@
 litellm
 pandas
+pyyaml
+pydantic

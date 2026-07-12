@@ -22,21 +22,62 @@ The ESCO green skills list only has links to each skill's category, not the
 category name. This step follows those links and writes the category names into
 new columns.
 
-Input (already in `data/esco/`, downloaded from the ESCO portal):
+Input (already in `enhance/esco/`, downloaded from the ESCO portal):
 
 - `greenSkillsCollection_en.csv` (the 629 green skills)
 - `broaderRelationsSkillPillar_en.csv` (which skill belongs under which category)
 - `skillsHierarchy_en.csv` (the category names and codes)
 
-Output: `data/greenSkillsCollection_enhanced.csv` (same skills, with category columns added).
+Output: `enhance/output_enhance/greenSkillsCollection_enhanced.csv` (same skills, with category columns added).
 
-Run:
+Run (from the project root folder):
 
 ```bash
-cd enhance
-python enhance_green_skills.py
+python enhance/enhance_green_skills.py
 ```
 
-How to check it worked: the script prints `Saved 629 rows to ...`, and the file
-`data/greenSkillsCollection_enhanced.csv` is created. Open it and confirm it has
-the new category columns filled in.
+## Step 2: categorize
+
+Puts each skill in one thematic group. Several LLMs read the skill and each votes
+for a group. The votes are combined into one final group per skill.
+
+The 8 groups come from two known frameworks (HolonIQ and O\*NET):
+
+- G1: Renewable energy and energy systems
+- G2: Energy efficiency and green buildings
+- G3: Circular economy, waste and resources
+- G4: Environmental protection and nature
+- G5: Sustainable agriculture, forestry and food
+- G6: Sustainable transport and green manufacturing
+- G7: Green management, policy and finance
+- G8: Green technology, data and digital tools
+
+There is also an "Education" flag for skills that are mainly about teaching. The
+exact wording the models read is in `categorize/taxonomy.py`.
+
+Models: this step uses local models through [Ollama](https://ollama.com), so no
+API key is needed. Which models to use is set in `categorize/models_config.yaml`.
+
+1. Install Ollama from https://ollama.com/download
+2. Pull the models listed in `categorize/models_config.yaml`:
+
+```bash
+ollama pull llama3.2:1b
+ollama pull gemma3:1b
+ollama pull gpt-oss
+```
+
+Run (from the project root folder):
+
+```bash
+python categorize/categorize.py   # each model votes a group per skill
+python categorize/aggregate.py    # combine the votes into a final group
+python categorize/merge_categories.py   # write the final group back onto the skills
+```
+
+It reads the enhanced skills from `enhance/output_enhance/` and writes everything
+into `categorize/output_categorize/`:
+
+- `predictions_raw.csv` (one row per skill and model)
+- `greenSkills_categorised.csv` (one final group per skill)
+- `greenSkillsCollection_enhanced_with_thematic.csv` (the enhanced skills with the group added)

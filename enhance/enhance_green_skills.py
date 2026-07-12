@@ -17,8 +17,8 @@ Output:
 
 import pandas as pd
 
-UPLOAD_DIR = "../data/esco/"   # raw ESCO input CSVs
-OUT_DIR = "../data/"           # enhanced output CSV
+UPLOAD_DIR = "enhance/esco/"            # raw ESCO input CSVs
+OUT_DIR = "enhance/output_enhance/"     # enhanced output CSV
 
 gs = pd.read_csv(f"{UPLOAD_DIR}/greenSkillsCollection_en.csv")
 br = pd.read_csv(f"{UPLOAD_DIR}/broaderRelationsSkillPillar_en.csv")
