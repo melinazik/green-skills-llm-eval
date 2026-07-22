@@ -93,15 +93,15 @@ into `categorize/output_categorize/`:
 ## Step 3: select
 
 Picks a small, balanced sample of skills (about 70) to actually test, a few from
-each group. This is a small web page you open in the browser.
+each group.
 
 Start a local web server from the project root folder, then open the page:
 
 ```bash
-python -m http.server 8000
+python -m http.server 8010
 ```
 
-Open `http://localhost:8000/select/skill_selector.html` in the browser. It loads
+Open `http://localhost:8010/select/skill_selector.html` in the browser. It loads
 the categorized skills from Step 2 automatically.
 
 In the page:
@@ -112,4 +112,29 @@ In the page:
    each group.
 3. `Export selected rows` downloads a CSV with only the selected skills.
 
-That exported CSV is the input for Step 4.
+Save that downloaded CSV as `select/output_select/selected_skills.csv`. That is the
+input for Step 4.
+
+## Step 4: prompt
+
+Asks each LLM the 5 fixed questions about each selected skill and saves the answers.
+The 5 questions are always the same. Only the skill name changes.
+
+Input: `select/output_select/selected_skills.csv` (from Step 3).
+Output: `prompt/output_prompt/responses.csv`, one row per skill, question and model,
+with the answer text plus metadata (time, tokens).
+
+Which models to use is set in the `MODELS` list at the top of
+`prompt/prompt_pipeline.py`. By default it uses the same local Ollama models as
+Step 2, so no API key is needed. To use a hosted model instead, add its id to the
+list and set its API key (for example `GEMINI_API_KEY`).
+
+Run (from the project root folder):
+
+```bash
+python prompt/prompt_pipeline.py --pilot   # first 10 skills only, to test
+python prompt/prompt_pipeline.py           # full run
+```
+
+It appends each answer immediately and is resumable. If it stops, run it again and
+it skips the answers already collected.
