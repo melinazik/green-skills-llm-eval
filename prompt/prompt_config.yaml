@@ -1,0 +1,33 @@
+run:
+  input_csv: "select/output_select/selected_skills.csv"
+  output_csv: "prompt/output_prompt/responses.csv"
+  verbose_log: "prompt/output_prompt/verbose.log"
+  label_col: preferredLabel # column in the input CSV that holds the skill name
+  temperature: 0.0 # 0 = as deterministic as the model allows
+  seed: 42
+  max_retries: 3
+  limit: null # null = all skills, or a number to cap (test runs)
+
+# only [GREEN_SKILL] is replaced with the skill name.
+prompts:
+  - "Explain the concept of [GREEN_SKILL] to a beginner with no prior background in sustainability."
+  - "Provide a practical example of how [GREEN_SKILL] can be applied in a real-world organizational or industrial context."
+  - "How does [GREEN_SKILL] contribute to environmental sustainability and long-term resource efficiency?"
+  - "Suggest a step-by-step learning path for someone who wants to acquire skills related to [GREEN_SKILL]."
+  - "Explain [GREEN_SKILL] for a university student in a technical field (e.g., engineering or computer science)."
+
+models:
+  - name: llama
+    litellm_model: ollama_chat/llama3.2:1b
+    enabled: true
+    api_base: http://localhost:11434
+
+  - name: gemma
+    litellm_model: ollama_chat/gemma3:1b
+    enabled: true
+    api_base: http://localhost:11434
+
+  - name: qwen
+    litellm_model: ollama_chat/qwen2.5:1.5b
+    enabled: true
+    api_base: http://localhost:11434

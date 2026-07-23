@@ -8,6 +8,23 @@ Each green skill is enriched with its ESCO category, classified into a thematic
 group, a representative sample is selected, and every LLM is then prompted to
 teach it. The responses are collected for evaluation.
 
+## Pipeline overview
+
+| Step | Folder        | What it does                                                   |
+| ---- | ------------- | -------------------------------------------------------------- |
+| 1    | `enhance/`    | Add the ESCO category of each green skill                      |
+| 2    | `categorize/` | Put each skill in a group (G1 to G8) by multi-LLM voting       |
+| 3    | `select/`     | Pick a balanced sample of skills (browser tool)                |
+| 4    | `prompt/`     | Ask each LLM the 5 fixed questions per skill, save the answers |
+
+Notes :
+
+- The green skills come from the ESCO dataset (629 skills flagged as green in this
+  version).
+- Runs are reproducible: temperature is 0 and the seed is fixed in Steps 2 and 4.
+- Every data-collecting step is resumable and appends as it goes, so a crash never
+  loses collected work.
+
 ## Setup
 
 ```bash
@@ -124,17 +141,39 @@ Input: `select/output_select/selected_skills.csv` (from Step 3).
 Output: `prompt/output_prompt/responses.csv`, one row per skill, question and model,
 with the answer text plus metadata (time, tokens).
 
-Which models to use is set in the `MODELS` list at the top of
-`prompt/prompt_pipeline.py`. By default it uses the same local Ollama models as
-Step 2, so no API key is needed. To use a hosted model instead, add its id to the
-list and set its API key (for example `GEMINI_API_KEY`).
+Settings live in `prompt/prompt_config.yaml`: the input and output paths, the 5
+prompts, the models, temperature and seed. By default it uses the same local Ollama
+models as Step 2, so no API key is needed. To use a hosted model, add its id there
+and set its API key (for example `GEMINI_API_KEY`).
 
 Run (from the project root folder):
 
 ```bash
-python prompt/prompt_pipeline.py --pilot   # first 10 skills only, to test
-python prompt/prompt_pipeline.py           # full run
+python prompt/prompt_pipeline.py --limit 5   # first 5 skills only, to test
+python prompt/prompt_pipeline.py             # full run
 ```
 
 It appends each answer immediately and is resumable. If it stops, run it again and
-it skips the answers already collected.
+it skips the answers already collected. A `verbose.log` next to the output records
+every call for debugging.
+
+## Helper scripts
+
+```bash
+python run_all.py         # run steps 1, 2 and 4 in order, then the checks (step 3 is manual)
+python check_outputs.py   # read-only sanity checks on each step's output
+```
+
+`run_all.py` runs the whole pipeline.
+It runs Step 1 (enhance), Step 2 (categorize, aggregate, merge) and Step 4 (prompt),
+one after another, and stops if any step fails. When they finish it runs
+`check_outputs.py`.
+
+Preparation:
+
+- Ollama must be running with the models from `categorize/models_config.yaml`.
+- Step 3 is a manual choice in the browser, so it is not included. Once step 3 is completed, save `select/output_select/selected_skills.csv`, otherwise Step 4 stops.
+
+It is safe to stop and re-run: every step is resumable and continues where it left
+off. On a normal computer the full run is slow (the models run on the CPU), so expect
+it to take a while.
