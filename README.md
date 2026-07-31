@@ -17,6 +17,10 @@ teach it. The responses are collected for evaluation.
 | 3    | `select/`     | Pick a balanced sample of skills (browser tool)                |
 | 4    | `prompt/`     | Ask each LLM the 8 fixed questions per skill, save the answers |
 
+The two browser tools live together in `viewer/`, as one page with a tab per step:
+**Select skills** (Step 3) and **Review answers** (Step 4). Serve the project root
+and open `http://localhost:8010/viewer/`.
+
 Notes :
 
 - The green skills come from the ESCO dataset (629 skills flagged as green in this
@@ -118,8 +122,12 @@ Start a local web server from the project root folder, then open the page:
 python -m http.server 8010
 ```
 
-Open `http://localhost:8010/select/skill_selector.html` in the browser. It loads
-the categorized skills from Step 2 automatically.
+Open `http://localhost:8010/viewer/` in the browser and stay on the
+**Select skills** tab. It loads the categorized skills from Step 2 automatically.
+
+The server has to start from the project root, not from `viewer/`, because the page
+reads the CSVs of the other steps through relative paths such as
+`../categorize/output_categorize/`.
 
 In the page:
 
@@ -187,8 +195,8 @@ There is no `max_tokens` limit, because the C4 prompts ask for long answers. If 
 model stops early anyway, the `finish_reason` column says `length` and the run
 prints a warning with how many answers were cut off.
 
-To read the answers, open `prompt/response_viewer.html` in a browser (serve the
-`prompt/` folder, for example `python -m http.server`, so it can load the CSV). It
+To read the answers, open `http://localhost:8010/viewer/#responses` (the same server
+as Step 3, started from the project root) and go to the **Review answers** tab. It
 groups the answers by skill and lets you compare prompts and models side by side.
 
 ## Helper scripts

@@ -1,3 +1,7 @@
+// Step 3 tab: pick a balanced sample of skills.
+// Wrapped in an IIFE because the two tabs share one page and both scripts
+// declare names like `state`, `el` and `DEFAULT_CSV_FILE`.
+(function () {
     const DEFAULT_CSV_FILE = '../categorize/output_categorize/greenSkillsCollection_enhanced_with_thematic.csv';
     const CATEGORY_VALUES = [
       'G1 Renewable Energy & Energy Systems — generating renewable energy + storage/grid (solar, wind, biomass, geothermal, hydro, hydrogen, batteries, smart grid).',
@@ -979,3 +983,4 @@
 
     setupEvents();
     loadDefaultCsv();
+})();

@@ -8,6 +8,8 @@
       --border: #374151;
       --row-hover: #1e3a8a33;
       --success: #34d399;
+      --error: #f87171;
+      --warn: #fbbf24;
     }
 
     @media (prefers-color-scheme: light) {
@@ -19,6 +21,8 @@
         --accent: #2563eb;
         --border: #e5e7eb;
         --row-hover: #2563eb11;
+        --error: #dc2626;
+        --warn: #b45309;
       }
     }
 
@@ -462,4 +466,342 @@
       background: var(--panel);
       padding: 0.05rem 0.3rem;
       border-radius: 4px;
+    }
+
+
+    /* ---------- Tab bar shared by the two steps ---------- */
+
+    .maintabs {
+      display: flex;
+      gap: 0.35rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+
+    .maintab-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 0.55rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .maintab-btn:hover { color: var(--text); }
+
+    .maintab-btn.active {
+      background: var(--panel);
+      color: var(--text);
+      border-color: var(--border);
+      margin-bottom: -1px;
+    }
+
+    .maintab-btn .step-tag {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .maintab-panel[hidden] { display: none; }
+
+    /* ---------- Responses tab ---------- */
+
+h2 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+.actions {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 2fr repeat(2, minmax(140px, 1fr));
+      align-items: end;
+      margin-top: 0.9rem;
+    }
+
+@media (max-width: 980px) {
+.actions { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+.actions { grid-template-columns: 1fr; }
+}
+
+.status.error { color: var(--error); }
+
+.ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+.mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.84rem;
+    }
+
+.details-header {
+      display: flex;
+      gap: 0.7rem;
+      justify-content: space-between;
+      align-items: end;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+.details-title {
+      display: grid;
+      gap: 0.3rem;
+      min-width: 250px;
+    }
+
+.details-title .skill-name {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      max-width: 900px;
+    }
+
+.details-title .skill-uri {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      overflow-wrap: anywhere;
+    }
+
+.details-controls {
+      min-width: 260px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+.tabs {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
+    }
+
+.tab-btn {
+      width: auto;
+      min-width: 120px;
+      padding: 0.45rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+.tab-btn.active {
+      border-color: transparent;
+      background: var(--accent);
+      color: #fff;
+    }
+
+.subtabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.65rem;
+    }
+
+.subtab-btn {
+      width: auto;
+      min-width: 84px;
+      padding: 0.35rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+.subtab-btn.active {
+      border-color: transparent;
+      background: var(--accent);
+      color: #fff;
+    }
+
+.status-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.16rem 0.52rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      margin-bottom: 0.65rem;
+      margin-right: 0.55rem;
+    }
+
+.status-badge.success {
+      color: var(--success);
+      border-color: color-mix(in srgb, var(--success) 35%, var(--border));
+      background: color-mix(in srgb, var(--success) 10%, transparent);
+    }
+
+.status-badge.error {
+      color: var(--error);
+      border-color: color-mix(in srgb, var(--error) 35%, var(--border));
+      background: color-mix(in srgb, var(--error) 10%, transparent);
+    }
+
+.status-badge.missing {
+      color: var(--warn);
+      border-color: color-mix(in srgb, var(--warn) 35%, var(--border));
+      background: color-mix(in srgb, var(--warn) 10%, transparent);
+    }
+
+.response-box {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.8rem;
+      max-height: 420px;
+      overflow: auto;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+      line-height: 1.45;
+      font-size: 0.92rem;
+    }
+
+.response-box.raw {
+      white-space: pre-wrap;
+    }
+
+.response-box.markdown {
+      white-space: normal;
+    }
+
+.response-box.markdown :first-child {
+      margin-top: 0;
+    }
+
+.response-box.markdown :last-child {
+      margin-bottom: 0;
+    }
+
+.response-box.markdown h1, .response-box.markdown h2, .response-box.markdown h3, .response-box.markdown h4 {
+      line-height: 1.25;
+      margin: 0.95rem 0 0.55rem;
+    }
+
+.response-box.markdown p, .response-box.markdown ul, .response-box.markdown ol, .response-box.markdown blockquote, .response-box.markdown pre {
+      margin: 0.6rem 0;
+    }
+
+.response-box.markdown ul, .response-box.markdown ol {
+      padding-left: 1.25rem;
+    }
+
+.response-box.markdown code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.84rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.07rem 0.32rem;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+    }
+
+.response-box.markdown pre {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem;
+      overflow: auto;
+      background: color-mix(in srgb, var(--panel) 92%, transparent);
+    }
+
+.response-box.markdown pre code {
+      border: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+.response-box.markdown blockquote {
+      border-left: 3px solid var(--accent);
+      margin-left: 0;
+      padding-left: 0.7rem;
+      color: var(--muted);
+    }
+
+.response-box.markdown a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+.inline-actions {
+      display: flex;
+      gap: 0.55rem;
+      align-items: center;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+.toggle-group {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+.toggle-group .toggle-btn {
+      width: auto;
+      min-width: 110px;
+      border: 0;
+      border-right: 1px solid var(--border);
+      border-radius: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 0.35rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+.toggle-group .toggle-btn:last-child {
+      border-right: 0;
+    }
+
+.toggle-group .toggle-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+.inline-actions button {
+      width: auto;
+      min-width: 130px;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.86rem;
+    }
+
+.feedback {
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+.feedback.ok { color: var(--success); }
+
+.feedback.error { color: var(--error); }
+
+.meta-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem;
+      background: color-mix(in srgb, var(--panel) 96%, transparent);
+    }
+
+.error-box {
+      margin-top: 0.7rem;
+      border: 1px solid color-mix(in srgb, var(--error) 35%, var(--border));
+      background: color-mix(in srgb, var(--error) 10%, transparent);
+      border-radius: 10px;
+      padding: 0.65rem;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
     }

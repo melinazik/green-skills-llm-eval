@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Skills: select and review</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <nav class="maintabs" role="tablist">
+        <button
+          id="tabBtnSelect"
+          class="maintab-btn active"
+          type="button"
+          role="tab"
+          aria-controls="tabSelect"
+          aria-selected="true"
+        >
+          Select skills<span class="step-tag">Step 3</span>
+        </button>
+        <button
+          id="tabBtnResponses"
+          class="maintab-btn"
+          type="button"
+          role="tab"
+          aria-controls="tabResponses"
+          aria-selected="false"
+        >
+          Review answers<span class="step-tag">Step 4</span>
+        </button>
+      </nav>
+
+      <div id="tabSelect" class="maintab-panel" role="tabpanel">
+
+        <section class="panel">
+          <h1>Select Green Skills to Test</h1>
+          <p class="subtle" style="margin: 0.25rem 0 0">
+            Pick a balanced sample of skills for Step 4. Do it in order:
+            <b>1.</b> Stratify select &nbsp; <b>2.</b> Export selected.
+          </p>
+          <div class="subtle" style="margin-top: 0.35rem">
+            Source:
+            <code id="sourceLabel">greenSkillsCollection_default.csv</code>
+          </div>
+          <div id="statusText" class="status" style="margin-top: 0.25rem">
+            Loading...
+          </div>
+
+          <details class="help">
+            <summary>How to use this page</summary>
+            <div class="help-body">
+              <p>
+                Each skill already has a group (G1 to G8) from Step 2, shown in
+                the editable Group column.
+              </p>
+
+              <h3>Workflow</h3>
+              <ol>
+                <li>
+                  <code>Stratify select</code> picks N random skills per group and
+                  ticks them.
+                </li>
+                <li>
+                  <code>Export selected</code> downloads ticked skills. Save as
+                  <code>select/output_select/selected_skills.csv</code> for Step
+                  4.
+                </li>
+              </ol>
+
+              <h3>Other buttons</h3>
+              <ul>
+                <li><code>Export all</code> downloads every shown skill.</li>
+                <li><code>Clear selection</code> unticks all.</li>
+                <li>
+                  <code>Reload default</code> reloads the Step 2 file and drops
+                  changes.
+                </li>
+                <li><code>Load another CSV</code> opens a different file.</li>
+                <li><code>Reset filters</code> clears search and dropdowns.</li>
+              </ul>
+
+              <h3>Columns</h3>
+              <ul>
+                <li>
+                  Group (G1 to G8): the group from Step 2. Editable if you need to
+                  fix one by hand.
+                </li>
+                <li>Others come from ESCO.</li>
+              </ul>
+
+              <p class="subtle">
+                Buttons and filters act only on filtered rows. Click a row for
+                full details.
+              </p>
+            </div>
+          </details>
+        </section>
+
+        <section class="panel">
+          <details>
+            <summary class="filters-summary">
+              <span>Filters (optional)</span>
+              <button id="resetBtn" class="secondary btn-small" type="button">
+                Reset filters
+              </button>
+            </summary>
+            <div class="controls">
+              <div class="field">
+                <label for="search">Search</label>
+                <input
+                  id="search"
+                  type="search"
+                  placeholder="Search across all columns..."
+                />
+              </div>
+
+              <div class="field">
+                <label for="selectionFilter">Selection</label>
+                <select id="selectionFilter">
+                  <option value="all">All</option>
+                  <option value="selected">Selected only</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="escoPillar">ESCO pillar</label>
+                <select id="escoPillar">
+                  <option value="">All</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="escoLevel1_Category">ESCO category</label>
+                <select id="escoLevel1_Category">
+                  <option value="">All</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="thematicCategory">Thematic category</label>
+                <select id="thematicCategory">
+                  <option value="">All</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="pageSize">Rows per load</label>
+                <select id="pageSize">
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                  <option>200</option>
+                </select>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <div class="workspace" id="workspace">
+          <div class="workspace-main">
+            <section class="panel">
+              <div class="table-wrap" id="tableWrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th class="select-col">
+                        <input
+                          id="selectAllCheckbox"
+                          type="checkbox"
+                          title="Tick or untick all filtered rows"
+                        />
+                        <div class="select-all-label">All</div>
+                      </th>
+                      <th
+                        class="resizable-col"
+                        data-col-key="preferredLabel"
+                        style="width: 260px"
+                      >
+                        Preferred label<span
+                          class="col-resize-handle"
+                          data-col-resize="preferredLabel"
+                        ></span>
+                      </th>
+                      <th
+                        class="resizable-col"
+                        data-col-key="skillType"
+                        style="width: 170px"
+                      >
+                        Skill type<span
+                          class="col-resize-handle"
+                          data-col-resize="skillType"
+                        ></span>
+                      </th>
+                      <th
+                        class="resizable-col"
+                        data-col-key="reuseLevel"
+                        style="width: 170px"
+                      >
+                        Reuse level<span
+                          class="col-resize-handle"
+                          data-col-resize="reuseLevel"
+                        ></span>
+                      </th>
+                      <th
+                        class="resizable-col"
+                        data-col-key="status"
+                        style="width: 140px"
+                      >
+                        Status<span
+                          class="col-resize-handle"
+                          data-col-resize="status"
+                        ></span>
+                      </th>
+                      <th
+                        class="resizable-col category-col"
+                        data-col-key="Category"
+                        style="width: 300px"
+                      >
+                        Group (G1 to G8)<span
+                          class="col-resize-handle"
+                          data-col-resize="Category"
+                        ></span>
+                      </th>
+                      <th
+                        class="resizable-col"
+                        data-col-key="description"
+                        style="width: 500px"
+                      >
+                        Description<span
+                          class="col-resize-handle"
+                          data-col-resize="description"
+                        ></span>
+                      </th>
+                    </tr>
+                    <tr class="filter-row">
+                      <th></th>
+                      <th>
+                        <input
+                          id="labelFilter"
+                          type="search"
+                          placeholder="Filter..."
+                        />
+                      </th>
+                      <th>
+                        <select id="skillType">
+                          <option value="">All</option>
+                        </select>
+                      </th>
+                      <th>
+                        <select id="reuseLevel">
+                          <option value="">All</option>
+                        </select>
+                      </th>
+                      <th>
+                        <select id="status">
+                          <option value="">All</option>
+                        </select>
+                      </th>
+                      <th>
+                        <select id="customCategoryFilter">
+                          <option value="">All</option>
+                        </select>
+                      </th>
+                      <th>
+                        <input
+                          id="descriptionFilter"
+                          type="search"
+                          placeholder="Filter..."
+                        />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBody"></tbody>
+                </table>
+              </div>
+              <div class="pagination">
+                <div class="info" id="pageInfo"></div>
+              </div>
+            </section>
+
+            <section class="panel" id="detailsPanel">
+              <h2 style="margin: 0 0 0.75rem; font-size: 1.1rem">
+                Entry details
+              </h2>
+              <div id="details" class="empty">
+                Click a row to inspect all fields. Use the checkbox to
+                select/deselect it.
+              </div>
+            </section>
+          </div>
+
+          <div id="colDivider" class="col-divider" title="Drag to resize"></div>
+
+          <section class="panel" id="sidePanel">
+            <div class="toolbar">
+              <div class="btn-group">
+                <span class="btn-group-label">Step 1: Select</span>
+                <button id="stratifySelectBtn" type="button">
+                  Stratify select
+                </button>
+                <button id="clearSelectionBtn" class="secondary" type="button">
+                  Clear selection
+                </button>
+              </div>
+
+              <div class="btn-group">
+                <span class="btn-group-label">Step 2: Export</span>
+                <button id="exportSelectedBtn" type="button">
+                  Export selected
+                </button>
+                <button id="exportAllBtn" class="secondary" type="button">
+                  Export all
+                </button>
+              </div>
+
+              <div class="btn-group">
+                <span class="btn-group-label">Data source</span>
+                <label id="csvFileLabel" class="file-btn secondary"
+                  >Load another CSV<input
+                    id="csvFileInput"
+                    type="file"
+                    accept=".csv,text/csv"
+                /></label>
+                <button id="reloadDefaultBtn" class="secondary" type="button">
+                  Reload default
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div id="tabResponses" class="maintab-panel" role="tabpanel" hidden>
+  <section class="panel">
+          <h1>Browse the collected answers</h1>
+          <p class="subtle" style="margin: 0.25rem 0 0">
+            Read what each model answered for each skill, so you can check the
+            output of Step 4 before rating it.
+          </p>
+          <div class="subtle" style="margin-top: 0.35rem">
+            Source: <code id="r_sourceLabel">../prompt/output_prompt/responses.csv</code>
+          </div>
+          <div id="r_statusText" class="status" style="margin-top: 0.25rem">
+            Loading...
+          </div>
+
+          <details class="help">
+            <summary>How to use this page</summary>
+            <div class="help-body">
+              <p>
+                Step 4 asked every model the same 8 questions about every skill you
+                picked in Step 3. One row here is one skill; open it to compare the
+                answers.
+              </p>
+
+              <h3>Workflow</h3>
+              <ol>
+                <li>Click a skill row. The details panel opens below the table.</li>
+                <li>
+                  Pick a prompt (P1 to P8), then a model. The answer is shown
+                  rendered; switch to <code>Raw</code> to see the exact text that
+                  was stored.
+                </li>
+                <li>
+                  Compare the same prompt across models, or the same model across
+                  prompts, to see where a model is weak.
+                </li>
+              </ol>
+
+              <h3>The 8 prompts</h3>
+              <p>
+                They are 4 pedagogical categories with 2 prompts each, so answers
+                can be judged per category and not only per single question. The
+                levels follow the revised Bloom taxonomy.
+              </p>
+              <ul>
+                <li>
+                  <b>C1 Conceptual Explanation</b> (Understand): P1 for a
+                  beginner, P2 for a technical student.
+                </li>
+                <li>
+                  <b>C2 Practical Application</b> (Apply): P3 in an organisation,
+                  P4 in daily professional work.
+                </li>
+                <li>
+                  <b>C3 Sustainability Rationale</b> (Analyse, Evaluate): P5 the
+                  contribution, P6 the benefits and limitations.
+                </li>
+                <li>
+                  <b>C4 Instructional Design</b> (Create): P7 a learning path, P8 a
+                  teaching scenario.
+                </li>
+              </ul>
+
+              <h3>Columns</h3>
+              <ul>
+                <li>Category (G1 to G8): the group of the skill, from Step 2.</li>
+                <li>
+                  Prompts and Models: how many were collected for that skill.
+                </li>
+                <li>
+                  Status summary: how many answers came back, failed, or came back
+                  empty.
+                </li>
+              </ul>
+
+              <h3>Other buttons</h3>
+              <ul>
+                <li>
+                  <code>Reload default CSV</code> re-reads the Step 4 output and
+                  drops changes.
+                </li>
+                <li>
+                  <code>Load another CSV</code> opens a different responses file.
+                </li>
+                <li><code>Reset filters</code> clears search and dropdowns.</li>
+              </ul>
+
+              <p class="subtle">
+                If the table stays empty, Step 4 has not produced
+                <code>prompt/output_prompt/responses.csv</code> yet.
+              </p>
+            </div>
+          </details>
+        </section>
+
+      <section class="panel">
+        <div class="controls">
+          <div class="field">
+            <label for="r_search">Search</label>
+            <input id="r_search" type="search" placeholder="Search skill, prompt, response text..." />
+          </div>
+
+          <div class="field">
+            <label for="r_promptNumber">Prompt number</label>
+            <select id="r_promptNumber"><option value="">All</option></select>
+          </div>
+
+          <div class="field">
+            <label for="r_llmFilter">LLM</label>
+            <select id="r_llmFilter"><option value="">All</option></select>
+          </div>
+
+          <div class="field">
+            <label for="r_categoryFilter">Category</label>
+            <select id="r_categoryFilter"><option value="">All</option></select>
+          </div>
+
+          <div class="field">
+            <label for="r_promptCategory">Prompt category</label>
+            <select id="r_promptCategory"><option value="">All</option></select>
+          </div>
+
+          <div class="field">
+            <label for="r_pageSize">Skills per load</label>
+            <select id="r_pageSize">
+              <option>25</option>
+              <option>50</option>
+              <option>100</option>
+              <option>200</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="field">
+            <label for="r_csvFileInput">Load another CSV</label>
+            <input id="r_csvFileInput" type="file" accept=".csv,text/csv" />
+          </div>
+          <button id="r_reloadDefaultBtn" class="secondary" type="button">Reload default CSV</button>
+          <button id="r_resetBtn" class="secondary" type="button">Reset filters</button>
+        </div>
+
+      </section>
+
+      <section class="panel">
+        <div class="table-wrap" id="r_tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 280px;">Skill</th>
+                <th style="width: 260px;">Concept URI</th>
+                <th style="width: 220px;">Category</th>
+                <th style="width: 130px;">Prompts</th>
+                <th style="width: 130px;">Models</th>
+                <th style="width: 180px;">Status summary</th>
+              </tr>
+            </thead>
+            <tbody id="r_tableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <div class="info" id="r_pageInfo"></div>
+          <button id="r_loadMoreBtn" class="secondary" type="button">Load more skills</button>
+        </div>
+      </section>
+
+      <div id="r_panelDivider" class="panel-divider" title="Drag to resize space between grid and details">↕ Drag divider between grid and details</div>
+
+      <section class="panel" id="r_detailsPanel">
+        <div id="r_details" class="empty">Click a skill row to inspect prompt context, responses per model, and metadata.</div>
+      </section>
+      </div>
+    </main>
+
+    <script>
+      // Plain show/hide: each tab keeps its own state, so switching back and
+      // forth never reloads a CSV or loses a selection.
+      (function () {
+        const tabs = [
+          { btn: document.getElementById("tabBtnSelect"), panel: document.getElementById("tabSelect") },
+          { btn: document.getElementById("tabBtnResponses"), panel: document.getElementById("tabResponses") },
+        ];
+
+        function show(active) {
+          for (const tab of tabs) {
+            const on = tab === active;
+            tab.btn.classList.toggle("active", on);
+            tab.btn.setAttribute("aria-selected", String(on));
+            tab.panel.hidden = !on;
+          }
+          location.hash = active === tabs[1] ? "responses" : "select";
+        }
+
+        for (const tab of tabs) tab.btn.addEventListener("click", () => show(tab));
+        if (location.hash === "#responses") show(tabs[1]);
+      })();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+    <script src="select.js"></script>
+    <script src="responses.js"></script>
+  </body>
+</html>
