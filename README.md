@@ -15,7 +15,7 @@ teach it. The responses are collected for evaluation.
 | 1    | `enhance/`    | Add the ESCO category of each green skill                      |
 | 2    | `categorize/` | Put each skill in a group (G1 to G8) by multi-LLM voting       |
 | 3    | `select/`     | Pick a balanced sample of skills (browser tool)                |
-| 4    | `prompt/`     | Ask each LLM the 5 fixed questions per skill, save the answers |
+| 4    | `prompt/`     | Ask each LLM the 8 fixed questions per skill, save the answers |
 
 Notes :
 
@@ -134,28 +134,62 @@ input for Step 4.
 
 ## Step 4: prompt
 
-Asks each LLM the 5 fixed questions about each selected skill and saves the answers.
-The 5 questions are always the same. Only the skill name changes.
+Asks each LLM the same 8 fixed questions about each skill and saves the answers.
+The questions never change. Only the skill name changes.
 
-Input: `select/output_select/selected_skills.csv` (from Step 3).
-Output: `prompt/output_prompt/responses.csv`, one row per skill, question and model,
-with the answer text plus metadata (time, tokens).
+The 8 prompts are 4 pedagogical categories with 2 prompts each, so that answers can
+also be compared per category and not only per single question:
 
-Settings live in `prompt/prompt_config.yaml`: the input and output paths, the 5
-prompts, the models, temperature and seed. By default it uses the same local Ollama
-models as Step 2, so no API key is needed. To use a hosted model, add its id there
-and set its API key (for example `GEMINI_API_KEY`).
+| Code | Category                 | Bloom level        | The two prompts differ in |
+| ---- | ------------------------ | ------------------ | ------------------------- |
+| C1   | Conceptual Explanation   | Understand         | audience                  |
+| C2   | Practical Application    | Apply              | context                   |
+| C3   | Sustainability Rationale | Analyse / Evaluate | stance                    |
+| C4   | Instructional Design     | Create             | form                      |
+
+The levels follow the revised Bloom taxonomy (Anderson & Krathwohl, 2001). The system
+prompt is empty and the same for all 8, so the user prompt is the only thing that
+changes between conditions.
+
+The prompts live in `prompt/prompts.csv`, which is written by `prompt/build_prompts.py`.
+Edit the prompts in `build_prompts.py` and re-run it, so that the wording and its
+provenance stay in one place under version control.
+
+Input: `select/output_select/selected_skills.csv` (from Step 3). If that file is
+missing, Step 4 stops with a message telling you to run Step 3 first.
+Output: `prompt/output_prompt/responses.csv`, one row per skill, prompt and model:
+all the skill columns, the prompt metadata (category, Bloom level), the answer text
+and the call metadata (time, tokens, cost, `finish_reason`).
+
+Settings live in `prompt/prompt_config.yaml`: the paths, the models, temperature and
+seed. By default it uses the same local Ollama models as Step 2, so no API key is
+needed. To use a hosted model, add its id there and set its API key (for example
+`GEMINI_API_KEY`).
 
 Run (from the project root folder):
 
 ```bash
-python prompt/prompt_pipeline.py --limit 5   # first 5 skills only, to test
-python prompt/prompt_pipeline.py             # full run
+python prompt/build_prompts.py                  # write prompts.csv (only when prompts change)
+python prompt/generate_responses.py --dry-run   # show rendered prompts, no calls
+python prompt/generate_responses.py --mock      # fake answers, to test the plumbing
+python prompt/generate_responses.py --limit 5   # first 5 skills only, to test
+python prompt/generate_responses.py             # full run
 ```
 
-It appends each answer immediately and is resumable. If it stops, run it again and
-it skips the answers already collected. A `verbose.log` next to the output records
-every call for debugging.
+It appends each answer to the CSV immediately and is resumable: if it stops, run it
+again and it skips the answers already collected (tracked in
+`prompt/output_prompt/checkpoint.jsonl`). At the end it rewrites the CSV from the
+checkpoint, which also removes duplicates. `--rebuild-csv` does only that rewrite,
+without calling any model. A `verbose.log` next to the output records every call
+for debugging.
+
+There is no `max_tokens` limit, because the C4 prompts ask for long answers. If a
+model stops early anyway, the `finish_reason` column says `length` and the run
+prints a warning with how many answers were cut off.
+
+To read the answers, open `prompt/response_viewer.html` in a browser (serve the
+`prompt/` folder, for example `python -m http.server`, so it can load the CSV). It
+groups the answers by skill and lets you compare prompts and models side by side.
 
 ## Helper scripts
 
@@ -171,8 +205,10 @@ one after another, and stops if any step fails. When they finish it runs
 
 Preparation:
 
-- Ollama must be running with the models from `categorize/models_config.yaml`.
-- Step 3 is a manual choice in the browser, so it is not included. Once step 3 is completed, save `select/output_select/selected_skills.csv`, otherwise Step 4 stops.
+- Ollama must be running with the models from `categorize/models_config.yaml` and
+  `prompt/prompt_config.yaml`.
+- Step 3 is a manual choice in the browser, so it is not included. Once step 3 is
+  completed, save `select/output_select/selected_skills.csv`, otherwise Step 4 stops.
 
 It is safe to stop and re-run: every step is resumable and continues where it left
 off. On a normal computer the full run is slow (the models run on the CPU), so expect
