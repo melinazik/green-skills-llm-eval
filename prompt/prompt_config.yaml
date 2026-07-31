@@ -1,20 +1,16 @@
 run:
-  input_csv: "select/output_select/selected_skills.csv"
+  skills_csv: "select/output_select/selected_skills.csv" # the skills chosen in Step 3
+  prompts_csv: "prompt/prompts.csv"
   output_csv: "prompt/output_prompt/responses.csv"
+  checkpoint: "prompt/output_prompt/checkpoint.jsonl"
   verbose_log: "prompt/output_prompt/verbose.log"
-  label_col: preferredLabel # column in the input CSV that holds the skill name
-  temperature: 0.0 # 0 = as deterministic as the model allows
-  seed: 42
+  id_col: conceptUri # column in the skills CSV that identifies a skill
   max_retries: 3
-  limit: null # null = all skills, or a number to cap (test runs)
-
-# only [GREEN_SKILL] is replaced with the skill name.
-prompts:
-  - "Explain the concept of [GREEN_SKILL] to a beginner with no prior background in sustainability."
-  - "Provide a practical example of how [GREEN_SKILL] can be applied in a real-world organizational or industrial context."
-  - "How does [GREEN_SKILL] contribute to environmental sustainability and long-term resource efficiency?"
-  - "Suggest a step-by-step learning path for someone who wants to acquire skills related to [GREEN_SKILL]."
-  - "Explain [GREEN_SKILL] for a university student in a technical field (e.g., engineering or computer science)."
+  default_params:
+    temperature: 0.0 # 0 = as deterministic as the model allows
+    seed: 42
+    # no max_tokens on purpose: the C4 prompts ask for long answers and a cap
+    # would silently truncate them (check the finish_reason column instead)
 
 models:
   - name: llama
