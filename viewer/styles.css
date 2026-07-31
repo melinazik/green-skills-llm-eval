@@ -805,3 +805,77 @@ h2 {
       font-size: 0.9rem;
       overflow-wrap: anywhere;
     }
+
+    /* ---------- Rate tab ---------- */
+
+    .rate-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .rate-question {
+      border-left: 3px solid var(--accent);
+      padding: 0.35rem 0 0.35rem 0.75rem;
+      margin: 0.75rem 0;
+      font-weight: 600;
+    }
+
+    #v_answer {
+      max-height: 40vh;
+      overflow: auto;
+    }
+
+    .criterion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .criterion:last-child { border-bottom: none; }
+
+    .criterion-label {
+      font-weight: 600;
+    }
+
+    .criterion-label .subtle {
+      display: block;
+      font-weight: 400;
+      font-size: 0.82rem;
+    }
+
+    .score-group {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .score-btn {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .score-btn:hover { border-color: var(--accent); }
+
+    .score-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    #v_saveBtn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }

@@ -29,6 +29,26 @@
         >
           Review answers<span class="step-tag">Step 4</span>
         </button>
+        <button
+          id="tabBtnRate"
+          class="maintab-btn"
+          type="button"
+          role="tab"
+          aria-controls="tabRate"
+          aria-selected="false"
+        >
+          Rate answers<span class="step-tag">Step 5</span>
+        </button>
+        <button
+          id="tabBtnJudge"
+          class="maintab-btn"
+          type="button"
+          role="tab"
+          aria-controls="tabJudge"
+          aria-selected="false"
+        >
+          Judge results<span class="step-tag">Step 5</span>
+        </button>
       </nav>
 
       <div id="tabSelect" class="maintab-panel" role="tabpanel">
@@ -503,6 +523,243 @@
         <div id="r_details" class="empty">Click a skill row to inspect prompt context, responses per model, and metadata.</div>
       </section>
       </div>
+
+      <div id="tabRate" class="maintab-panel" role="tabpanel" hidden>
+        <section class="panel">
+          <h1>Rate the answers</h1>
+          <p class="subtle" style="margin: 0.25rem 0 0">
+            Score one answer at a time on four criteria, then export your scores
+            for Step 5.
+          </p>
+          <div class="subtle" style="margin-top: 0.35rem">
+            Source: <code>../prompt/output_prompt/responses.csv</code>
+          </div>
+          <div id="v_statusText" class="status" style="margin-top: 0.25rem">
+            Loading...
+          </div>
+
+          <details class="help">
+            <summary>How to use this page</summary>
+            <div class="help-body">
+              <p>
+                Every answer collected in Step 4 gets four scores from 1 to 5.
+                Several people can rate the same answers, which is what makes
+                inter-rater agreement possible, so each rater works under their
+                own name.
+              </p>
+
+              <h3>Workflow</h3>
+              <ol>
+                <li>
+                  Type your name. Scores are kept per rater and stay in this
+                  browser until you export them.
+                </li>
+                <li>
+                  Score the answer on screen, then <code>Save and next</code>.
+                  Rated answers drop out of the queue, so you can stop and come
+                  back later.
+                </li>
+                <li>
+                  <code>Export ratings</code> downloads
+                  <code>ratings_&lt;your name&gt;.csv</code>. Save it in
+                  <code>evaluate/output_evaluate/</code>, then run
+                  <code>python evaluate/stats.py</code>.
+                </li>
+              </ol>
+
+              <h3>The four criteria</h3>
+              <ul>
+                <li><b>Clarity</b>: understandable, well structured, accessible.</li>
+                <li>
+                  <b>Depth</b>: connects the skill to real context and
+                  sustainability reasoning.
+                </li>
+                <li><b>Relevance</b>: actually answers about the intended ESCO skill.</li>
+                <li>
+                  <b>Pedagogical value</b>: guides the learner with steps,
+                  examples and reasoning.
+                </li>
+              </ul>
+
+              <h3>Keyboard</h3>
+              <p>
+                Press <code>1</code> to <code>5</code> to fill the next criterion
+                that has no score, and <code>Enter</code> to save and move on.
+              </p>
+
+              <p class="subtle">
+                The rubric is provisional. Scores are stored in this browser only,
+                so export before clearing browser data or changing computer. Use
+                <code>Load ratings CSV</code> to continue from an exported file.
+              </p>
+            </div>
+          </details>
+        </section>
+
+        <section class="panel">
+          <div class="controls">
+            <div class="field">
+              <label for="v_rater">Your name</label>
+              <input id="v_rater" type="text" placeholder="e.g. maria" />
+            </div>
+
+            <div class="field">
+              <label for="v_modelFilter">Model</label>
+              <select id="v_modelFilter"><option value="">All</option></select>
+            </div>
+
+            <div class="field">
+              <label for="v_promptFilter">Prompt</label>
+              <select id="v_promptFilter"><option value="">All</option></select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class="field">
+              <label for="v_importInput">Load ratings CSV</label>
+              <input id="v_importInput" type="file" accept=".csv,text/csv" />
+            </div>
+            <button id="v_exportBtn" type="button">Export ratings</button>
+            <button id="v_clearBtn" class="secondary" type="button">
+              Clear my ratings
+            </button>
+          </div>
+
+          <div id="v_summary" class="subtle" style="margin-top: 0.5rem"></div>
+        </section>
+
+        <section class="panel" id="v_card" hidden>
+          <div class="rate-header">
+            <div>
+              <div class="details-title">
+                <span class="skill-name" id="v_skill"></span>
+              </div>
+              <div class="subtle mono" id="v_meta"></div>
+            </div>
+            <div class="status" id="v_progress"></div>
+          </div>
+
+          <div class="rate-question" id="v_question"></div>
+          <div class="response-box raw" id="v_answer"></div>
+
+          <div id="v_criteria"></div>
+
+          <div class="inline-actions" style="margin-top: 0.9rem">
+            <button id="v_saveBtn" type="button">Save and next</button>
+            <button id="v_skipBtn" class="secondary" type="button">Skip</button>
+            <button id="v_backBtn" class="secondary" type="button">Back</button>
+          </div>
+        </section>
+      </div>
+
+      <div id="tabJudge" class="maintab-panel" role="tabpanel" hidden>
+        <section class="panel">
+          <h1>What the LLM judges scored</h1>
+          <p class="subtle" style="margin: 0.25rem 0 0">
+            Read only. This page cannot run the judges; it shows the file they
+            produced.
+          </p>
+          <div class="subtle" style="margin-top: 0.35rem">
+            Source: <code>../evaluate/output_evaluate/llm_judgements.csv</code>
+          </div>
+          <div id="j_statusText" class="status" style="margin-top: 0.25rem">
+            Loading...
+          </div>
+
+          <details class="help">
+            <summary>How to use this page</summary>
+            <div class="help-body">
+              <p>
+                Besides the people, the models can score the answers. Produce the
+                data first, from the project root folder:
+              </p>
+              <ol>
+                <li><code>python evaluate/judge.py</code> to score everything.</li>
+                <li>Press <code>Reload</code> here.</li>
+                <li>
+                  <code>python evaluate/stats.py</code> for the full report,
+                  including the comparison with the human raters.
+                </li>
+              </ol>
+
+              <h3>Why every judge scores every answer</h3>
+              <p>
+                Including its own. A model asked to grade only its own work tends
+                to score it high, and that inflation cannot be measured when there
+                is nothing to compare it with. Because every judge sees every
+                answer, each judge's score on its own answers can be set against
+                what the other judges gave the <b>same</b> answers, which is the
+                Self-preference figure below. The judge is never told which model
+                wrote the answer.
+              </p>
+
+              <h3>Read the warning first</h3>
+              <p>
+                If a judge gave nearly the same score to every answer, it is not
+                rating anything, and its means look perfectly normal while meaning
+                nothing. The red box appears when that happens. It is a real risk
+                with small models.
+              </p>
+
+              <p class="subtle">
+                An LLM judge does not replace human rating. It is a second opinion
+                whose own reliability has to be reported next to it.
+              </p>
+            </div>
+          </details>
+        </section>
+
+        <section class="panel">
+          <div class="controls">
+            <div class="field">
+              <label for="j_judgeFilter">Judge</label>
+              <select id="j_judgeFilter"><option value="">All</option></select>
+            </div>
+            <div class="field">
+              <label for="j_modelFilter">Answer written by</label>
+              <select id="j_modelFilter"><option value="">All</option></select>
+            </div>
+            <div class="field">
+              <label for="j_promptFilter">Prompt</label>
+              <select id="j_promptFilter"><option value="">All</option></select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="j_reloadBtn" class="secondary" type="button">Reload</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div id="j_warning" class="error-box" hidden></div>
+          <div id="j_summary"></div>
+        </section>
+
+        <section class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 220px">Skill</th>
+                  <th style="width: 110px">Prompt</th>
+                  <th style="width: 90px">Answer by</th>
+                  <th style="width: 130px">Judge</th>
+                  <th style="width: 70px">Clar.</th>
+                  <th style="width: 70px">Depth</th>
+                  <th style="width: 70px">Relev.</th>
+                  <th style="width: 70px">Pedag.</th>
+                  <th style="width: 80px">Overall</th>
+                  <th style="width: 320px">Rationale</th>
+                </tr>
+              </thead>
+              <tbody id="j_tableBody"></tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <div class="info" id="j_pageInfo"></div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <script>
@@ -510,8 +767,10 @@
       // forth never reloads a CSV or loses a selection.
       (function () {
         const tabs = [
-          { btn: document.getElementById("tabBtnSelect"), panel: document.getElementById("tabSelect") },
-          { btn: document.getElementById("tabBtnResponses"), panel: document.getElementById("tabResponses") },
+          { name: "select", btn: document.getElementById("tabBtnSelect"), panel: document.getElementById("tabSelect") },
+          { name: "responses", btn: document.getElementById("tabBtnResponses"), panel: document.getElementById("tabResponses") },
+          { name: "rate", btn: document.getElementById("tabBtnRate"), panel: document.getElementById("tabRate") },
+          { name: "judge", btn: document.getElementById("tabBtnJudge"), panel: document.getElementById("tabJudge") },
         ];
 
         function show(active) {
@@ -521,11 +780,13 @@
             tab.btn.setAttribute("aria-selected", String(on));
             tab.panel.hidden = !on;
           }
-          location.hash = active === tabs[1] ? "responses" : "select";
+          location.hash = active.name;
         }
 
         for (const tab of tabs) tab.btn.addEventListener("click", () => show(tab));
-        if (location.hash === "#responses") show(tabs[1]);
+
+        const wanted = tabs.find(t => t.name === location.hash.slice(1));
+        if (wanted) show(wanted);
       })();
     </script>
 
@@ -533,5 +794,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
     <script src="select.js"></script>
     <script src="responses.js"></script>
+    <script src="rate.js"></script>
+    <script src="judgements.js"></script>
   </body>
 </html>
