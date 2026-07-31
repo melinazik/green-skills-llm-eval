@@ -52,10 +52,12 @@ def main():
     def check_responses(df):
         errors = (df["error"].fillna("") != "").sum() if "error" in df else "?"
         empty = (df["response_text"].fillna("") == "").sum() if "response_text" in df else "?"
-        models = df["model"].nunique() if "model" in df else "?"
-        skills = df["skill_name"].nunique() if "skill_name" in df else "?"
-        print(f"[OK] Step 4 responses: {len(df)} rows, {skills} skills, {models} models, "
-              f"{errors} errors, {empty} empty answers")
+        models = df["llm"].nunique() if "llm" in df else "?"
+        skills = df["conceptUri"].nunique() if "conceptUri" in df else "?"
+        prompts = df["prompt_number"].nunique() if "prompt_number" in df else "?"
+        cut = (df["finish_reason"].fillna("") == "length").sum() if "finish_reason" in df else "?"
+        print(f"[OK] Step 4 responses: {len(df)} rows, {skills} skills, {prompts} prompts, "
+              f"{models} models, {errors} errors, {empty} empty answers, {cut} cut off")
 
     check("Step 4 responses", RESPONSES, check_responses)
 

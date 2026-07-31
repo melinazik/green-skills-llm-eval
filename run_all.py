@@ -18,7 +18,8 @@ STEPS = [
     ("Step 2a: categorize", ["python", "categorize/categorize.py"]),
     ("Step 2b: aggregate", ["python", "categorize/aggregate.py"]),
     ("Step 2c: merge", ["python", "categorize/merge_categories.py"]),
-    ("Step 4: prompt", ["python", "prompt/prompt_pipeline.py"]),
+    ("Step 4a: build prompts", ["python", "prompt/build_prompts.py"]),
+    ("Step 4b: generate responses", ["python", "prompt/generate_responses.py"]),
 ]
 
 
