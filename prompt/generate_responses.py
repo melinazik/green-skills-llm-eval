@@ -27,6 +27,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import shutil
 import string
 import subprocess
@@ -341,10 +342,15 @@ def maybe_log_ollama_digests(model_cfgs: List[Dict[str, Any]]) -> None:
                 check=False,
             )
             if proc.returncode == 0:
+                # The FROM line points at the weights blob, whose file name holds
+                # the digest: FROM /.../blobs/sha256-<hex>
                 for line in proc.stdout.splitlines():
                     line = line.strip()
-                    if line.startswith("FROM sha256:"):
-                        digest = line.split("FROM", 1)[1].strip()
+                    if not line.startswith("FROM "):
+                        continue
+                    m = re.search(r"sha256[:-]([0-9a-f]{12,64})", line)
+                    if m:
+                        digest = f"sha256:{m.group(1)}"
                         break
             print(f"  - {tag}: {digest or 'unavailable'}")
         except Exception as exc:
