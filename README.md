@@ -213,3 +213,39 @@ Preparation:
 It is safe to stop and re-run: every step is resumable and continues where it left
 off. On a normal computer the full run is slow (the models run on the CPU), so expect
 it to take a while.
+
+### Test runs on a small volume
+
+A full run takes hours, so try the pipeline on a few skills first. Two flags do that,
+and both are passed on to the two steps that call the models (Step 2a and Step 4b);
+the other steps are fast and ignore them.
+
+```bash
+python run_all.py --limit 2 --mock   # no model is called at all, seconds
+python run_all.py --limit 2          # real models, 2 skills
+python run_all.py --limit 5          # real models, 5 skills
+```
+
+- `--mock` replaces every answer with a synthetic one. Nothing is sent to a model, so
+  it checks the plumbing only: paths, prompt rendering, resuming, the output columns.
+- `--limit N` caps the number of skills. Rough cost: about 20 seconds per call on the
+  CPU, and Step 4 makes 8 prompts x 3 models = 24 calls per skill, so 2 skills take
+  roughly 15 minutes and 5 skills roughly 40.
+
+The same flags exist on the individual scripts, which is handier when only one step
+needs testing:
+
+```bash
+python categorize/categorize.py --limit 5 --mock
+python prompt/generate_responses.py --limit 5 --mock
+python prompt/generate_responses.py --dry-run   # print the rendered prompts, call nothing
+```
+
+Two things to keep in mind:
+
+- Mock answers are written to the same checkpoint as real ones, so delete
+  `prompt/output_prompt/` and `categorize/output_categorize/checkpoint.jsonl` before
+  the real run, otherwise those cells count as already done and are skipped.
+- Because every step is resumable, `--limit N` caps the skills of *this* run, not the
+  total in the output file. Running `--limit 2` on top of 18 skills already collected
+  leaves you with 20, not 2.
