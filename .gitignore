@@ -6,3 +6,6 @@ __pycache__/
 checkpoint.jsonl
 verbose.log
 agreement_report.md
+
+# ratings are personal per rater and are exported by hand
+evaluate/output_evaluate/
