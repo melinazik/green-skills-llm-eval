@@ -9,3 +9,6 @@ agreement_report.md
 
 # ratings are personal per rater and are exported by hand
 evaluate/output_evaluate/
+
+# local env (endpoints/keys) - never commit
+.env

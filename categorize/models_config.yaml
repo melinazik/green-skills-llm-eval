@@ -16,17 +16,17 @@ models:
     litellm_model: ollama_chat/llama3.1:8b
     supports_schema: false
     enabled: true
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 
   - name: gemma3.5
     litellm_model: ollama_chat/gemma3.5:9b
     supports_schema: false
     enabled: false
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 
   - name: gpt-oss
     litellm_model: ollama_chat/gpt-oss:20b
     supports_schema: false
     enabled: true
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 

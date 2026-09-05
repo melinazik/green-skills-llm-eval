@@ -1,0 +1,7 @@
+python -m venv myenv
+#source myenv/bin/activate
+
+#myenv\Scripts\activate.bat
+#myenv\Scripts\activate.ps1
+
+#pip install litellm pandas pyyaml pydantic tabulate matplotlib

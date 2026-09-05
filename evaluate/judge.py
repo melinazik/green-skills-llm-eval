@@ -30,6 +30,14 @@ from typing import Any, Dict, Optional, Set, Tuple
 import pandas as pd
 import yaml
 
+# Load environment variables from a local .env file if one exists.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 from rubric import (
     CRITERIA,
     JUDGE_SYSTEM_PROMPT,
@@ -235,8 +243,16 @@ def call_judge(*, litellm, model_cfg: Dict[str, Any], run_cfg: Dict[str, Any],
         "temperature": temperature,
         "seed": seed,
     }
-    if model_cfg.get("api_base"):
-        kwargs["api_base"] = model_cfg["api_base"]
+    api_base = model_cfg.get("api_base")
+    api_base_env = model_cfg.get("api_base_env")
+    if api_base_env:
+        api_base = os.getenv(str(api_base_env))
+        if not api_base:
+            raise RuntimeError(
+                f"Missing environment variable '{api_base_env}' for judge "
+                f"'{model_cfg.get('name', model_cfg['litellm_model'])}'")
+    if api_base:
+        kwargs["api_base"] = api_base
 
     api_key_env = model_cfg.get("api_key_env")
     if api_key_env:

@@ -26,6 +26,14 @@ from typing import Any, Dict, List, Optional, Tuple
 import pandas as pd
 import yaml
 
+# Load environment variables from a local .env file if one exists.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 from taxonomy import (
     JSON_FALLBACK_INSTRUCTION,
     SYSTEM_PROMPT,
@@ -268,8 +276,16 @@ def call_model_once(
         "temperature": run_cfg.get("temperature", 0.0),
         "seed": run_cfg.get("seed", 42),
     }
-    if model_cfg.get("api_base"):
-        kwargs["api_base"] = model_cfg["api_base"]
+    api_base = model_cfg.get("api_base")
+    api_base_env = model_cfg.get("api_base_env")
+    if api_base_env:
+        api_base = os.getenv(str(api_base_env))
+        if not api_base:
+            raise RuntimeError(
+                f"Missing environment variable '{api_base_env}' required for model '{model_cfg.get('name', model_cfg['litellm_model'])}'"
+            )
+    if api_base:
+        kwargs["api_base"] = api_base
 
     api_key_env = model_cfg.get("api_key_env")
     if api_key_env:

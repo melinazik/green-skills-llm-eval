@@ -39,6 +39,14 @@ from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 import pandas as pd
 import yaml
 
+# Load environment variables from a local .env file if one exists.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
 
 PROMPT_REQUIRED_COLS = ["prompt_number", "system_prompt", "prompt_text"]
 PROMPT_OUTPUT_META_COLS = [
@@ -665,6 +673,13 @@ def main() -> None:
         model_name = str(model["name"])
         litellm_model = str(model["litellm_model"])
         api_base = model.get("api_base")
+        api_base_env = model.get("api_base_env")
+        if api_base_env:
+            api_base = os.getenv(str(api_base_env))
+            if not api_base:
+                raise RuntimeError(
+                    f"Missing environment variable '{api_base_env}' for model '{model_name}'"
+                )
 
         print(
             f"\nStarting model run: name={model_name}, litellm_model={litellm_model}"

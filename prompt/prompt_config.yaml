@@ -18,20 +18,20 @@ models:
     desc: dense
     supports_schema: false
     enabled: false
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 
   - name: gemma4
     litellm_model: ollama_chat/gemma4:31b
     supports_schema: false
     desc: dense
     enabled: false
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 
   - name: mixtral
     litellm_model: ollama_chat/mixtral:8x7b
     supports_schema: false
     desc: moe
     enabled: true
-    api_base: mygpucluster1
+    api_base_env: LLM_API_BASE
 
 
