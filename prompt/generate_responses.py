@@ -47,8 +47,6 @@ PROMPT_OUTPUT_META_COLS = [
     "prompt_category",
     "category_name",
     "bloom_level",
-    "variation",
-    "source",
 ]
 GENERATED_OUTPUT_COLS = [
     "system_prompt_rendered",
@@ -504,6 +502,7 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--dry-run", action="store_true", help="Validate + render sample prompts only")
     parser.add_argument("--mock", action="store_true", help="Offline synthetic responses, no API calls")
+    parser.add_argument("--verbose", action="store_true", help="Log each prompt/skill cell as it is processed")
     parser.add_argument(
         "--rebuild-csv",
         action="store_true",
@@ -634,7 +633,6 @@ def main() -> None:
 
         litellm = _litellm
         litellm_version = getattr(_litellm, "__version__", "unknown")
-        print(f"LiteLLM version: {litellm_version}")
         maybe_log_ollama_digests(model_cfgs)
     else:
         print("MOCK mode enabled: no API calls will be made")
@@ -668,6 +666,11 @@ def main() -> None:
         litellm_model = str(model["litellm_model"])
         api_base = model.get("api_base")
 
+        print(
+            f"\nStarting model run: name={model_name}, litellm_model={litellm_model}"
+            + (f", api_base={api_base}" if api_base else "")
+        )
+
         model_params = model.get("params", {}) or {}
         effective_params = {**default_params, **model_params}
         effective_params = {k: v for k, v in effective_params.items() if v is not None}
@@ -680,8 +683,15 @@ def main() -> None:
                 skill_id = str(skill_values.get(id_col, ""))
                 cell_key = (skill_id, prompt_number, model_name)
 
+                if args.verbose:
+                    print(
+                        f"Processing cell: model={model_name}, prompt_number={prompt_number}, skill_id={skill_id}"
+                    )
+
                 if cell_key in done_success:
                     model_stats[model_name]["skipped"] += 1
+                    if args.verbose:
+                        print("  -> skipped (already successful in checkpoint)")
                     continue
 
                 started_cells += 1

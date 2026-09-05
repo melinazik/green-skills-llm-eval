@@ -13,17 +13,25 @@ run:
     # would silently truncate them (check the finish_reason column instead)
 
 models:
-  - name: llama
-    litellm_model: ollama_chat/llama3.2:1b
-    enabled: true
-    api_base: http://localhost:11434
+  - name: llama3.1
+    litellm_model: ollama_chat/llama3.1:8b
+    desc: dense
+    supports_schema: false
+    enabled: false
+    api_base: mygpucluster1
 
-  - name: gemma
-    litellm_model: ollama_chat/gemma3:1b
-    enabled: true
-    api_base: http://localhost:11434
+  - name: gemma4
+    litellm_model: ollama_chat/gemma4:31b
+    supports_schema: false
+    desc: dense
+    enabled: false
+    api_base: mygpucluster1
 
-  - name: qwen
-    litellm_model: ollama_chat/qwen2.5:1.5b
+  - name: mixtral
+    litellm_model: ollama_chat/mixtral:8x7b
+    supports_schema: false
+    desc: moe
     enabled: true
-    api_base: http://localhost:11434
+    api_base: mygpucluster1
+
+

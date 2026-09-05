@@ -6,10 +6,10 @@
 (function () {
   const DEFAULT_CSV_FILE = '../prompt/output_prompt/responses.csv';
   const CRITERIA = [
-    { key: 'clarity', label: 'Clarity', hint: 'understandable, well structured, accessible' },
-    { key: 'depth', label: 'Depth', hint: 'real context and sustainability reasoning' },
-    { key: 'relevance', label: 'Relevance', hint: 'matches the intended ESCO skill' },
-    { key: 'pedagogical', label: 'Pedagogical value', hint: 'steps, examples, guides the learner' },
+    { key: 'coherence_clarity', label: 'Coherence / Clarity', hint: 'clear structure, level-appropriate language, defined terms' },
+    { key: 'consistency_accuracy', label: 'Consistency / Accuracy', hint: 'factually correct, technically sound, no fabricated specifics' },
+    { key: 'relevance_esco_alignment', label: 'Relevance / ESCO alignment', hint: 'focused on the intended ESCO skill and scope' },
+    { key: 'educational_value', label: 'Educational value', hint: 'teaches with examples, sequencing, and learner support' },
   ];
   const STORAGE_KEY = 'greenSkillsRatings.v1';
 
@@ -20,6 +20,7 @@
     ratings: {},       // "rater||conceptUri||prompt||llm" -> record
     rater: '',
     draft: {},         // the scores of the answer on screen
+    answerRenderMode: 'markdown',
   };
 
   const el = {
@@ -33,6 +34,8 @@
     meta: document.getElementById('v_meta'),
     question: document.getElementById('v_question'),
     answer: document.getElementById('v_answer'),
+    renderMarkdownBtn: document.getElementById('v_renderMarkdownBtn'),
+    renderRawBtn: document.getElementById('v_renderRawBtn'),
     criteria: document.getElementById('v_criteria'),
     saveBtn: document.getElementById('v_saveBtn'),
     skipBtn: document.getElementById('v_skipBtn'),
@@ -157,6 +160,50 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  function markdownLibsAvailable() {
+    return typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined';
+  }
+
+  function hardenSanitizedLinks(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    template.content.querySelectorAll('a').forEach(link => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+    return template.innerHTML;
+  }
+
+  function renderAnswerContent(text, preferredMode) {
+    const rawText = String(text ?? '');
+    const mode = preferredMode === 'raw' ? 'raw' : 'markdown';
+
+    if (mode === 'raw') {
+      return { mode: 'raw', rawText };
+    }
+
+    if (!rawText || !markdownLibsAvailable()) {
+      return { mode: 'raw', rawText };
+    }
+
+    try {
+      marked.setOptions({
+        gfm: true,
+        breaks: false,
+      });
+
+      const rawHtml = marked.parse(rawText);
+      const cleanHtml = DOMPurify.sanitize(rawHtml, {
+        USE_PROFILES: { html: true },
+      });
+
+      return { mode: 'markdown', html: hardenSanitizedLinks(cleanHtml) };
+    } catch (err) {
+      // If markdown parsing fails, fall back to plain text.
+      return { mode: 'raw', rawText };
+    }
+  }
+
   function uniqueSorted(values) {
     return [...new Set(values.filter(v => v !== ''))].sort((a, b) =>
       a.localeCompare(b, undefined, { numeric: true }));
@@ -236,6 +283,18 @@
       : `Save and next (${CRITERIA.filter(c => state.draft[c.key]).length}/${CRITERIA.length} scored)`;
   }
 
+  function setAnswerRenderMode(mode) {
+    state.answerRenderMode = mode === 'raw' ? 'raw' : 'markdown';
+    render();
+  }
+
+  function syncRenderModeButtons() {
+    if (!el.renderMarkdownBtn || !el.renderRawBtn) return;
+    const markdownOn = state.answerRenderMode !== 'raw';
+    el.renderMarkdownBtn.classList.toggle('active', markdownOn);
+    el.renderRawBtn.classList.toggle('active', !markdownOn);
+  }
+
   function renderSummary() {
     const mine = Object.values(state.ratings).filter(r => r.rater === state.rater);
     if (mine.length === 0) {
@@ -292,7 +351,18 @@
     ].filter(Boolean);
     el.meta.textContent = bits.join('  |  ');
     el.question.textContent = row.prompt_text;
-    el.answer.textContent = row.response_text;
+
+    syncRenderModeButtons();
+    const answerRender = renderAnswerContent(row.response_text, state.answerRenderMode);
+    el.answer.classList.remove('raw', 'markdown');
+    if (answerRender.mode === 'markdown') {
+      el.answer.classList.add('markdown');
+      el.answer.innerHTML = answerRender.html;
+    } else {
+      el.answer.classList.add('raw');
+      el.answer.textContent = answerRender.rawText;
+    }
+
     el.backBtn.disabled = state.index === 0;
 
     renderCriteria(row);
@@ -418,6 +488,23 @@
 
     el.modelFilter.addEventListener('change', rebuildQueue);
     el.promptFilter.addEventListener('change', rebuildQueue);
+
+    const tabRate = document.getElementById('tabRate');
+    if (tabRate) {
+      tabRate.addEventListener('click', event => {
+        const markdownBtn = event.target.closest('#v_renderMarkdownBtn');
+        if (markdownBtn) {
+          setAnswerRenderMode('markdown');
+          return;
+        }
+
+        const rawBtn = event.target.closest('#v_renderRawBtn');
+        if (rawBtn) {
+          setAnswerRenderMode('raw');
+        }
+      });
+    }
+
     el.saveBtn.addEventListener('click', saveCurrent);
     el.skipBtn.addEventListener('click', skipCurrent);
     el.backBtn.addEventListener('click', goBack);
@@ -437,7 +524,13 @@
       if (!tab || tab.hidden) return;
       if (event.target.matches('input, textarea, select')) return;
 
-      if (event.key >= '1' && event.key <= '5') {
+      if (event.key === 'm' || event.key === 'M') {
+        setAnswerRenderMode('markdown');
+        event.preventDefault();
+      } else if (event.key === 'r' || event.key === 'R') {
+        setAnswerRenderMode('raw');
+        event.preventDefault();
+      } else if (event.key >= '1' && event.key <= '5') {
         const next = CRITERIA.find(c => !state.draft[c.key]);
         if (next) {
           state.draft[next.key] = Number(event.key);

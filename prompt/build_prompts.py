@@ -20,7 +20,7 @@ from pathlib import Path
 OUTPUT_CSV = Path(__file__).resolve().parent / "prompts.csv"
 
 ROWS = [
-    # ---- C1 Conceptual Explanation (Bloom: Understand) — varies AUDIENCE ----
+    # ---- C1 Conceptual Explanation (Bloom: Understand) - varies AUDIENCE ----
     dict(prompt_number=1, prompt_name="explain_beginner",
          prompt_category="C1", category_name="Conceptual Explanation",
          bloom_level="Understand", variation="audience: novice",
@@ -35,7 +35,7 @@ ROWS = [
          system_prompt="",
          prompt_text="Explain {preferredLabel} to a university student in a technical field such as engineering or computer science."),
 
-    # ---- C2 Practical Application (Bloom: Apply) — varies CONTEXT ----
+    # ---- C2 Practical Application (Bloom: Apply) - varies CONTEXT ----
     dict(prompt_number=3, prompt_name="apply_organisational",
          prompt_category="C2", category_name="Practical Application",
          bloom_level="Apply", variation="context: organisational/industrial",
@@ -50,7 +50,7 @@ ROWS = [
          system_prompt="",
          prompt_text="How can professionals apply {preferredLabel} to promote environmental sustainability in their day-to-day work?"),
 
-    # ---- C3 Sustainability Rationale (Bloom: Analyse/Evaluate) — varies STANCE ----
+    # ---- C3 Sustainability Rationale (Bloom: Analyse/Evaluate) - varies STANCE ----
     dict(prompt_number=5, prompt_name="rationale_contribution",
          prompt_category="C3", category_name="Sustainability Rationale",
          bloom_level="Analyse", variation="stance: contribution",
@@ -65,7 +65,7 @@ ROWS = [
          system_prompt="",
          prompt_text="What are the main benefits and limitations of {preferredLabel} as a means of reducing environmental impact?"),
 
-    # ---- C4 Instructional Design (Bloom: Create) — varies FORM ----
+    # ---- C4 Instructional Design (Bloom: Create) - varies FORM ----
     dict(prompt_number=7, prompt_name="design_learning_path",
          prompt_category="C4", category_name="Instructional Design",
          bloom_level="Create", variation="form: learning path",
@@ -90,7 +90,7 @@ with OUTPUT_CSV.open("w", newline="", encoding="utf-8") as f:
     for r in ROWS:
         w.writerow(r)
 
-print(f"wrote {OUTPUT_CSV} — {len(ROWS)} prompts in "
+print(f"wrote {OUTPUT_CSV} - {len(ROWS)} prompts in "
       f"{len({r['prompt_category'] for r in ROWS})} categories")
 for r in ROWS:
     print(f"  P{r['prompt_number']} [{r['prompt_category']}/{r['bloom_level']:10s}] {r['prompt_name']}")

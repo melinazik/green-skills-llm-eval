@@ -1,9 +1,13 @@
-"prompt_number","prompt_name","prompt_category","category_name","bloom_level","variation","source","system_prompt","prompt_text"
-"1","explain_beginner","C1","Conceptual Explanation","Understand","audience: novice","supervisor #2","","Explain the concept of {preferredLabel} to a beginner with no prior background in sustainability."
-"2","explain_technical","C1","Conceptual Explanation","Understand","audience: technical student","supervisor #6","","Explain {preferredLabel} to a university student in a technical field such as engineering or computer science."
-"3","apply_organisational","C2","Practical Application","Apply","context: organisational/industrial","supervisor #3","","Provide a practical example of how {preferredLabel} can be applied in a real-world organizational or industrial context."
-"4","apply_professional","C2","Practical Application","Apply","context: professional practice","thesis plan #2","","How can professionals apply {preferredLabel} to promote environmental sustainability in their day-to-day work?"
-"5","rationale_contribution","C3","Sustainability Rationale","Analyse","stance: contribution","supervisor #4","","How does {preferredLabel} contribute to environmental sustainability and long-term resource efficiency?"
-"6","rationale_tradeoffs","C3","Sustainability Rationale","Evaluate","stance: benefits and limitations","new (balances C3)","","What are the main benefits and limitations of {preferredLabel} as a means of reducing environmental impact?"
-"7","design_learning_path","C4","Instructional Design","Create","form: learning path","supervisor #5","","Suggest a step-by-step learning path for someone who wants to acquire skills related to {preferredLabel}."
-"8","design_teaching_scenario","C4","Instructional Design","Create","form: teaching scenario","thesis plan #3","","Imagine you are teaching a beginner about {preferredLabel}. Give a simple real-world example and explain how you would check that they have understood it."
+prompt_number,prompt_name,prompt_category,category_name,bloom_level,system_prompt,prompt_text
+1,remember_1,C1,Remember,Remember,,"What is {preferredLabel}? Give a concise, one-sentence definition."
+2,remember_2,C1,Remember,Remember,,List three key terms or concepts closely associated with {preferredLabel}.
+3,understand_1,C2,Understand,Understand,,Explain the concept of {preferredLabel} to a beginner with no prior background in sustainability.
+4,understand_2,C2,Understand,Understand,,Explain {preferredLabel} to a university student in a technical field such as engineering or computer science.
+5,apply_1,C3,Apply,Apply,,Provide a practical example of how {preferredLabel} can be applied in a real-world organizational or industrial context.
+6,apply_2,C3,Apply,Apply,,How can professionals apply {preferredLabel} to promote environmental sustainability in their day-to-day work?
+7,analyze_1,C4,Analyze,Analyze,,"What are the main components or steps involved in {preferredLabel}, and how do they relate to one another?"
+8,analyze_2,C4,Analyze,Analyze,,How does {preferredLabel} contribute to environmental sustainability and long-term resource efficiency?
+9,evaluate_1,C5,Evaluate,Evaluate,,What are the main benefits and limitations of {preferredLabel} as a means of reducing environmental impact?
+10,evaluate_2,C5,Evaluate,Evaluate,,"Compared to alternative approaches, how effective is {preferredLabel} in achieving sustainability goals, and under what conditions might it fall short?"
+11,create_1,C6,Create,Create,,Suggest a step-by-step learning path for someone who wants to acquire skills related to {preferredLabel}.
+12,create_2,C6,Create,Create,,Imagine you are teaching a beginner about {preferredLabel}. Give a simple real-world example and explain how you would check that they have understood it.

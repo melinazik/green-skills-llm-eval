@@ -1,0 +1,19 @@
+run:
+  max_retries: 3
+  default_params:
+    temperature: 0.0 # 0 = as deterministic as the model allows
+    seed: 42
+
+models:
+  - name: qwen3.6-27b
+    litellm_model: ollama_chat/qwen3.6:27b
+    supports_schema: true
+    enabled: true
+    api_base: mygpucluster1
+
+  - name: nemotron-3.5-lightning
+    litellm_model: ollama_chat/nemotron-3.5-lightning:30b
+    supports_schema: true
+    enabled: true
+    api_base: mygpucluster1
+

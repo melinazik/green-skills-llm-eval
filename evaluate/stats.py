@@ -4,8 +4,8 @@ Reads every evaluate/output_evaluate/ratings_*.csv and reports:
   - mean and standard deviation per model and per criterion
   - mean per prompt category (C1 to C4), which is why Step 4 asks two prompts
     per category instead of one
-  - inter-rater agreement (exact-match percent and Cohen's kappa) when there are
-    two or more raters
+  - inter-rater agreement (exact-match percent and weighted Cohen's kappa)
+    when there are two or more raters
   - for the LLM judges (evaluate/judge.py): self-preference bias, and how far
     each judge sits from the human raters
 
@@ -61,20 +61,63 @@ def load_all_ratings():
     return pd.concat(frames, ignore_index=True)
 
 
-def cohens_kappa(a, b):
-    """Cohen's kappa for two equal-length label sequences (nominal)."""
-    pairs = list(zip(a, b))
+def weighted_cohens_kappa(a, b, *, weighting="quadratic"):
+    """Weighted Cohen's kappa for two equal-length ordinal label sequences."""
+    pairs = [(x, y) for x, y in zip(a, b) if pd.notna(x) and pd.notna(y)]
     n = len(pairs)
     if n == 0:
         return None
 
-    labels = sorted(set(a) | set(b))
-    observed = sum(1 for x, y in pairs if x == y) / n
-    expected = sum((sum(1 for x, _ in pairs if x == k) / n) *
-                   (sum(1 for _, y in pairs if y == k) / n) for k in labels)
-    if expected == 1:
+    labels = sorted(set(x for x, _ in pairs) | set(y for _, y in pairs))
+    k = len(labels)
+    if k <= 1:
         return 1.0
-    return (observed - expected) / (1 - expected)
+
+    idx = {label: i for i, label in enumerate(labels)}
+
+    # Observed and expected agreement matrices, as probabilities.
+    observed = [[0.0 for _ in range(k)] for _ in range(k)]
+    hist_a = [0.0 for _ in range(k)]
+    hist_b = [0.0 for _ in range(k)]
+
+    for x, y in pairs:
+        i = idx[x]
+        j = idx[y]
+        observed[i][j] += 1.0
+        hist_a[i] += 1.0
+        hist_b[j] += 1.0
+
+    for i in range(k):
+        hist_a[i] /= n
+        hist_b[i] /= n
+        for j in range(k):
+            observed[i][j] /= n
+
+    def disagreement_weight(i, j):
+        d = abs(i - j) / (k - 1)
+        if weighting == "linear":
+            return d
+        if weighting == "quadratic":
+            return d * d
+        return 0.0 if i == j else 1.0
+
+    weighted_observed = 0.0
+    weighted_expected = 0.0
+    for i in range(k):
+        for j in range(k):
+            w = disagreement_weight(i, j)
+            weighted_observed += w * observed[i][j]
+            weighted_expected += w * (hist_a[i] * hist_b[j])
+
+    if weighted_expected == 0:
+        return 1.0
+    return 1.0 - (weighted_observed / weighted_expected)
+
+
+def _mean_sd(series):
+    mean = series.mean()
+    sd = series.std()
+    return float(mean), 0.0 if pd.isna(sd) else float(sd)
 
 
 def report_scores(df, title):
@@ -90,23 +133,32 @@ def report_scores(df, title):
 
     print("\n=== Overall mean per model (all criteria) ===")
     for model, g in df.groupby("llm"):
-        print(f"  {model}: {g['overall'].mean():.2f}  (n={len(g)})")
+        mean, sd = _mean_sd(g["overall"])
+        print(f"  {model}: {mean:.2f} (sd {sd:.2f})  (n={len(g)})")
 
     if "prompt_category" in df.columns and df["prompt_category"].notna().any():
         print("\n=== Overall mean per prompt category ===")
         for cat, g in df.groupby("prompt_category"):
+            cat_mean, cat_sd = _mean_sd(g["overall"])
             per_model = ", ".join(
-                f"{m}={gm['overall'].mean():.2f}" for m, gm in g.groupby("llm")
+                f"{m}={_mean_sd(gm['overall'])[0]:.2f} (sd {_mean_sd(gm['overall'])[1]:.2f})"
+                for m, gm in g.groupby("llm")
             )
-            print(f"  {cat}: {g['overall'].mean():.2f}  ({per_model})")
+            print(f"  {cat}: {cat_mean:.2f} (sd {cat_sd:.2f})  ({per_model})")
 
     print("\n=== Overall mean per prompt ===")
     for pnum, g in df.groupby("prompt_number"):
-        print(f"  P{pnum}: {g['overall'].mean():.2f}  (n={len(g)})")
+        mean, sd = _mean_sd(g["overall"])
+        print(f"  P{pnum}: {mean:.2f} (sd {sd:.2f})  (n={len(g)})")
+
+    print("\n=== Overall mean per prompt per llm ===")
+    for (pnum, model), g in df.groupby(["prompt_number", "llm"]):
+        mean, sd = _mean_sd(g["overall"])
+        print(f"  P{pnum} | {model}: {mean:.2f} (sd {sd:.2f})  (n={len(g)})")
 
 
 def report_agreement(df, title):
-    """Exact match and Cohen's kappa for every pair of raters in df."""
+    """Exact match and weighted Cohen's kappa for every pair of raters in df."""
     raters = sorted(df["rater"].unique())
     if len(raters) < 2:
         print(f"\n({title}: needs at least two raters, found {len(raters)})")
@@ -126,8 +178,8 @@ def report_agreement(df, title):
             a = d1.loc[common, c].tolist()
             b = d2.loc[common, c].tolist()
             exact = sum(1 for x, y in zip(a, b) if x == y) / len(common) * 100
-            k = cohens_kappa(a, b)
-            print(f"    {c}: exact {exact:.0f}%, kappa {k:.2f}")
+            k = weighted_cohens_kappa(a, b, weighting="quadratic")
+            print(f"    {c}: exact {exact:.0f}%, weighted kappa {k:.2f}")
 
 
 def report_discrimination(df, title):
@@ -191,8 +243,11 @@ def report_self_preference(judged):
         theirs = others.loc[common, "overall"].groupby(level=[0, 1, 2]).mean()
         gap = (mine - theirs).mean()
         any_row = True
-        print(f"  {judge} on its own answers: {mine.mean():.2f} vs {theirs.mean():.2f} "
-              f"from the others  ->  {gap:+.2f}  (n={len(mine)})")
+        mine_mean, mine_sd = _mean_sd(mine)
+        theirs_mean, theirs_sd = _mean_sd(theirs)
+        print(f"  {judge} on its own answers: {mine_mean:.2f} (sd {mine_sd:.2f}) "
+              f"vs {theirs_mean:.2f} (sd {theirs_sd:.2f}) from the others "
+              f" ->  {gap:+.2f}  (n={len(mine)})")
 
     if not any_row:
         print("  not enough overlap to measure it yet")
@@ -204,17 +259,21 @@ def report_judge_vs_human(human, judged):
         return
 
     print("\n=== LLM judges against the human raters ===")
-    human_rank = human.groupby("llm")["overall"].mean().sort_values(ascending=False)
+    human_means = human.groupby("llm")["overall"].mean()
+    human_sds = human.groupby("llm")["overall"].std().fillna(0.0)
+    human_rank = human_means.sort_values(ascending=False)
     print("  humans rank the models: " +
-          " > ".join(f"{m} ({v:.2f})" for m, v in human_rank.items()))
+          " > ".join(f"{m} ({human_means[m]:.2f}, sd {human_sds[m]:.2f})" for m in human_rank.index))
 
     for judge, g in judged.groupby("rater"):
-        rank = g.groupby("llm")["overall"].mean().sort_values(ascending=False)
+        judge_means = g.groupby("llm")["overall"].mean()
+        judge_sds = g.groupby("llm")["overall"].std().fillna(0.0)
+        rank = judge_means.sort_values(ascending=False)
         same = list(rank.index) == list(human_rank.index)
-        shift = rank.mean() - human_rank.mean()
-        print(f"  {judge}: " + " > ".join(f"{m} ({v:.2f})" for m, v in rank.items()) +
-              f"   [{'same order' if same else 'DIFFERENT order'}, "
-              f"scores {shift:+.2f} vs humans]")
+        shift = judge_means.mean() - human_means.mean()
+        print(f"  {judge}: " + " > ".join(
+            f"{m} ({judge_means[m]:.2f}, sd {judge_sds[m]:.2f})" for m in rank.index
+        ) + f"   [{'same order' if same else 'DIFFERENT order'}, scores {shift:+.2f} vs humans]")
 
 
 def main():

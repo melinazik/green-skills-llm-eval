@@ -640,6 +640,12 @@
           </div>
 
           <div class="rate-question" id="v_question"></div>
+          <div class="inline-actions" style="margin-bottom: 0.45rem">
+            <div class="toggle-group" role="group" aria-label="Response render mode">
+              <button id="v_renderMarkdownBtn" type="button" class="toggle-btn active">Markdown</button>
+              <button id="v_renderRawBtn" type="button" class="toggle-btn">Raw text</button>
+            </div>
+          </div>
           <div class="response-box raw" id="v_answer"></div>
 
           <div id="v_criteria"></div>
@@ -744,10 +750,10 @@
                   <th style="width: 110px">Prompt</th>
                   <th style="width: 90px">Answer by</th>
                   <th style="width: 130px">Judge</th>
-                  <th style="width: 70px">Clar.</th>
-                  <th style="width: 70px">Depth</th>
-                  <th style="width: 70px">Relev.</th>
-                  <th style="width: 70px">Pedag.</th>
+                  <th style="width: 90px">Coh./Clar.</th>
+                  <th style="width: 90px">Cons./Acc.</th>
+                  <th style="width: 90px">Relev./ESCO</th>
+                  <th style="width: 90px">Edu. value</th>
                   <th style="width: 80px">Overall</th>
                   <th style="width: 320px">Rationale</th>
                 </tr>
@@ -794,7 +800,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
     <script src="select.js"></script>
     <script src="responses.js"></script>
-    <script src="rate.js"></script>
+    <script src="rate.js?v=20260804-1"></script>
     <script src="judgements.js"></script>
   </body>
 </html>

@@ -12,22 +12,21 @@ run:
   alt_col: altLabels
 
 models:
-
-  - name: llama_llama
-    litellm_model: ollama_chat/llama3.2:1b
+  - name: llama3.1
+    litellm_model: ollama_chat/llama3.1:8b
     supports_schema: false
     enabled: true
-    api_base: http://localhost:11434
+    api_base: mygpucluster1
 
-  - name: llama_gemma
-    litellm_model: ollama_chat/gemma3:1b
+  - name: gemma3.5
+    litellm_model: ollama_chat/gemma3.5:9b
+    supports_schema: false
+    enabled: false
+    api_base: mygpucluster1
+
+  - name: gpt-oss
+    litellm_model: ollama_chat/gpt-oss:20b
     supports_schema: false
     enabled: true
-    api_base: http://localhost:11434
-
-  - name: llama_qwen
-    litellm_model: ollama_chat/qwen2.5:1.5b
-    supports_schema: false
-    enabled: true
-    api_base: http://localhost:11434
+    api_base: mygpucluster1
 

@@ -4,7 +4,7 @@
 // data with `python evaluate/judge.py`, then read it here.
 (function () {
   const DEFAULT_CSV_FILE = '../evaluate/output_evaluate/llm_judgements.csv';
-  const CRITERIA = ['clarity', 'depth', 'relevance', 'pedagogical'];
+  const CRITERIA = ['coherence_clarity', 'consistency_accuracy', 'relevance_esco_alignment', 'educational_value'];
   // a criterion repeated on this share of the answers carries no information
   const CONSTANT_THRESHOLD = 90;
 

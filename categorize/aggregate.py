@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Phase C — aggregate per-model predictions into one final label per skill.
+Phase C - aggregate per-model predictions into one final label per skill.
 
 Reads predictions_raw.csv (long format, one row per skill x model), applies
 majority voting with deterministic tie-breaks, computes inter-model agreement,
@@ -279,7 +279,7 @@ def write_agreement_report(path: Path, out: pd.DataFrame, metrics: Dict[str, Any
     agreement_counts = metrics["agreement_counts"]
 
     lines: List[str] = []
-    lines.append("# Phase C — Inter-Model Agreement Report")
+    lines.append("# Phase C - Inter-Model Agreement Report")
     lines.append("")
     lines.append(f"- Skills categorised: **{n}**")
     lines.append(f"- Models: {', '.join(models) if models else '(none)'}")

@@ -28,8 +28,7 @@ STEPS = [
     ("Step 2a: categorize", ["python", "categorize/categorize.py"], True, True),
     ("Step 2b: aggregate", ["python", "categorize/aggregate.py"], False, False),
     ("Step 2c: merge", ["python", "categorize/merge_categories.py"], False, False),
-    ("Step 4a: build prompts", ["python", "prompt/build_prompts.py"], False, False),
-    ("Step 4b: generate responses", ["python", "prompt/generate_responses.py"], True, True),
+    ("Step 4: generate responses", ["python", "prompt/generate_responses.py"], True, True),
 ]
 
 
