@@ -142,26 +142,27 @@ input for Step 4.
 
 ## Step 4: prompt
 
-Asks each LLM the same 8 fixed questions about each skill and saves the answers.
+Asks each LLM the same 12 fixed questions about each skill and saves the answers.
 The questions never change. Only the skill name changes.
 
-The 8 prompts are 4 pedagogical categories with 2 prompts each, so that answers can
+The 12 prompts are 6 pedagogical categories with 2 prompts each, so that answers can
 also be compared per category and not only per single question:
 
-| Code | Category                 | Bloom level        | The two prompts differ in |
-| ---- | ------------------------ | ------------------ | ------------------------- |
-| C1   | Conceptual Explanation   | Understand         | audience                  |
-| C2   | Practical Application    | Apply              | context                   |
-| C3   | Sustainability Rationale | Analyse / Evaluate | stance                    |
-| C4   | Instructional Design     | Create             | form                      |
+| Code | Category   | Bloom level | Prompts                    |
+| ---- | ---------- | ----------- | -------------------------- |
+| C1   | Remember   | Remember    | remember_1, remember_2     |
+| C2   | Understand | Understand  | understand_1, understand_2 |
+| C3   | Apply      | Apply       | apply_1, apply_2           |
+| C4   | Analyze    | Analyze     | analyze_1, analyze_2       |
+| C5   | Evaluate   | Evaluate    | evaluate_1, evaluate_2     |
+| C6   | Create     | Create      | create_1, create_2         |
 
 The levels follow the revised Bloom taxonomy (Anderson & Krathwohl, 2001). The system
-prompt is empty and the same for all 8, so the user prompt is the only thing that
+prompt is empty and the same for all 12, so the user prompt is the only thing that
 changes between conditions.
 
-The prompts live in `prompt/prompts.csv`, which is written by `prompt/build_prompts.py`.
-Edit the prompts in `build_prompts.py` and re-run it, so that the wording and its
-provenance stay in one place under version control.
+The prompts are given ready in `prompt/prompts.csv`, which is the authoritative
+record of what was asked. To change them, edit that file directly.
 
 Input: `select/output_select/selected_skills.csv` (from Step 3). If that file is
 missing, Step 4 stops with a message telling you to run Step 3 first.
@@ -177,7 +178,6 @@ needed. To use a hosted model, add its id there and set its API key (for example
 Run (from the project root folder):
 
 ```bash
-python prompt/build_prompts.py                  # write prompts.csv (only when prompts change)
 python prompt/generate_responses.py --dry-run   # show rendered prompts, no calls
 python prompt/generate_responses.py --mock      # fake answers, to test the plumbing
 python prompt/generate_responses.py --limit 5   # first 5 skills only, to test
@@ -237,8 +237,8 @@ python run_all.py --limit 5          # real models, 5 skills
 - `--mock` replaces every answer with a synthetic one. Nothing is sent to a model, so
   it checks the plumbing only: paths, prompt rendering, resuming, the output columns.
 - `--limit N` caps the number of skills. Rough cost: about 20 seconds per call on the
-  CPU, and Step 4 makes 8 prompts x 3 models = 24 calls per skill, so 2 skills take
-  roughly 15 minutes and 5 skills roughly 40.
+  CPU, and Step 4 makes 12 prompts x 3 models = 36 calls per skill, so 2 skills take
+  roughly 25 minutes and 5 skills roughly 60.
 
 The same flags exist on the individual scripts, which is handier when only one step
 needs testing:

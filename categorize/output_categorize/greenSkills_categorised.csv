@@ -1,21 +1,630 @@
-skill_id,label_text,llama_gemma_primary,llama_gemma_overlay,llama_gemma_conf,llama_llama_primary,llama_llama_overlay,llama_llama_conf,llama_qwen_primary,llama_qwen_overlay,llama_qwen_conf,final_primary,final_overlay,agreement_level,n_models
-http://data.europa.eu/esco/skill/001d46db-035e-4b92-83a3-ed8771e0c123,train staff to reduce food waste,,,,G6,True,0.9,G4,True,0.95,G4,True,tie_resolved,2
-http://data.europa.eu/esco/skill/0037c821-2898-4919-b96e-7ed1cd89554c,develop energy saving concepts,,,,G6,False,0.9,G2,False,1.0,G2,False,tie_resolved,2
-http://data.europa.eu/esco/skill/00735755-adc6-4ea0-b034-b8caff339c9f,install heat pump,G2,False,1.0,G6,True,0.9,G2,False,0.95,G2,False,majority,3
-http://data.europa.eu/esco/skill/0082c13b-5866-4542-bc4f-722a4ae9530e,design biomass installations,G2,False,1.0,G6,False,0.9,G1,False,0.95,G2,False,tie_resolved,3
-http://data.europa.eu/esco/skill/012d6406-016a-4790-aeb8-853e61058517,maintain sorting equipment,,,,G6,True,0.9,G4,False,0.95,G4,False,tie_resolved,2
-http://data.europa.eu/esco/skill/0171653e-c8e9-4c24-bb86-a4b6fe038f25,adopt ways to foster biodiversity and animal welfare,,,,G6,True,0.9,G4,False,0.95,G4,False,tie_resolved,2
-http://data.europa.eu/esco/skill/01895f13-1989-4756-80d6-9b9ee19ddb32,perform a feasibility study for building management systems,,,,G6,False,0.9,G2,False,1.0,G2,False,tie_resolved,2
-http://data.europa.eu/esco/skill/023faef3-0633-436d-8b91-389c45c1421c,contamination exposure regulations,,,,G7,False,0.9,G6,False,0.95,G6,False,tie_resolved,2
-http://data.europa.eu/esco/skill/02619401-8e21-46e5-8f19-204747fd755d,remove contaminated materials,,,,G6,True,0.9,G3,False,1.0,G3,False,tie_resolved,2
-http://data.europa.eu/esco/skill/03d93bf5-3c09-489c-a0d7-a895b068041a,rescue animals,,,,G6,False,0.5,G6,False,1.0,G6,False,unanimous,2
-http://data.europa.eu/esco/skill/04012dd1-478d-4eec-9951-dd623bfe86ca,climate smart agriculture,,,,G6,True,0.9,G6,False,0.95,G6,False,unanimous,2
-http://data.europa.eu/esco/skill/052b829c-67c5-466f-9300-0e0b001a68ef,prepare energy performance contracts,,,,G7,True,0.9,G7,False,0.95,G7,False,unanimous,2
-http://data.europa.eu/esco/skill/05dbdec3-c9d0-4f15-91ad-0700475a0f75,assess environmental influences on bovine feet,,,,G6,False,0.9,G6,False,0.95,G6,False,unanimous,2
-http://data.europa.eu/esco/skill/05e5e14f-ffa6-4106-b311-c6335ccc2bd2,solar energy,G1,False,1.0,G1,False,0.9,G1,False,0.95,G1,False,unanimous,3
-http://data.europa.eu/esco/skill/062ec888-7fd2-4b1e-860e-4cdcc9503ab3,manage land resources permits,,,,G6,False,0.9,G7,False,1.0,G6,False,tie_resolved,2
-http://data.europa.eu/esco/skill/065ec709-e0f4-407f-91fe-9feab66942be,design sprinkler systems,G2,False,1.0,G6,False,0.9,G2,False,0.95,G2,False,majority,3
-http://data.europa.eu/esco/skill/06a4004d-ee47-44ff-ae2f-a038ba0c0256,perform a feasibility study on mini wind power,,,,G6,True,0.9,G1,False,0.95,G1,False,tie_resolved,2
-http://data.europa.eu/esco/skill/072f35a1-98e7-4a6c-9a19-474ace5644da,cultivate crops for biomass,G5,False,1.0,G6,False,0.9,G1,False,0.95,G5,False,tie_resolved,3
-http://data.europa.eu/esco/skill/07c29939-d5fe-4f7f-8546-f1d02fd352db,inspect silo systems,,,,G6,True,0.9,G4,False,0.95,G4,False,tie_resolved,2
-http://data.europa.eu/esco/skill/07ec6866-d283-46a6-991c-e8ce0c6fc159,interpret scientific data to assess water quality,,,,G6,False,0.8,G4,False,1.0,G4,False,tie_resolved,2
+skill_id,label_text,gpt-oss_primary,gpt-oss_overlay,gpt-oss_conf,llama3.1_primary,llama3.1_overlay,llama3.1_conf,final_primary,final_overlay,agreement_level,n_models
+http://data.europa.eu/esco/skill/001d46db-035e-4b92-83a3-ed8771e0c123,train staff to reduce food waste,G5,True,0.95,G5,True,0.9,G5,True,unanimous,2
+http://data.europa.eu/esco/skill/0037c821-2898-4919-b96e-7ed1cd89554c,develop energy saving concepts,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/00735755-adc6-4ea0-b034-b8caff339c9f,install heat pump,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/0082c13b-5866-4542-bc4f-722a4ae9530e,design biomass installations,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/012d6406-016a-4790-aeb8-853e61058517,maintain sorting equipment,G3,False,0.95,G2,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/0171653e-c8e9-4c24-bb86-a4b6fe038f25,adopt ways to foster biodiversity and animal welfare,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/01895f13-1989-4756-80d6-9b9ee19ddb32,perform a feasibility study for building management systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/023faef3-0633-436d-8b91-389c45c1421c,contamination exposure regulations,G7,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/02619401-8e21-46e5-8f19-204747fd755d,remove contaminated materials,G4,False,0.95,G3,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/03d93bf5-3c09-489c-a0d7-a895b068041a,rescue animals,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/04012dd1-478d-4eec-9951-dd623bfe86ca,climate smart agriculture,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/052b829c-67c5-466f-9300-0e0b001a68ef,prepare energy performance contracts,G7,False,0.95,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/05dbdec3-c9d0-4f15-91ad-0700475a0f75,assess environmental influences on bovine feet,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/05e5e14f-ffa6-4106-b311-c6335ccc2bd2,solar energy,G1,False,0.99,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/062ec888-7fd2-4b1e-860e-4cdcc9503ab3,manage land resources permits,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/065ec709-e0f4-407f-91fe-9feab66942be,design sprinkler systems,G3,False,0.95,G2,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/06a4004d-ee47-44ff-ae2f-a038ba0c0256,perform a feasibility study on mini wind power,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/072f35a1-98e7-4a6c-9a19-474ace5644da,cultivate crops for biomass,G5,False,0.95,G1,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/07c29939-d5fe-4f7f-8546-f1d02fd352db,inspect silo systems,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/07ec6866-d283-46a6-991c-e8ce0c6fc159,interpret scientific data to assess water quality,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/081d7679-5070-4777-bece-a28c49f15636,environmental policy,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/085c8851-2354-44ae-98de-367bdde8bf58,communicate with waste treatment facilities,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/089ee650-297e-4716-87d1-440743b70a0d,ensure compliance with environmental legislation,G7,False,0.95,G7,False,1.0,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/08a5f6dd-d3dd-4371-9919-6d730f34499c,mount photovoltaic panels,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/09473fea-69ea-40dc-9ff4-bbaaff10840e,conduct engineering site audits,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/09c28e46-712a-4c11-a4ae-67ae554ea940,advise on chemical use reduction,G5,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/0aabb61b-5382-490a-bf44-375858f9cd3e,types of tidal stream generators,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/0ad6d5e8-593f-4191-843c-439b23a468ca,conduct energy audit,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/0b3ae8c1-771e-4483-b3da-fd420fe6545b,strive to conserve the composition of water,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/0b4f100c-813d-4eec-8aa5-4227bb98c635,ship related legislative requirements,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/0bca9840-478a-40fd-a6c3-c8cc923add98,develop management plans,G5,False,0.9,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/0cf3117a-c627-48e0-8d55-65b0f4557ae5,apply sustainable tillage techniques,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/0d0fe364-462d-48dd-b54b-e972e2bdecb1,types of insulation material,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/0d75a128-bd88-4c1b-b70d-8e963aeb490c,adopt ways to reduce pollution,G4,False,0.9,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/0e0b8991-4b24-4bb8-9113-df3ce43c1ff9,advise on mining environmental issues,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/0e628dde-8d1b-4a1d-b973-a349fe1725c8,conduct sediment control,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/0e78d9c9-7c3c-4c5c-82cb-205c16edbcb8,green computing,G8,False,0.95,G8,False,0.9,G8,False,unanimous,2
+http://data.europa.eu/esco/skill/0e81fcff-2fb5-4c87-afc2-49b5e5d9db50,operate biogas plant,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/0f4cc60e-820e-439d-8810-31a2cc27ada6,use water disinfection equipment,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/101d63ee-bb22-4a7c-9e0a-c2716063696a,"make health, safety and environment assessments",G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/101e6f4c-c892-4812-9e2c-f2b888771bb3,test wind turbine blades,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/103f7814-d262-4df6-a1b6-759bc51f76cb,sustainable technologies,G1,False,0.9,G8,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/1063b061-329e-4212-8db4-ab936dc60efc,environmental economics,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/108320f7-c8a1-4386-aed9-91054ab05619,develop agricultural policies,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/10ff3d22-1f29-48bc-98e4-63fc61c78034,social alliances,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/110d7aa3-e44e-4cce-a927-8d4de615f3d9,sort waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/111b9dad-b2e0-4b55-8d0f-2e41cb435f64,ensure no harmful effects on feed additives,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/114a79ef-1e62-475b-a862-954f5b4cca20,develop waste management processes,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/128f318e-1bc8-4921-821f-b0aad1d98922,determine appropriate heating and cooling system,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/12d7ea6f-ec1f-4f9a-a50b-8e2e9693f068,hazardous materials transportation,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/13f7cd7c-6ec5-4186-8744-de3c780b973d,advise on landscapes,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/145fb42f-ebee-48e2-bdf8-2e935edc7158,disinfect surfaces,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/1565b401-1754-4b07-8f1a-eb5869e64d95,climate change impact,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/15c522eb-cd6d-4b00-9d95-db20c0f8df88,energy saving potential of automated shift systems,G6,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/17446f6d-d8b0-4945-a37b-9ad0dfc9f3e8,design a solar absorption cooling system,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/17447ce4-4c4a-4158-b1ea-03ed5364b4e8,manage plans for the storage of organic by-products,G3,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/186da517-9a3e-41cd-9158-4001e3694459,organic farming,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/189777b9-6e95-4f76-b8db-f8e0f0477bc6,develop irrigation strategies,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/18d3f89a-6ac5-4ca6-bf93-0baec4e13bcd,install photovoltaic systems,G1,False,0.99,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/192e12e7-6bf0-42e6-bfc3-70c08551f12a,assess environmental plans against financial costs,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/192f3ca9-2232-40d0-b241-387966ce2de8,waste transport legislation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/1a09db78-cbcf-428a-a23c-5c3f3951cc4c,monitor civic recycling sites,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/1a6c7e0d-fc13-41d7-a5c0-8ca00606de89,promote sustainable energy,G1,False,0.9,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/1aae38c8-f75a-4009-8aa0-c5fa94b06e6b,manage water quality testing,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/1ab1449d-5b65-458b-b115-f5283a52da8e,advise on utility consumption,G2,True,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/1b6197c8-a08b-412b-8be0-ed6de108b17e,develop improvements to the electrical systems,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/1b644187-7c16-4685-bc80-fe1279492dea,coordinate sewage sludge handling,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/1b718a43-4295-44cc-9530-78323bbeb663,lab scale fermentation,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/1b73b2a7-aefc-49ef-8b30-b90ca7429984,advise customers on building materials,G2,True,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/1b94ad6c-c54d-4bdd-858d-81ebef51c5a4,sustainable footwear materials and components,G3,False,0.95,G5,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/1c4fa8a3-7f7e-4c63-a36c-89e4321774d6,determine historic climate changes,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/1c9bb265-6ff7-428e-9a72-9c8df75178b8,assess impact of industrial activities,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/1cf20c3c-027e-45f4-bad1-c91b98726d28,provide information on geothermal heat pumps,G1,True,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/1d4ddf05-510a-424a-85d3-2305558665c5,research ocean energy projects,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/1de91358-6ad3-4513-b975-396c61cf8858,advise on fitted ventilation systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/1e25d043-0307-4e50-8a19-9e7cce22caea,assess conservation needs,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/1e3222fa-724d-41f0-9b0a-e88d1003cd35,perform a feasibility study on solar absorption cooling,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/1ead478f-4e9d-4aa7-a728-823fc1e894f5,assess waste type,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/1ee7d019-9226-4844-925f-a8a8c4db3444,coordinate airport environmental policies,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/1f632076-fd9b-4b18-a9a2-b59a59181d3e,urban planning law,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/1fe682ad-b8a2-44bb-a557-7eccf79b2014,operate recycling processing equipment,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/203083ca-b051-4c28-8986-fc8731bacee5,sustainable finance,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/21331900-9d2a-4806-9a0c-a1885e16dc3d,perform forest analysis,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/214c892e-e236-4e5f-9824-47316528cb42,manage habitats to benefit game,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/215d64d0-a698-4508-b1b4-3d8a56b3ce9e,develop forestry strategies,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/21934d08-3535-4dc2-ae67-fde9fd21dc60,determine internal air quality parameters,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/21b298f3-370d-4d9a-8601-ccfa7446446e,assist people in contaminated areas,G4,True,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/21c27eba-bd1f-42f5-a1d5-c250227030f7,electricity consumption,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/22c45bf7-e52b-475f-847b-c32a87f65a5d,circular economy,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/23072dbb-e93b-48ab-8756-c64f74aaab26,apply forest legislation,G7,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/23759dba-1abd-4865-b0f9-608012348870,geothermal power plant operations,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/23845010-4c1e-41d3-94a3-940bcab65bce,monitor nature conservation,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/23872ce8-ea42-44ac-9b00-ccc0dc407209,perform a feasibility study on electric heating,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/23cb29ec-5738-4966-8453-09952ed8c1fc,develop bioremediation techniques,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/23dc8bb2-1091-461e-9095-a048b7ffa009,airport environmental regulations,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/2474e095-309f-4283-b880-6a3a9aec4d34,assess harvesting impact on wildlife,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2479ac51-f43f-42d1-a912-ff000b351439,coordinate forestry research,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/2492becf-6769-4431-8e95-bee41b36232a,ensure responsible sourcing in food supply chains,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/24ae68dc-59c5-4156-b25b-3070bfdaa79e,follow environmentally sustainable work practices in the veterinary sector,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/25fb676a-cf69-487d-a9c1-273c6f291b6a,wind energy,G1,False,0.99,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/270c4de9-97f9-4a7a-95d1-63670f1ec3bc,ecosystem management,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/27273605-2400-4392-a6d6-cc8161a2d445,ensure compliance with waste legislative regulations,G7,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/273407b4-0b00-4166-8211-1fc6bbcb6b42,apply alternate wetting and drying techniques,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/27ad6528-0914-4049-87c0-2f05791d0e2e,design a domotic system in buildings,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/27b6623b-e09c-4112-9672-8ddb9e354b9e,land use for airport planning,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/27c7910a-c3b5-4d8d-a713-a6c334929a42,spatial planning,G4,False,0.9,G6,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2879e8f6-037a-49ed-ba73-6f7d7766223e,food waste monitoring systems,G3,False,0.95,G8,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/28ad7c97-9fb3-4b1d-846a-654e529ab8ac,sustainable manufacturing,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/28bc5334-5372-4bd6-8458-c2b516dd6104,collect industrial waste,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/29bfe2cd-f011-4f94-a3aa-f77768e60460,analyse energy consumption,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/29c60c96-d71c-4a6e-ad81-fca0a4e48925,habitat restoration,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/29f57ff2-2f7f-41e2-a1ed-30b3175c91a3,inspect roof for source of rainwater contamination,G4,False,0.9,G2,False,0.8,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2a2e85d7-75cc-40b4-8a34-82277d72eb84,supervise waste disposal,G3,False,0.9,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2a45f2d1-8f1a-4c62-9332-cfd3535d9d35,maintain water treatment equipment,G4,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2a74063a-d4b1-42fb-bc90-cb8c06ff53ec,install solar water heater,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2a910a87-2253-404c-b75d-05af9b3363e3,perform forest diseases control,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/2a95d8f8-dcd8-4052-9805-2dd9c507d372,manage ocean-going oil tankers,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2aaad52d-599e-4e77-a681-bbc236825821,evaluate environmental impact of personal behaviour,G4,True,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2afefe51-4dcf-4314-a014-7c0477ee7372,perform water treatments,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2b281511-176e-4f7c-a581-0875d3c4cb51,forestry regulations,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/2b8d193d-4e87-41d0-8221-979c274b935c,ensure compliance with aquaculture standards,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2bc626f8-32ce-4131-9f65-c52929d55a95,electric heating systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/2bdc2f65-b42f-4963-abff-d7214ca4caae,emission standards,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2be2d20e-1191-4f85-8f8c-d49a60ca428a,educate on recycling regulations,G3,True,0.95,G3,True,1.0,G3,True,unanimous,2
+http://data.europa.eu/esco/skill/2c8199c8-4e40-49b3-b878-caee6e1c1bc0,investigate pollution,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2cb27e30-2be7-4a09-9502-fdd2102c046b,carry out training in environmental matters,G7,True,0.9,G7,True,0.9,G7,True,unanimous,2
+http://data.europa.eu/esco/skill/2d158a78-179e-48e3-ab6f-dd5df7aedadb,manage aquatic habitat,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2d73b2d4-2dfd-42e9-a9f4-106d9c58a4b9,integrated food-energy systems,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/2dd79277-f639-463d-b74f-00b7501d742d,decontamination techniques,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2e55bf22-45f2-43f6-8aa0-28894263313d,electric motors,G2,False,0.85,G1,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2e77d381-df21-4f84-b3dd-6062be7ef4e1,protect plants during pest control,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2eea3fd6-82ee-4334-8e36-62a0707cade1,design building air tightness,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/2f05d09d-7e91-423c-9210-19da0b0e34c6,maintain irrigation controllers,G3,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/2f48c606-a936-46a4-9058-dd925973efd6,measure water quality parameters,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/2f4cdc7e-d98d-4e6c-9811-3dc28255c7ff,social entreprise,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/2fb4b423-c1e4-407d-ba48-38032d8dcda2,manage waste rock,G3,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/303c6ab0-21c3-4b09-ac77-d405936857d9,sustainable installation materials,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/30685aeb-512f-4517-adc8-63bdc1eefb8e,design a solar heating system,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/306d9964-2d32-4952-927a-e836bf7041ab,natural fertilisers,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/30783499-3872-4b14-9684-6217e98c6e1d,discharge of collected waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/30dce29d-0518-4f5d-aeb0-2b5b49e3afbe,aquaponics,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/311832d1-1167-47c7-b613-fc64784ffeed,describe electric drive system,G6,False,0.95,G2,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3220a66f-d129-463b-848e-891b4f1c79e3,develop hazardous waste management strategies,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/32a76797-6235-4659-869f-c691ffd30463,palaeoclimatology,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/32f20d0e-d127-4901-a971-a53e26dfef14,advise customers on smart homes technology,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/33784b61-bd86-4451-8a89-741ada5f8475,maintain photovoltaic systems,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/340a75f4-76e1-4ef0-8f1e-1bb78ba561ef,inspect compliance with hazardous waste regulations,G7,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3419fac9-575d-4492-a018-edff6f4dae26,environmental legislation in agriculture and forestry,G7,True,0.95,G7,True,0.9,G7,True,unanimous,2
+http://data.europa.eu/esco/skill/34406889-f522-47a7-b60d-8545b36d73bb,design harmonious architecture,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/347b6a67-59ad-4408-bb9c-cfa502867e24,monitor forest health,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/351cd749-498c-4ed3-9e38-58fc9bbf8f0e,ensure compliance with noise standards,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3577e49b-951d-4d46-a1f4-417087a8fb6d,adapt to different weather conditions,G6,False,0.7,G1,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/36359101-4488-4859-83a8-9600d9faf3f2,engage local communities in the management of natural protected areas,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3727f0d3-da1b-4ce3-a9cb-efe6130fe41f,assess contamination,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/37ba5509-9665-4947-a5ae-f124d5769473,make paper slurry,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/38f7be4a-f6af-4f1d-a972-8c51b27d2cea,enforce park rules,G7,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3936cc7d-d045-4eb0-b951-b862a072c0a2,design indicators for food waste reduction,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/3955cd15-a1fa-4c16-99b4-c39cb17db21d,protective measures against the introduction of organisms,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/395ace35-e463-4dc7-8181-c2dd43885107,perform a feasibility study on heat pumps,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/397412dc-47c4-4580-82d0-15a9f9a86ea2,design drainage well systems,G4,False,0.95,G2,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3a09d732-08b9-4c90-8fd3-34e2d69ce084,explain blockchain implications,G8,False,0.9,G7,False,0.9,G7,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3a2f0b3f-8203-466f-89f9-207316ade4da,dispose of soldering waste,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/3a519990-ae6c-4c8b-a827-2bf96d949940,manage conservation of natural and cultural heritage,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3a560dc4-ee2e-4437-b94f-c076a2b5f25e,inspect water wells,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3b4f2a64-9884-4f3d-8020-44dc95919a7c,design the insulation concept,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/3bf93cf6-2b6f-46ad-b0ba-3b161379bac1,perform selective demolition,G3,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3c1622fc-6c95-4b51-98da-1814ebe6e889,geothermal energy systems,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/3d69b305-4051-4c1d-ba1e-d8c5b35e22db,monitor manufacturing impact,G4,False,0.9,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3d9873e5-7128-49d9-9048-f72b8ea4b29e,manage forests,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/3de6d427-546b-450b-97ba-d3d50eb274da,operate water purifying equipment,G4,False,0.95,G1,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3dffcb35-26d4-4fee-8517-002f9e40508a,integrate biogas energy in buildings,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/3e25fd3e-2bcd-4320-9587-0aadf7fb93b1,advise on soil and water protection,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/3e37d714-4d65-416d-a138-46f7e2a98073,design heat pump installations,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/3ecde258-d1c6-4d6a-bfa7-ec4c5e4fc700,develop green compounding solutions,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/3edfa33c-c644-4a9a-acd1-e82039daa663,promote the use of sustainable transport,G6,True,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/3efd2b02-f6f8-4911-a154-8bfcaeadeb5d,origin of dietary fats and oils,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/3f82a026-8a37-4b54-9ebb-7702b66eeb24,perform environmental investigations,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/407b1474-7cfb-4538-823b-7667604f0267,restore natural environment after drilling proofs,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/40f65a56-ccbe-4601-9f32-1cc6cdd24f28,waste management,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/40fa39b5-0f69-432a-b5ea-b01b5d98649a,dispose of hazardous waste,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/41168850-6e3f-4fc8-afd5-9337f0c66190,assess environmental impact in aquaculture operations,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/41bbfa08-ce0b-478f-beaa-f51c62e61796,install roof windows,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/41de7eb8-be07-4822-ba85-b76e9b8d6e4e,sustainable forest management,G5,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4300b453-9bcf-474c-9ee3-92ec2229720c,global standards for sustainability reporting,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/442328a8-8a11-4e15-b80c-402a9bd5844d,conduct research on climate processes,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/44493977-83c4-49e0-88b2-28435da57cd0,minimise environmental impact on the surrounding area,G4,False,0.95,G3,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/444d3725-902f-49aa-9363-7de405bb991d,measure the impact of specific aquaculture activity,G5,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/44d5340c-45df-4478-9e55-2363342a7324,design building retrofitting solutions,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/450aeb6d-5f23-4e08-b088-3bbefbfb9f2d,aquatic ecology,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/4548416b-2310-4afc-bd6a-c022d3e41014,ensure cost efficiency in food manufacturing,G5,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4562497f-836c-415a-b5ce-4ec3b5766d09,propose alternative rubber compound ingredients,G3,False,0.95,G6,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/456f68b4-ca28-4029-a67f-7813b2c6cb4d,food ethics,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/45b2a257-1c28-4c84-bc71-a4871e398c54,research locations for wind farms,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/45b79278-465a-4eed-8809-369318bab119,develop site remediation strategies,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/46454506-fb7c-4ad7-84e0-d4a6a5589ea1,zero-energy building design,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/465af498-53b1-4e04-9f49-7458afb59274,design utility equipment,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/467cfa0a-f6d8-4f07-a770-11d2ea3546cd,reduce tanning emissions,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/469e19ed-a0bd-445a-ae2d-4ba9430e296b,promote sustainability,G7,True,0.9,G7,True,0.9,G7,True,unanimous,2
+http://data.europa.eu/esco/skill/47d491a9-f7c0-4b13-a10f-983d3aa0113e,safety engineering,G1,False,0.8,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/47f14289-3bcd-4575-9cc1-15c582d1da29,manage waste treatment facility,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4817fa29-7e52-41ee-a112-c1454012ca95,review waste-treatment facilities construction plans,G3,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/492214f5-5bfd-4f2a-9a48-c36240ce100d,follow an environmental friendly policy while processing food,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/49298916-2090-4b08-ac57-5cfedaa5af36,reduce environmental impact of footwear manufacturing,G6,False,0.95,G3,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4aba6668-6118-4953-804b-869cef94422a,dispose of non-hazardous waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4ac715f8-7c4e-4e78-a96d-2398b8bdc49d,plan public housing,G2,False,0.9,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/4b5f0aeb-875b-4afb-befc-2465b45602d8,inspect recycling procedures,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4c3ab565-747c-4db3-8c47-79e8d6f98cf4,adopt ways to reduce negative impact of consumption,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4c4235a9-a1fb-403f-a173-37d9297c218c,recycle livestock manure,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4c598891-db23-4b7c-9b39-233ba8eaf848,landscape architecture,G4,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4c5fed97-939f-4050-adc0-7adaf15065e5,plan water resource development,G3,False,0.9,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4ca83b9d-afa0-49f8-b7af-e4e6a42ad299,crop production principles,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/4d032f82-6279-48e6-9892-116440a071e3,advise on pollution prevention,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/4d30ad07-9e39-4899-81dd-02b280f162f9,apply systemic design thinking,G7,False,0.9,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/4e09e2d2-e317-47d2-bf5e-1d6c66be3efc,energy performance of buildings,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/4e0a7f6e-b546-4cc6-9f8b-53e4fa31a426,design smart grids,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/4e0ba879-1cf3-4260-822b-2c2e3cc5e269,install onshore wind energy systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/4e87c852-602a-4a0e-b8d8-20709ce14ac5,assess the life cycle of resources,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/4ee4ed1d-dc38-48e0-a9e6-a6b64f316ea6,water policies,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/4efb00d2-e8b3-4d13-8ab7-70bc7a0a8af9,investigate microclimates for buildings,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/4f4ca760-970a-4839-9ce2-ab85ed66772e,dispose of cutting waste material,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/4fb7f781-9362-426a-9eb6-65c360f83e31,perform cleaning activities in an environmentally friendly way,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/4fdcf911-b738-4cf4-80ab-aa5a14d22f73,conduct reforestation surveys,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/507e2b21-1285-47e9-bf09-0db794df1bf0,develop environmental policy,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/509ff122-3546-40a7-ae02-3ee7395b3a76,road transport legislation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/50a382c6-e848-467d-b156-7a1a3610b522,evolution of economic forecasts,G7,False,0.9,G7,False,0.8,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/50ac5186-bb18-4ffb-9f29-00636853c8ea,design solar energy systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/50b7b13a-4e58-43b8-b7c4-edbd09145798,care for the wildlife,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/50e6eba0-4440-4ba5-bb58-3ee78a96e29b,hydroelectricity,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/51399b1c-15d6-4e4c-8673-30c25a094fce,promote sustainable packaging,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/51729032-56d3-4092-9dd8-23d6cbd97511,teach energy principles,G1,True,0.95,G7,True,0.9,G1,True,tie_resolved,2
+http://data.europa.eu/esco/skill/5195eebc-f400-467c-97a3-6f9fbf136169,geothermal energy,G1,False,0.99,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/519e5731-4d6c-4f98-938e-0976a202c6ba,hazardous waste treatment,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/5206a9b8-8337-4f0b-ae00-163a2f55d8cf,carry out waste water treatment,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/52242966-692f-4a4f-8279-cadbc7874183,inspect wind turbines,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5354a726-ee64-4f34-90f8-8436f9f374b8,analyse ecological data,G8,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5368a46a-54b5-4874-a06f-964d557c1cfb,green space strategies,G4,False,0.9,G7,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/538f8bc6-a5bf-422b-8112-5ad3fe9de9a0,urban sustainability,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/53af2b85-fac4-4c3f-afe2-44aa4a545ff3,manage rivers and streams,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/53d89f4e-c819-490d-ad32-fed731f32639,research locations for offshore farms,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/5483c363-e942-4787-8686-0f29c593357f,avoid contamination,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/54c8490d-067a-40f1-96ca-4960a30d6eb5,participate as observer in different types of audits in the food sector,G5,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/55116536-a3e0-4c32-818d-cc567fd3023e,minimize risks in tree operations,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/555343c3-e580-4b3d-82dc-51af4e1b3b75,define energy profiles,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/55a4ae74-45e3-4f5c-8646-17149edfbddb,conduct ecological research,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/5641a2af-9eb2-4209-9fc6-856f78f2d2f2,pollution legislation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/564e86a6-0916-44e6-b3d6-d99bc0c1f194,mitigate environmental impact of pipeline projects,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/585593ef-d0a3-47a2-82da-14f26d75d83e,biosafety in biomedical laboratory,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/589f0d24-0846-4971-bc6c-a42bb274f69a,airtight construction,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/58c089ab-338b-4e4c-8117-7c1fcc89af69,manage donated goods in second-hand shop,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/59004ee8-3975-4877-bf82-ff0b8070ef28,implement environmental action plans,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5944cee9-763e-4b08-99e4-f514bdde14a6,hazardous waste types,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/59998878-fa14-458a-9085-06b45e89df1b,types of heat pumps,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/5aec5b83-df71-483e-90b9-21e56a0a3cb2,measure pollution,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/5b06c369-10db-477d-a8df-987179324001,manage water distribution procedures,G7,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5b91b6d4-345e-4195-a078-218514871e7b,ensure efficient utilisation of warehouse space,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/5be72e00-e506-45ca-a251-b59500d7fca7,protect wilderness areas,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/5bf756dd-a54a-47cd-80fe-3418fedd1c51,calculate solar panel orientation,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5bf97b49-74b4-4d4d-9d07-5b51ab1cd704,develop wildlife programs,G4,True,0.95,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/5cddc62d-3958-4390-b17e-0aecb5848c40,dispose of sewage sludge,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/5def6d00-daed-4d21-af9e-47938cf1877f,sustainable building design,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/5dfd1b83-8b77-444b-94cd-72f8e13472fa,legislation in agriculture,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/5e80353d-53ed-4e64-a5ff-0e3ec52156fa,direct logistical functions,G3,False,0.95,G2,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/5efdcf3b-9c19-4b1c-ac41-7347493da37d,store sorted waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/5f1f365c-ad8c-4291-9ba5-79e2132a334d,fuel cell types,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/60032986-43ac-4c26-a830-c825f3fa205a,design district heating and cooling energy systems,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/60097ab6-722e-4a22-9f3e-40aecb24daef,organic building materials,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/609d6bb4-db16-4578-87fc-57b11a701cc2,bioeconomy,G1,False,0.85,G5,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/60ab2bf7-c812-4a88-86c0-7c81a9b2f77c,carry out environmental audits,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/60c4cdfa-1aa3-452d-a989-10fd61706911,European pesticide legislation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/610ccf09-e9f2-4268-bb93-442dde5bf26e,advise on offshore renewable energies subjects,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/615cfc39-797f-4229-8e92-159fcf8f3030,building codes,G7,False,0.95,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/62685d7a-a8be-4070-89e9-8699ad1201b6,ecological principles,G4,True,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/6385444a-2e10-41c9-9a65-88455655543d,inspire enthusiasm for nature,G4,True,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/63e92f65-e70d-421e-94ac-40f944966161,promote ethical eating,G5,True,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/63eee3cc-9864-485e-bb95-5daa145d0c78,educate on hazardous waste,G3,True,0.9,G4,True,1.0,G4,True,tie_resolved,2
+http://data.europa.eu/esco/skill/63f9a5bc-f070-46a6-bea7-c6b9e9dbacc3,envelope systems for buildings,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/64091c5d-a448-4f01-8a80-058ff91483ab,install offshore renewable energy systems,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/6561f116-70de-47d8-80b8-f0e2a1d2cf11,perform feasibility study on solar heating,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/66c88f8d-b73e-4f9d-8cf3-15d9c68b5384,identify risks in aquaculture facilities,G5,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/66db424f-2abe-420d-8e5b-186607266b61,corporate social responsibility,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/66dbdb89-74ca-45b7-b8af-2479fc0e22c0,manage animal welfare,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/6709e92c-7546-46a4-aa57-5e951bd4cb0f,building automation,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/670ebf56-761c-4d3d-865a-db14085b77f7,apply procedures and regulations for eco-labelling,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/6742977a-aa00-4c8c-9861-898b0373907e,advise on sustainable management policies,G7,False,0.95,G7,False,1.0,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/6825a7dd-c2da-40fa-b745-508ff20ee293,natural areas maintenance,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/6853886b-ebc5-4b91-98af-9a4ecca803bd,types of wind turbines,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/68d5d7e2-1e9e-4b2b-bce9-ff6c687e4f45,develop sewerage networks,G3,False,0.9,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/68e8e227-b843-4f2b-8572-9cbe63aada3a,specify landscape design components,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/691c7db6-bad8-4a09-a3c4-4bf799375a35,sustainable agricultural production principles,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/6962058d-9808-4820-a6bc-d7cabce60cde,implement sustainable procurement,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/6af000e5-a451-4f78-9feb-723971f2ad05,develop water purification methods,G3,False,0.9,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/6b41fcd8-85eb-4b27-b409-05ffcc663a3d,prevent sea pollution,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/6b5d032a-b85a-44ea-9dad-5201048d2dd2,develop flood remediation strategies,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/6c2182f9-9068-42e8-8855-31252d62fbb0,ecotourism,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/6c6daac0-80f5-431f-a33f-c5b722094657,energy storage systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/6d355a4e-d9b6-4a24-a79b-30176e15589e,beverages filtration processes,G5,False,0.95,G3,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/6d53015b-6867-408f-8f3a-4eb9d5dae101,maintain plant soil nutrition,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/6d6ad261-4d81-4d7f-98fb-3587c25deb74,promote agricultural policies,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/6f30181d-65b5-4527-b36e-a686d47fed84,bicycle sharing systems,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/6f5850ea-5785-4e2c-b062-743066fd5bdb,environmental legislation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/705f5906-9b08-4562-9544-46f6ab944a7e,forest conservation,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/70d9b308-f8f2-4a4f-b4d9-54b5c8648c05,synthetic biology,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/7109d172-c370-47fe-ac81-8fe93550a9e3,impact investing,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/722058b4-2b90-453c-8ba1-88f74e8fb645,compare alternative vehicles,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/72627d40-488a-4ef5-9c72-3c048361102c,dismantle broken appliances,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/72886bc5-eeb0-42d5-9b01-f83b4cf138b4,water consumption,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/73576419-31c2-4e45-8e30-ab1afec3db4e,use sustainable materials and components,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/73a9561d-112c-4d8a-9d5f-b2c11c5bbd5f,manage waste,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/73cc1ce2-4ada-4ae1-9f8e-d7efadcd52f6,design an electric heating system,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/7493634f-30ea-4f2f-8fd4-c78b4a309bf7,fresh water ecosystems,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/75f312e1-622b-4751-8d93-815b32feaf8d,pollution prevention,G4,False,0.9,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/7608e884-6f73-4205-a02a-ea7062a2337e,monitor disposal of radioactive substances,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/761de590-ca64-423f-a5a7-8639abd8c615,energy micro-generation technologies,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/761e1acc-d38b-4524-9890-6a119fb7e98c,support local tourism,G7,False,0.9,G6,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/765f2d06-775e-45bf-93a7-c83b8fad5a1a,manage rainwater,G3,False,0.9,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/76654176-5cc8-4cb3-b307-4ef1b6c2543c,zoning codes,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/76f552ef-bb2d-4f66-83a8-ad205086967e,educate people about nature,G4,True,0.95,G7,True,0.9,G4,True,tie_resolved,2
+http://data.europa.eu/esco/skill/772a9c72-abef-4333-9788-f4cb48ad8e08,identify software for warehouse management,G8,False,0.95,G8,False,0.9,G8,False,unanimous,2
+http://data.europa.eu/esco/skill/77f109c4-3107-4d2a-a512-5160ac103933,analyse environmental data,G8,False,0.95,G8,False,0.9,G8,False,unanimous,2
+http://data.europa.eu/esco/skill/7808ccb8-9797-4864-80e3-37119ca32b30,monitor composting,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/7832b684-580c-4eaf-a8b3-322164b041ab,provide information on solar panels,G1,True,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/78d6270a-2f81-45a8-8558-5112926febba,clean contaminants from airport runways,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/792789aa-6122-4dd7-be50-bcdb46f85725,"install heating, ventilation, air conditioning and refrigeration ducts",G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/79a5bc25-5b59-47bc-a4c2-fb8e8cb1ddf6,smart grids systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/7ac88283-80aa-4a1f-93f8-213cd2a469cb,design offshore energy systems,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/7afd29d7-9c9f-4151-83f2-562b8c94a3af,apply transportation management concepts,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/7b3717e4-e963-44e0-b94f-1088a7242da0,nurse plants,G5,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/7c2c81fe-b5f5-4691-a58d-7fd0a8b6c0e1,prevent kiln loss of heat,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/7cefbd03-d544-4184-a9b4-caa1eea2a646,environmental impact of tourism,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/7d70ed20-1c29-4ce3-bda5-9ba6c957a2d2,types of wave energy converters,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/7e420d23-3733-482b-8513-4611f8a70059,remove concrete forms,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/7f321b88-3d16-4e30-8163-5494ca8ce978,engage others in environment friendly behaviours,G7,True,0.9,G7,True,0.9,G7,True,unanimous,2
+http://data.europa.eu/esco/skill/7f4d1dee-bc5a-495a-926b-17b383b8d8fd,green building standards,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/7feca0cc-f0b3-470d-ba03-48c0f7cff286,educate on sustainable tourism,G4,True,0.95,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/7ff9cce1-6518-48db-8f59-2beb81508fb2,provide information on wind turbines,G1,True,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/8029637c-00eb-4764-ae88-387611176c4b,analyse logistic needs,G6,False,0.9,G7,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/8034a1ea-5ee0-4a84-8fd3-16411c8d86fb,agroforestry,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/811f3583-3956-477e-b4c8-e8c53eb44cc3,primitive technology,G2,False,0.9,G8,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/81af8698-9873-4b3d-b6d2-8eb275bf170b,environmental threats,G4,False,0.9,G4,True,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/82423b5c-486f-42e7-b00e-7358757a8de5,test samples for pollutants,G4,False,0.9,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/8248a071-5307-4a64-a62d-643a35ec31e2,types of photovoltaic panels,G1,False,0.95,G8,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/829d1376-41bf-4c41-9bc3-62dce647677c,artificial lighting systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/82b14cde-76e7-4d4b-b564-c45c014f3ce4,waste removal regulations,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/82ea1455-ff29-43c8-8074-685fa2653144,maintain waste collection records,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/82fea746-853f-4f1b-8ab7-55de8619cccd,lean manufacturing,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/8318ca1f-117e-4a21-a07a-5d7515a21035,provide training in sustainable tourism development and management,G4,True,0.95,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/83fc0b2b-6cd2-46af-b1ff-d3fc83604c26,energy efficiency,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/8570573a-937b-406a-b4b2-1def0387d0d1,maintain concentrated solar power systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/85947873-e99a-4b08-a4e3-743942710fea,manage fisheries projects,G5,False,0.92,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/85f73cdf-fb6f-434d-8fff-fcd723834a90,perform environmental remediation,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/8604cb5f-9e1f-427c-ba23-3c4a6853fe95,design wind farm collector systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/8614b988-b907-473e-a701-47b525959dc8,advise on heating systems energy efficiency,G2,True,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/862920c8-f2d0-4058-8fb8-9f06fbfc2446,develop recycling programs,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/86df7af2-f9f3-4c06-a500-7f1fba9e78fe,follow health and safety procedures in construction,G7,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/86f0bb12-6491-4be7-8306-c88900e91a63,green bonds,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/885808f7-f42b-406e-95f2-28efcd45ddda,carry out energy management of facilities,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/88de7361-2054-4402-8e1a-a6feb61d8ba9,conduct airport environmental studies,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/89a94a26-29d4-4cd7-9e9d-faebc300c1b1,conduct erosion control,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/89f5fa96-ae45-4906-902c-d50ca51009c6,identify new recycling opportunities,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/8abdc43c-2bfd-417c-97c2-27fcdaf53171,promote environmental awareness,G4,True,0.9,G7,True,0.9,G4,True,tie_resolved,2
+http://data.europa.eu/esco/skill/8b46636e-e201-4086-a8d5-049b65eaf40e,advise on use of land,G7,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/8bcf4ef0-edda-4f6a-a1ce-7defb1d324d6,perform water treatment procedures,G4,False,0.9,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/8bdd25f8-4b6e-40fe-a2cf-c1badc594114,geology,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/8be4540d-db79-4213-8820-bda0d3fb74a7,aeroponics,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/8c609e7c-5002-41a7-b629-0b98f132afb0,regulation on the discharge of raw materials into the sea,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/8c7707b3-cd9b-405a-b2e5-9df24172d4f9,monitor grounds,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/8ca08a35-2d2e-46f5-b440-8fc8ce736287,apply precision farming,G5,False,0.95,G5,False,1.0,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/8ddd7e74-d187-48a1-9009-ff06b268f6cc,handle waste rock,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/8df12fb1-7f41-4068-8d05-007e8fec8f33,conserve forests,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/8df86db8-dfcd-414b-854f-ad1cdb18d733,communicate on the environmental impact of mining,G4,True,0.95,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/8e01e994-0e09-4fbb-a76b-7f615678cc7d,maintain biogas plant,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/8f585def-6ade-41b3-b897-3d71fba4151d,alternative energy,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/8f98653a-4aee-4619-91c7-0cdc2f8e225a,manage plans for the utilisation of organic by-products,G5,False,0.9,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/901297b8-9f66-431b-a6ab-bc2235acf056,collect broken appliances,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/90d04cf8-dcc1-45cf-93e1-a2eba80aed6f,hybrid vehicle architecture,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/9263f0d8-7266-4782-b0ee-38f62656e97e,promote sustainable interior design,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/92e4064a-a93c-4e22-a63b-8da91757b90c,detect bottlenecks,G7,False,0.9,G3,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9349f502-9c11-476c-957d-2e016790a2ee,coordinate waste management procedures,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/942edf03-a450-4261-b65c-9b447fdddc51,set up generators,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9438b0dc-062a-4893-b176-959706e4ae1e,use environmental friendly materials,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/94747ff4-603d-47d4-9780-bf53be41e190,inspect industrial equipment,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/956487a3-5b0b-4d03-8d0e-01e71fb65482,social bonds,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/9582094d-e08c-4df2-a6f1-7c321724f273,natural food resources,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/95bff246-c3ce-4181-a11b-e4363453c2f8,environmental management standards,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/96835f47-da71-415b-8cbf-d37386dc98d4,conduct environmental surveys,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/96d549bb-3e62-4c45-92a7-f114df089581,analyse supply chain strategies,G7,False,0.9,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/96d901a6-c931-4e8d-b685-a47e1deaaa1b,identify energy needs,G2,False,0.92,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/97725325-5287-4ebb-9f83-1ba2c38f465c,produce sustainable products,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/97902800-f9e0-4a73-8826-6cc42f874a18,green logistics,G6,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/97b473ae-8535-498d-9999-cc77549c5e50,identify fitted source for heat pumps,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/982ccb23-102c-4d7a-a899-4df50a032def,install concentrated solar power systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/988f696e-01c9-4aa5-b024-4aa96505ee0c,operate water-heating equipment,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/9920e559-e66c-44a8-b853-bf5c66f123fe,supervise biofilter systems,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/995f7d9c-45c9-4622-b704-739982ff9070,watershed development,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/9a354775-1a03-4258-a357-be4ab0a07465,establish green roof,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/9b242812-7d88-4219-bac7-1195ecc4db51,recirculation systems,G3,False,0.9,G2,False,0.8,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9b5aa426-7daa-4143-8d70-c3623e8c7e60,design window and glazing systems,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/9be02d2d-9d45-400b-aa05-1e9aee7bd815,mini wind power generation,G1,False,0.99,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/9c07b3e2-b919-4594-b6f2-e01df6e9390f,design microclimates in buildings,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/9ccb56ee-3d5f-4d48-8692-8f96fe1e4adb,solar absorption cooling system,G1,False,0.9,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9cf2856d-0375-4ec3-a51f-7f9c82119859,maintain solar energy systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/9d04490c-cea5-4765-a15e-99c46b543c1d,coordinate shipments of recycling materials,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/9d3490b2-a0e6-415b-81a4-a3a4a63268b0,maintain plant health,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9d75efb9-0c77-4f86-b5e7-99100808564a,pest control in plants,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/9da6f4ba-24a0-485f-bf66-3f632387dcd9,supervise aquaculture circulation system,G5,False,0.92,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/9dfab993-ecab-4292-9cb2-528a93eb3161,employ habitat survey techniques,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/9ecd4016-b9de-480d-8ec3-9881644f0eda,use sound measuring instruments,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/9f719da2-5ba8-46b8-b20b-3d5f59208f49,solar panel mounting systems,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/9f763ac3-1d6c-48d2-ab54-324b1b144f40,manage air quality,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/a118a699-7258-48d1-bc45-45fc04f792c8,ingredient threats,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/a2723f98-0fb2-469b-8c79-7ad2d0f73660,handle mining plant waste,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/a28c96cd-a43d-4143-b992-903356d0923e,manage habitats,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/a3629b49-ef78-49ce-8538-033772d6e6ca,perform a feasibility study on combined heat and power,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/a366bfc5-8d17-4792-a9f0-db0951528dda,advise on environmental risk management systems,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/a420a3ed-32a1-4ab8-b590-cba5a89bc8f8,analyse travel alternatives,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/a5f836cc-7e6d-4f3d-a7ee-0146ebb84260,create soil and plant improvement programmes,G5,False,0.95,G3,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/a7573f65-d00c-417f-b952-441ebaeed675,create crop protection plans,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/a8429098-ddac-481b-91e7-688d021c092e,ecology,G4,True,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/a8f1c3cf-bd8b-4c85-80d3-c69955f6bd00,pruning techniques,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/a929f335-e5b9-4f8f-a052-0a8b166d595c,geothermal power generation methods,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/a94dbd21-611b-4540-9ce0-66db8e8f6ed8,coastal management,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/a9c1a772-8ef6-4dd7-93a4-c6bbf3293688,code of Conduct for Responsible Fisheries,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/aaa84f7f-4006-4d9b-81e0-e8eeacdde025,perform a feasibility study on biogas energy,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/aac9e93a-106a-4cdc-8d27-ac3a9ffce0ac,International Convention for the Prevention of Pollution from Ships,G4,True,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/aadf267e-08f0-4bf3-ae4a-f1670b8e9e5d,offshore renewable energy technologies,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/ab0deac2-b872-45c8-ad65-657938d2fe79,operate solar thermal energy systems for hot water and heating,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/ab1cb4c3-8a39-4e26-aa53-6e0680eb08dc,domestic cooling systems,G2,False,0.95,G2,True,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/ae6d655d-bbce-4701-ba04-d687cfa90eda,safeguard biodiversity,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/aeb400b6-d38c-45cc-9252-3c6983c614bb,conduct ecological surveys,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/afdcb380-ef9f-4785-b877-cc551f035034,agronomy,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/affb720b-98e7-4ae6-b833-b12e94fa8987,hydroponics,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/b013ae1f-5efc-42b5-8dab-8a8add39bbd8,enforce fuel storage regulations,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/b115cabc-c030-45b2-ac8e-922d45716183,biomass conversion,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/b13e0689-636d-42d0-86c3-df9d6f85a882,manage environmental management system,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/b1b118c4-3291-484e-b64d-6d51fd5da8b3,environmental engineering,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b21072bc-7c50-4ec7-a822-5233e9363b53,prepared animal feeds contamination hazards,G5,True,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/b25c3eb8-fd63-4d77-8308-7061dbd271c1,conserve natural resources,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b2b970ad-0276-4069-ba31-899a53191b95,biofilter systems,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b2f05068-c409-43ec-ba58-b5dfe991ca5e,advise on corporate social responsibility,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/b30c2dd2-996c-4984-9c68-ce05bf26f1e1,train staff on recycling programs,G3,True,0.95,G3,True,1.0,G3,True,unanimous,2
+http://data.europa.eu/esco/skill/b34f8562-9fcc-4e58-bd1c-8088ebadd315,advise on nature conservation,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b422efe7-b151-4120-86ae-db11a48dd0fa,advise on environmental remediation,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b4db1a85-2488-4dc9-bd53-3dcb3f9deac7,fertilisation principles,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/b552832c-ad26-4901-b76c-232a53c74aba,coordinate electricity generation,G1,False,0.9,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/b55376e1-41c3-45f8-9b35-d3e7b1288a33,evaluate vehicle ecological footprint,G6,False,0.95,G4,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/b589ce7c-588f-4045-be2d-9332c2d2278d,surface engineering,G4,False,0.7,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/b589fa82-f177-4cce-9fb4-31bbbebf792b,green chemistry,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/b70ab677-5781-40b5-9198-d98f4a34310f,toxicology,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/b71fc6e4-14eb-488b-9f26-a7c15fd6d6e8,perform feasibility study on geothermal energy,G1,False,0.95,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/b7a26b32-c457-49aa-9a78-25ade10090e3,maintain wind turbines,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/b8316819-feca-403d-902f-a86562fd91e9,analyse transport business networks,G6,False,0.9,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/b970e437-2f8b-42e3-ae49-6718a0cca44f,water reuse,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/b9931096-a9b9-4db4-b210-6fcada68c2ff,coordinate shipments of waste materials,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/b9f67432-0057-4247-aa84-469f8c53b39d,waste and scrap products,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/ba54cf3c-dd64-48ea-8a9d-ee621a05fb07,assess energy consumption of ventilation systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/ba8b530e-8f6f-4667-b734-3358797c0595,vehicle type-approval,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/bb4f3174-8d64-478b-8d9b-5f37cbf557b7,manage visitor flows in natural protected areas,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/bb859329-0cd8-45c0-a09f-48b6dcd9fc1a,protect trees,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/bbfb0e36-807c-492f-bed2-267224ba7bc7,conduct research on food waste prevention,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/bc70f963-c1c0-49a5-b940-3e28e163db45,plan measures to safeguard cultural heritage,G7,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/bc97c755-2174-4d02-adaf-21b8b1863742,manage environmental aspects of inland waterway transportation,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/bce60ecd-ceee-4dbd-b619-70c9789ec634,test tightness and pressure of refrigeration circuits,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/bd70f004-e1d6-43f0-96f1-59c014a4ea01,coordinate environmental efforts,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/be973dc1-6aa9-4aed-954c-644affe78639,apply insulation strips,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/bed97655-cb0c-4f05-bfd7-9a79d058619d,wildlife projects,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/bf056c12-eaba-4f00-b5a9-c4add7f841f3,landscaping materials,G2,False,0.9,G3,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/bf4779c9-ce55-4110-a996-a7014ca3f1f9,green automotive technologies,G6,False,0.9,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/bf9a2403-850d-4dd3-b266-edaabebc8ab0,evaluate integrated design of buildings,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/bfa5427c-83ec-404f-8465-dd49b42fde8e,cleaning of reusable packaging,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/c0133edf-845a-47bf-968b-bd4a5bd03bbf,use aquacultural heating equipment,G5,False,0.85,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/c0ccbd15-36f3-4515-ae0b-b4062d225ee2,abide by regulations on banned materials,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/c1de3963-05eb-4e45-8496-58156a345fb1,shift energy demands,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c214d86e-fbb8-45c0-87d4-f2cefc954057,select sustainable technologies in design,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c291df22-0d6b-4cea-8feb-11c350a33081,monitor radiation levels,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/c29fed5c-f03b-4389-b110-29b6db00cd01,dispose non-food waste within the food industry,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/c3108ed8-de97-41fc-9ff7-8c028e662734,biotechnology in aquaculture,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/c33877c2-be85-458b-ab59-327c1c6a3507,repair ventilation equipment,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c36dc79e-3414-4283-a85d-f664a523837f,educate the public about wildlife,G4,True,0.95,G4,True,1.0,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/c3ac5c4c-b4b9-4842-b871-43e12cfc0442,green building practices,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c3bb5700-a94d-407a-8cd0-147727378f25,urban pollution implications,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/c4867766-50f8-489e-98d7-262da5589c0a,solar products,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/c4b03a17-a93e-4a8e-9846-4c4d469d4001,agroecology,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/c4ba12d1-4698-42fa-8abb-789462ea2586,protect the environment from the impact of the digital technologies,G4,True,0.9,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/c4e9f0d0-bbdd-42d7-83a5-2c131f6d67c2,develop energy policy,G7,False,0.95,G7,False,1.0,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/c4f97536-866b-4a4f-b91d-da07809ef2d8,execute feasibility study on hydrogen,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/c5320743-60f2-40dc-bc13-337cc3834892,study groundwater,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/c565e722-0e14-4f57-99ff-267dd9ea2510,collaborate on international energy projects,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c582dd36-a83d-4d61-b87a-364b84950a3f,install recycling containers,G3,False,0.95,G2,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/c5afeb33-4291-44c9-a89a-373185d0bfef,"study the relationship between buildings, people and the environment",G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/c65ac31c-fdaf-4e87-beca-8ed952c3aa35,biogas energy,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/c71e5209-dfb8-456d-a1ad-5ac657a92812,use agronomic modelling,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/c76ea1b8-25a3-4084-a684-dcf10b7c880c,ecopedagogy,G7,True,0.9,G7,True,0.9,G7,True,unanimous,2
+http://data.europa.eu/esco/skill/c8195036-dab3-4d87-b83b-395a59b18a42,make decisions regarding forestry management,G5,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/c8b34758-5954-4388-b475-a4e57b3906ac,green water incubation technology,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/c8b4b02c-d9ce-4e24-ab43-5dd52c6dff48,advise on carbon emissions reduction,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/c9b97523-d520-4494-aa60-e3bc9ef0d8a4,grind wasted plastic,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/c9bb544b-99a1-4335-bcea-23f84b01095a,develop non-hazardous waste management strategies,G3,False,0.95,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/c9eea75d-918e-4733-bf1d-86ecd7a04946,perform studies and field investigation,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/ca4ae285-244f-4321-83d6-b109bd1693bc,follow recycling collection schedules,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/cb21f7c2-6bf6-46b5-a638-ad494e95ffbf,apply road transport environmental measures,G6,False,0.9,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/cc0a45a7-4883-4122-af11-7ca6c45a37c2,design building envelope systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/ce541a71-0eaa-40e7-999d-793d1f16fa4c,adapt efficient food processing practices,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/ce689fb5-2c21-4f96-a4b0-d02d4af35923,design passive energy measures,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/cfbe1cdb-1738-45a1-b442-75cbda1fff06,mine dump design,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/cfccea88-0558-40d4-b896-56a1e7993e24,climatology,G4,False,0.9,G1,False,0.8,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/d0fc1d32-c64d-4b53-923f-953f648715ab,carpooling services,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/d10030a4-f49c-4125-8646-6b091efe5089,monitor the welfare of animals,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/d13f1685-9848-4c9e-a40a-686ddb407858,asbestos removal regulations,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/d168d98c-b7bb-4b9a-b1dc-eac008af4df3,implement biodiversity action plans,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d1ec6846-dd8a-4810-8115-474cdf271540,regulations on substances,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/d1ee1caa-1956-48f6-a009-318204bf908e,model groundwater,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d1f73ae9-d348-4aac-b5d5-9b6d508401d3,resource-efficient technologies,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/d28bf3f7-4659-4405-9979-b1270c4c4322,manage kiln ventilation,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/d2c81ad1-2439-43cf-9c63-204187b8f771,mitigate waste of resources,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/d2c9c20e-ff2f-4684-bf93-1d04c78f698f,maintain desalination control system,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d3672a07-6a5b-49f4-bdd3-fcd539594556,biodiesel,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/d3a8ef9c-8572-438c-91dc-010537070be3,manage environmental impact,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d483ae95-5f25-4601-ba97-113bbb7a31b0,monitor the farm environmental management plan,G7,False,0.95,G5,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/d53eab76-e8ff-4e28-af26-7e012951c763,measure company's sustainability performance,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/d589970b-933d-4656-bcb6-a43b3cc67888,monitor water quality,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d5bcc417-a004-4165-b7f1-ab739eadd2f4,smart city features,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/d62755fd-2b38-45b8-aed6-22b4cb36f8c8,supervise aquaculture facilities,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/d7d39ebe-3960-4c8f-a504-19b441990cfa,dispose prepared animal feeds waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/d7d53919-5313-4f23-a701-d12f86c03a60,use resource-efficient technologies in hospitality,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/d81b58ba-52e4-45fa-9f7c-f59b87fa6041,domotic systems,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/d84326c9-a3d3-4e22-a6a1-1ad42a356f10,sustainability consulting,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/d86babea-bf8b-4552-81a8-daf706066ad6,manage environmental impact of operations,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/d96b6330-c73f-443f-9048-702b2226f62b,treat contaminated water,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/d9beab8e-1bd0-42a3-bf3e-58a8f647ad96,install water purity mechanism,G3,False,0.9,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/d9d3eb78-a7c6-4076-9e19-df225af2ec62,manage recycling program budget,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/da896663-08b3-409d-aa3d-31f39a8e8d2b,perform a feasibility study on biomass systems,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/dab7c301-2a33-454e-8fed-23218fa28eee,environmental design,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/dacaebb5-5d85-4f3e-9adb-7c82b4f53189,dispose food waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/dada8e80-2a53-41bf-9eac-f8c1f9971bed,sustainable building materials,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/db54a4d7-9ea9-4c3d-9bd9-9169e6c1fb4f,change power distribution systems,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/db9050db-ae5d-4be8-8114-c26f272c3bda,manage health and safety,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/dbbe485f-b9c2-42df-ba1c-144a2ecfb119,evaluate potential aquaculture conflicts,G7,False,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/dbe63ddf-76f8-4177-a482-fee995a57b77,integrated pest management,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/dbef5042-4b99-4e6f-b2ed-1d33b07b3ed6,advise on sustainability solutions,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/dce16d2c-278a-4161-9847-8435e52c96d3,manage water flows and catchments,G3,False,0.9,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/dd5451c6-a006-4218-bf94-348d81bed42f,conservation agriculture,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/dda26251-7331-41fd-871f-1106ca468189,traffic engineering,G6,False,0.9,G2,False,0.9,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/dda745dd-b8d6-45d8-8c74-e05495ce90f5,sustainable development goals,G7,False,0.95,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/ddbf25f1-b91a-4083-9ef1-cc113a46e4c0,ecosystems,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/ddce2912-bc0f-4a47-aa2b-c1de48bc4b44,energy conservation,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/de131ede-cbfe-4e34-aff4-96f16831c3c4,report pollution incidents,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/debd4fe7-58c9-499e-8a7e-b42984afe728,distribution of heating cooling and hot water,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/df179770-1c8d-4673-a270-481b7e4e6010,design a mini wind power system,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/dfa7be8d-a98d-4fa5-a759-86b6357f38cf,check grant applications,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/dff0087d-25e4-40bf-979e-32fdf2445438,develop food waste reduction strategies,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/e0475631-c151-4413-829c-cb5c76b83271,measure sustainability of tourism activities,G4,False,0.92,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e0701805-94ab-4c79-9624-39a7202cbe4f,perform asset depreciation,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/e16fca1b-b3e2-4823-bba1-7c755c1caf58,advise on nitrate pollution,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e1da04bb-4de8-4d17-af8a-75ea893fe36a,promote responsible consumer behaviour,G3,True,0.9,G4,True,0.9,G3,True,tie_resolved,2
+http://data.europa.eu/esco/skill/e2028206-3060-4e81-8350-77baefabefde,oversee wetlands in project development,G4,False,0.92,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e2bb641f-f647-4229-a48e-9a5ef3526c23,ensure the safety of endangered species and protected areas,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e361af91-3e68-4e59-b0e2-bca0ffb416fa,marine energy,G1,False,0.99,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/e36c1f47-3913-4d35-a6ae-fd9a7243483f,design ventilation network,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/e381f278-7218-4f30-a7b6-34dc3eb7e4a8,reforestation,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e3f2c37f-e484-4b4c-ad82-f565a2b98f89,environmental management monitors,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e3fcd642-5f9c-48ee-be58-258dd895d281,collect biological data,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e45507ff-c1e2-4e0c-92fb-b6c0e6cb6245,photovoltaic systems,G1,False,0.99,G1,False,1.0,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/e4698f9f-bb23-486e-a74a-c8f3a19c3132,investigate contamination,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e4a3c9af-8a5d-49cc-95bb-b77e41588746,process harvested honey,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/e4ff825c-7376-4135-93cd-3892fd67b7c1,develop environmental remediation strategies,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e52c1125-1d27-4e3d-afc9-761ee5f678b3,tree preservation and conservation,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e541c69c-ea80-4b17-87cb-4001d0b9d303,assess environmental impact,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e5727f3b-0dc9-4daf-84e0-d5789b33a6d9,forest ecology,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e5deced2-5636-4ff2-b9bc-dca6cbfc5f72,design a combined heat and power system,G1,False,0.95,G2,False,0.9,G1,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e5f77488-7561-475a-9888-decd2443d37a,train staff on waste management,G3,True,0.95,G3,True,1.0,G3,True,unanimous,2
+http://data.europa.eu/esco/skill/e64d28b8-9379-440b-ba77-2738486f8e4a,control odours from prepared animal feeds production,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e65117b6-97e0-4f45-bd61-e581dcd6ec2a,select adequate packaging for food products,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/e671c957-b998-49df-b630-7908806966f1,inform customers environmental protection,G4,True,0.9,G4,True,0.9,G4,True,unanimous,2
+http://data.europa.eu/esco/skill/e6bf6e73-230a-434c-97b2-a0c042a8b7ac,apply sustainability principles in health care,G3,False,0.9,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e844bde0-9563-4c07-a7e6-4150d5f06a4b,estimate consumption of water,G3,False,0.95,G4,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e85cff6b-ee0e-4106-98f0-b57b39a2ea3f,execute disease and pest control activities,G5,False,0.95,G4,False,0.9,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e979659d-d06e-4968-b4b2-ac51e379b552,design hybrid operating strategies,G6,False,0.95,G2,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/e9d6ebab-13ad-45ce-a955-fc3f1e56add8,plan measures to safeguard natural protected areas,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/e9e57db9-a6ef-4e44-a33c-a022d7c4a17f,environmental indoor quality,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/e9ff446f-6a8a-4e35-a611-176508964be3,alternative fuels,G6,False,0.95,G1,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/eaef3371-cb14-4d21-90a4-e54dc7c6391c,manage desalination control system,G4,False,0.95,G1,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/eb65ce8e-61bf-49d1-99bb-cb699ba1005b,radiation protection,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/ec4de8aa-9ba4-412b-832d-93361210eae3,marine technology,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/ec66a2f9-db12-4eec-936a-47632bfdccfb,perform smart grid feasibility study,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/ec7fd241-e68f-4593-a42a-a12a9bd80cbc,footwear components,G3,False,0.95,G6,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/ecd368bc-6383-4a03-9b61-46e0a94750f7,instruct on energy saving technologies,G2,True,0.95,G2,True,1.0,G2,True,unanimous,2
+http://data.europa.eu/esco/skill/ed17ddef-52ed-4a24-b6ca-d5ecc53eba24,implement fin fish feeding regimes,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/ed8dbdd1-5b40-4eaf-adaf-3b1f6d16a37b,hazardous waste storage,G3,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/edf0690f-629d-4674-a9df-45fd89413e85,assess groundwater environmental impact,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/ee02393d-27dd-438a-8879-b8088ce45e79,ICT environmental policies,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/ef010091-ddce-410d-9864-9276ef6fe390,district heating and cooling,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f01fe651-4270-47e8-bb85-e74c8084bd83,measure water flow,G3,False,0.9,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/f03a3387-c4a7-41e3-a5d4-dd4577147940,integrated design,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/f12f094b-492f-4e88-b36b-50b8e58b7500,conduct environmental site assessments,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/f14cfbac-07c5-43de-8b63-51518be99826,design wind turbines,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/f191c306-f0eb-4cb8-82fb-3331adbbc6f1,adapt energy distribution schedules,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/f2071535-4da0-4253-a548-920d170b80e0,design thermal equipment,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/f2412a5c-8072-4cd7-8fa1-806864f91276,by-products,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/f29c3331-b0dc-44c6-949f-b646bcfde992,analyse tree population,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/f36dff27-a70e-4c23-b2de-e2dffe84adbf,plant propagation,G5,False,0.95,,,,G5,False,unanimous,1
+http://data.europa.eu/esco/skill/f3cc52e3-a96c-4549-b841-6e41a846fa99,report on environmental issues,G7,False,0.9,G4,True,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f519caf2-a69f-4357-a8b7-d992e4bfdae3,design thermal requirements,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/f5bf985b-ac78-4d23-881a-18a359234528,corporate sustainability,G7,False,0.95,G7,False,0.9,G7,False,unanimous,2
+http://data.europa.eu/esco/skill/f64b7f4d-e89e-4920-8674-b75a9cd63389,inspect tidal stream generators,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/f66b2fc3-2952-41e5-89bf-a9157ea29420,ensure compliance with environmental legislation in food production,G7,False,0.95,G5,False,1.0,G5,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f672b7a0-698e-45f1-a102-51adeaf89200,develop efficiency plans for logistics operations,G6,False,0.95,G2,False,0.9,G6,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f6d7ba88-5234-4994-944d-843ca453c923,implement environmental protection measures,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/f7626ae8-eecf-41f4-bc4f-de9e57ed30a6,rainwater management,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/f76eeb55-2ad1-40ef-ba09-fa60e2c28b40,design an artificial lighting system,G2,False,0.9,G2,False,0.9,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/f7a4fb1d-d951-4c4c-8643-3212c0958f71,monitor electric generators,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/f806d624-7700-4e47-9f7b-253d4d6ab9e5,promote animal welfare,G5,True,0.9,G4,False,0.9,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f82b05a7-128b-4a72-a815-044ff6062f62,advise on waste management procedures,G3,False,0.95,G4,False,1.0,G4,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f8413360-6114-40de-a276-c59b764b9913,renewable energy,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/f8460277-3c9a-4be4-b203-600a2a295f47,plant disease control,G5,False,0.95,G5,False,0.9,G5,False,unanimous,2
+http://data.europa.eu/esco/skill/f85c6fbb-51c9-4b3f-adc9-391df4b2da65,design geothermal energy systems,G1,False,0.95,G2,False,1.0,G2,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f9032d23-4b04-4cbb-8152-2cafc2d394d2,operate scrap vibratory feeder,G3,False,0.95,G2,False,0.9,G3,False,tie_resolved,2
+http://data.europa.eu/esco/skill/f975091a-e5a5-4472-ac17-11680e53e98f,seek innovation in current practices,G8,False,0.9,G8,False,0.9,G8,False,unanimous,2
+http://data.europa.eu/esco/skill/f9b7be6c-29a0-4021-980e-a0e3b0005205,inspect wave energy converters,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/fac6dbca-0d38-48a0-a255-d2beea8156d6,prevent marine pollution,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/fc0ea6f4-8182-4127-a92b-fd53be15ec30,develop biocatalytic processes,G1,False,0.95,G1,False,0.9,G1,False,unanimous,2
+http://data.europa.eu/esco/skill/fc6890aa-1dbd-4aa1-bae2-4699965eeaf0,manage forest fires,G4,False,0.95,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/fc7ed09d-3010-4054-8136-a534b16fb35e,develop natural areas works programmes,G4,False,0.9,G4,False,0.9,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/fcc29203-1f8d-4c54-90ee-78cb18467695,supervise waste water treatments,G4,False,0.95,G4,False,1.0,G4,False,unanimous,2
+http://data.europa.eu/esco/skill/fcffe2a5-6253-4848-92e7-749304aca647,develop innovative mobility solutions,G6,False,0.95,G6,False,0.9,G6,False,unanimous,2
+http://data.europa.eu/esco/skill/fd082998-8cea-4abc-8504-03f7e4b7088e,design a building management system,G2,False,0.95,G2,False,1.0,G2,False,unanimous,2
+http://data.europa.eu/esco/skill/fd2930ce-cd21-4eb2-87f7-115c3d197e24,conserve water resource,G3,False,0.9,G3,False,1.0,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/fdfb348c-6aaf-4815-8f50-2f665287c422,challenging issues in the textile industry,G3,False,0.95,G3,True,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/ff9f1770-2b94-4afa-bf82-1671d7f54b99,collect domestic waste,G3,False,0.95,G3,False,0.9,G3,False,unanimous,2
+http://data.europa.eu/esco/skill/ffa1d58b-ba09-49bd-a982-e743b2237006,perform energy simulations,G2,False,0.95,G2,False,0.9,G2,False,unanimous,2

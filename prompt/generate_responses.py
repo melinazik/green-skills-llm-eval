@@ -542,7 +542,7 @@ def main() -> None:
             "export the selected rows and save them at that path, then run this again."
         )
     if not prompts_csv.exists():
-        raise SystemExit(f"Prompts CSV not found: {prompts_csv}\nRun: python prompt/build_prompts.py")
+        raise SystemExit(f"Prompts CSV not found: {prompts_csv}\nIt ships with the repository; restore it from version control.")
 
     full_skills_df = read_csv_str(skills_csv)
     prompts_df = read_csv_str(prompts_csv)

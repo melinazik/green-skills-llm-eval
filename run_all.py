@@ -11,8 +11,8 @@ Step 4, otherwise Step 4 will stop with a clear message.
 
 --limit caps the number of skills in the two steps that call the models, so a test
 run takes minutes instead of hours. The models run on the CPU, so a full run is
-slow: count on roughly 20 seconds per call, and Step 4 makes 8 prompts x 3 models
-= 24 calls per skill.
+slow: count on roughly 20 seconds per call, and Step 4 makes 12 prompts x 3 models
+= 36 calls per skill.
 
 Each command must succeed before the next one runs.
 """
